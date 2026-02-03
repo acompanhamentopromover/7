@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polígonos Regulares - Promover</title>
+    <title>Média, Moda e Mediana - Promover</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,9 @@
             --text-color: #2D3748;
             --border-color: #000000;
             
-            /* CORES DA MATÉRIA: TEMA VERDE MENTA (Geometria/Construção) */
-            --theme-color: #D1FAE5; 
-            --theme-active: #059669; 
+            /* CORES DA MATÉRIA: TEMA ROXO/DADOS (Estatística/Análise) */
+            --theme-color: #E9D8FD; 
+            --theme-active: #6B46C1; 
             --theme-text-active: #FFFFFF;
             
             /* FEEDBACK */
@@ -156,14 +156,14 @@
             justify-content: center;
             margin: 15px 0;
             padding: 15px;
-            background-color: #D1FAE5;
+            background-color: #E9D8FD;
             border-radius: 12px;
             border: 1px dashed var(--theme-active);
         }
 
         .example-box {
-            background-color: #ECFDF5; /* Verde muito claro */
-            border-left: 5px solid #059669;
+            background-color: #FAF5FF; /* Roxo muito claro */
+            border-left: 5px solid #6B46C1;
             padding: 15px;
             margin: 15px 0;
             border-radius: 8px;
@@ -173,7 +173,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #047857;
+            color: #553C9A;
             margin-bottom: 5px;
             display: block;
         }
@@ -362,53 +362,46 @@
 
         <div id="viewExplanation" class="section-view" style="display: block;">
             
-            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Polígonos Regulares</h1>
-            <p style="color: #555; margin-bottom: 20px;">São figuras perfeitas onde todos os lados e todos os ângulos são iguais.</p>
+            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Média, Moda e Mediana</h1>
+            <p style="color: #555; margin-bottom: 20px;">São as medidas que ajudam a resumir um conjunto de dados e encontrar o "centro" deles.</p>
             
             <div class="card-content">
-                <h3>💎 A Perfeição Geométrica</h3>
-                <p>Para ser regular, o polígono precisa cumprir duas regras ao mesmo tempo:</p>
+                <h3>📊 Média Aritmética</h3>
+                <p>É o valor "equilibrado". Somamos todos os valores e dividimos pela quantidade.</p>
                 <br>
                 <div class="visual-row">
                     <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <rect x="15" y="15" width="30" height="30" fill="#D1FAE5" stroke="#059669"/>
-                            <path d="M15 15 L20 20 M45 15 L40 20 M15 45 L20 40 M45 45 L40 40" stroke="#059669" stroke-width="1"/>
-                        </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Quadrado</p>
-                        <p style="font-size:0.7rem;">4 lados iguais<br>4 ângulos iguais</p>
-                    </div>
-                    
-                    <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <polygon points="30,5 55,25 45,55 15,55 5,25" fill="#D1FAE5" stroke="#059669"/>
-                        </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Pentágono Regular</p>
-                        <p style="font-size:0.7rem;">5 lados iguais</p>
+                        <p style="font-size:0.8rem;">Notas: 5, 7, 9</p>
+                        <p style="font-weight:700; color:#6B46C1;">(5 + 7 + 9) ÷ 3 = 7</p>
                     </div>
                 </div>
             </div>
 
             <div class="card-content">
-                <h3>🔢 Fórmulas Importantes</h3>
-                <p>Como calcular a medida dos ângulos internos?</p>
+                <h3>👗 Moda</h3>
+                <p>É o valor que "está na moda", ou seja, o que <strong>mais se repete</strong>.</p>
                 
                 <div class="example-box">
-                    <span class="example-tag">Soma dos Ângulos Internos (S)</span>
-                    <p>S = (n - 2) x 180</p>
-                    <p style="font-size:0.8rem;">Onde "n" é o número de lados.</p>
+                    <span class="example-tag">Exemplo</span>
+                    <p>Dados: 2, 3, 3, 5, 7</p>
+                    <p>O número <strong>3</strong> aparece mais vezes.</p>
+                    <p style="font-weight:700; margin-top:5px;">Moda = 3</p>
                 </div>
+            </div>
 
+            <div class="card-content">
+                <h3>📍 Mediana</h3>
+                <p>É o valor que está exatamente no <strong>meio</strong> da lista. </p>
+                <p style="color:#C53030; font-weight:bold; font-size:0.8rem; margin-top:5px;">⚠️ Regra de Ouro: Tem que colocar em ordem crescente primeiro!</p>
+                
                 <div class="example-box">
-                    <span class="example-tag">Cada Ângulo Interno (Ai)</span>
-                    <p>Ai = S / n</p>
-                    <p style="font-size:0.8rem;">Basta dividir a soma total pelo número de lados.</p>
+                    <span class="example-tag">Exemplo Ímpar</span>
+                    <p>1, 4, <strong>7</strong>, 8, 9 ➝ Mediana = 7</p>
                 </div>
-
+                
                 <div class="example-box">
-                    <span class="example-tag">Ângulo Externo (Ae)</span>
-                    <p>Ae = 360 / n</p>
-                    <p style="font-size:0.8rem;">A soma dos externos é sempre 360°!</p>
+                    <span class="example-tag">Exemplo Par</span>
+                    <p>1, <strong>4, 6</strong>, 9 ➝ (4+6)÷2 = 5</p>
                 </div>
             </div>
 
@@ -420,7 +413,7 @@
         <div id="viewPractice" class="section-view">
             <div style="margin-bottom: 15px;">
                 <h2>Hora de Praticar!</h2>
-                <p style="color: #666; font-size: 0.9rem;">Identifique e calcule os polígonos.</p>
+                <p style="color: #666; font-size: 0.9rem;">Organize os dados antes de responder.</p>
             </div>
             <div class="question-map" id="qMap"></div>
             <div id="quizContainer" style="margin-bottom: 100px;"></div>
@@ -446,177 +439,177 @@
     </footer>
 
     <script>
-        // --- BANCO DE QUESTÕES (POLÍGONOS REGULARES) ---
+        // --- BANCO DE QUESTÕES (MÉDIA, MODA, MEDIANA) ---
         const questions = [
-            // NÍVEL 1: CONCEITOS E NOMES
+            // NÍVEL 1: CONCEITOS
             {
                 id: 1,
-                text: "O que é necessário para um polígono ser considerado <strong>regular</strong>?",
-                options: ["Ter todos os lados iguais e ângulos diferentes", "Ter todos os lados congruentes e todos os ângulos congruentes", "Ter apenas ângulos iguais", "Ter pelo menos dois lados iguais"],
+                text: "O que é a <strong>Moda</strong> em um conjunto de dados?",
+                options: ["O valor do meio", "O valor que mais se repete", "A soma dividida pelo total", "O maior valor"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Se os ângulos forem diferentes, ele não é regular (ex: losango).<br>
-                    <strong>(B) Correta:</strong> A definição exige as duas condições: lados iguais (equilátero) E ângulos iguais (equiângulo).<br>
-                    <strong>(C) Incorreta:</strong> Um retângulo tem ângulos iguais (90°), mas não é regular pois os lados são diferentes.<br>
-                    <strong>(D) Incorreta:</strong> Isso seria um isósceles, não regular.`
+                    <strong>(A) Incorreta:</strong> O valor do meio é a Mediana.<br>
+                    <strong>(B) Correta:</strong> Moda é o que está 'na moda', o mais frequente.<br>
+                    <strong>(C) Incorreta:</strong> Isso é a Média.<br>
+                    <strong>(D) Incorreta:</strong> Isso é o valor máximo.`
             },
             {
                 id: 2,
-                text: "Qual é o nome do polígono regular de <strong>3 lados</strong>?",
-                options: ["Triângulo Isósceles", "Triângulo Escaleno", "Triângulo Equilátero", "Triângulo Retângulo"],
-                correct: 2,
+                text: "Para calcular a <strong>Mediana</strong>, qual é o primeiro passo obrigatório?",
+                options: ["Somar tudo", "Colocar os números em ordem (crescente ou decrescente)", "Dividir pelo total", "Escolher o maior número"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Isósceles tem apenas 2 lados iguais.<br>
-                    <strong>(B) Incorreta:</strong> Escaleno tem todos os lados diferentes.<br>
-                    <strong>(C) Correta:</strong> Equilátero é o único triângulo regular (3 lados iguais e 3 ângulos de 60°).<br>
-                    <strong>(D) Incorreta:</strong> Retângulo refere-se ao ângulo de 90°.`
+                    <strong>(A) Incorreta:</strong> Isso é para a Média.<br>
+                    <strong>(B) Correta:</strong> Se não ordenar (fazer o Rol), você pega o número errado no meio.<br>
+                    <strong>(C) Incorreta:</strong> Passo da Média.<br>
+                    <strong>(D) Incorreta:</strong> Irrelevante para a mediana.`
             },
             {
                 id: 3,
-                text: "Qual é o nome do polígono regular de <strong>4 lados</strong>?",
-                options: ["Losango", "Retângulo", "Quadrado", "Trapézio"],
+                text: "Como calculamos a <strong>Média Aritmética</strong>?",
+                options: ["Pegamos o número do meio", "Subtraímos o menor do maior", "Somamos todos e dividimos pela quantidade", "Multiplicamos todos os valores"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> O losango tem lados iguais, mas ângulos podem ser diferentes.<br>
-                    <strong>(B) Incorreta:</strong> O retângulo tem ângulos iguais, mas lados diferentes.<br>
-                    <strong>(C) Correta:</strong> O quadrado é o único quadrilátero regular (lados e ângulos iguais).<br>
-                    <strong>(D) Incorreta:</strong> Trapézio nem tem todos os lados iguais.`
+                    <strong>(A) Incorreta:</strong> Mediana.<br>
+                    <strong>(B) Incorreta:</strong> Amplitude.<br>
+                    <strong>(C) Correta:</strong> É a distribuição igualitária dos valores.<br>
+                    <strong>(D) Incorreta:</strong> Média Geométrica (outro conceito).`
             },
-            // NÍVEL 2: SOMA DOS ÂNGULOS E FÓRMULAS
+            // NÍVEL 2: CÁLCULOS SIMPLES
             {
                 id: 4,
-                text: "Qual é a soma dos ângulos internos de um <strong>quadrado</strong>?",
-                options: ["180°", "360°", "540°", "90°"],
-                correct: 1,
+                text: "Qual a <strong>Moda</strong> da lista: 2, 2, 5, 7, 9?",
+                options: ["5", "7", "2", "9"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Isso é para triângulos.<br>
-                    <strong>(B) Correta:</strong> Um quadrado tem 4 ângulos de 90°. 4 x 90 = 360°. Ou pela fórmula: (4-2)x180 = 2x180 = 360°.<br>
-                    <strong>(C) Incorreta:</strong> Isso é para pentágonos.<br>
-                    <strong>(D) Incorreta:</strong> Isso é o valor de um ângulo só.`
+                    <strong>(A) Incorreta:</strong> Aparece só 1 vez.<br>
+                    <strong>(B) Incorreta:</strong> Aparece só 1 vez.<br>
+                    <strong>(C) Correta:</strong> O número 2 aparece duas vezes, mais que os outros.<br>
+                    <strong>(D) Incorreta:</strong> Aparece só 1 vez.`
             },
             {
                 id: 5,
-                text: "A soma dos ângulos <strong>externos</strong> de qualquer polígono convexo é sempre:",
-                options: ["180°", "360°", "Depende dos lados", "540°"],
+                text: "Calcule a <strong>Média</strong> de: 4, 6, 8.",
+                options: ["4", "6", "8", "18"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 180° é a soma interna de triângulos.<br>
-                    <strong>(B) Correta:</strong> Não importa se é um triângulo ou um milágono, se você somar os giros externos, sempre completa uma volta (360°).<br>
-                    <strong>(C) Incorreta:</strong> É uma constante fixa.<br>
-                    <strong>(D) Incorreta:</strong> Valor da soma interna do pentágono.`
+                    <strong>(A) Incorreta:</strong> Valor muito baixo.<br>
+                    <strong>(B) Correta:</strong> Soma: 4+6+8 = 18. Divisão: 18 ÷ 3 = 6.<br>
+                    <strong>(C) Incorreta:</strong> Valor muito alto.<br>
+                    <strong>(D) Incorreta:</strong> Você esqueceu de dividir por 3.`
             },
             {
                 id: 6,
-                text: "Se o perímetro de um pentágono regular é 50 cm, quanto mede cada lado?",
-                options: ["5 cm", "25 cm", "10 cm", "50 cm"],
-                correct: 2,
+                text: "Qual a <strong>Mediana</strong> de: 10, 20, 30, 40, 50?",
+                options: ["20", "30", "40", "150"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 5 x 5 = 25.<br>
-                    <strong>(B) Incorreta:</strong> 25 x 5 = 125.<br>
-                    <strong>(C) Correta:</strong> Pentágono tem 5 lados iguais. Perímetro dividido por lados: 50 ÷ 5 = 10 cm.<br>
-                    <strong>(D) Incorreta:</strong> Seria o perímetro total.`
+                    <strong>(A) Incorreta:</strong> Não está no centro.<br>
+                    <strong>(B) Correta:</strong> Já estão em ordem. O 30 está exatamente no meio, com dois números para cada lado.<br>
+                    <strong>(C) Incorreta:</strong> Não está no centro.<br>
+                    <strong>(D) Incorreta:</strong> Você somou tudo.`
             },
-            // NÍVEL 3: CÁLCULOS DE ÂNGULOS INTERNOS
+            // NÍVEL 3: ORDENAÇÃO E ZEROS
             {
                 id: 7,
-                text: "Quanto mede cada ângulo interno de um <strong>triângulo equilátero</strong>?",
-                options: ["45°", "90°", "60°", "30°"],
+                text: "Qual a <strong>Mediana</strong> destes números (cuidado, estão bagunçados): 5, 1, 4?",
+                options: ["5", "1", "4", "3,3"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Metade de 90.<br>
-                    <strong>(B) Incorreta:</strong> Ângulo reto.<br>
-                    <strong>(C) Correta:</strong> A soma é 180°. Dividido por 3 ângulos iguais: 180 ÷ 3 = 60°.<br>
-                    <strong>(D) Incorreta:</strong> Muito pequeno.`
+                    <strong>(A) Incorreta:</strong> Pegou o primeiro sem ordenar.<br>
+                    <strong>(B) Incorreta:</strong> É o menor.<br>
+                    <strong>(C) Correta:</strong> Ordenando: 1, 4, 5. O meio é 4.<br>
+                    <strong>(D) Incorreta:</strong> Calculou a média.`
             },
             {
                 id: 8,
-                text: "Um hexágono regular tem 6 lados. Qual a soma dos seus ângulos internos?",
-                options: ["360°", "540°", "720°", "180°"],
-                correct: 2,
+                text: "Calcule a <strong>Média</strong> das notas: 10, 0, 5.",
+                options: ["7,5", "5", "15", "0"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Quadrilátero.<br>
-                    <strong>(B) Incorreta:</strong> Pentágono.<br>
-                    <strong>(C) Correta:</strong> Fórmula: (n-2) x 180. (6-2) x 180 = 4 x 180 = 720°.<br>
-                    <strong>(D) Incorreta:</strong> Triângulo.`
+                    <strong>(A) Incorreta:</strong> Dividiu por 2 (esqueceu de contar o zero).<br>
+                    <strong>(B) Correta:</strong> Soma: 10+0+5 = 15. Total de itens: 3. Média: 15 ÷ 3 = 5.<br>
+                    <strong>(C) Incorreta:</strong> Esqueceu de dividir.<br>
+                    <strong>(D) Incorreta:</strong> O zero entra na soma, mas não zera a média.`
             },
             {
                 id: 9,
-                text: "Seguindo a questão anterior, quanto mede <strong>um</strong> ângulo interno do hexágono regular?",
-                options: ["100°", "120°", "90°", "60°"],
-                correct: 1,
+                text: "Qual a <strong>Moda</strong> do conjunto: 1, 2, 3, 4, 5?",
+                options: ["3", "1", "Não tem moda (Amodal)", "5"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Cálculo errado.<br>
-                    <strong>(B) Correta:</strong> A soma é 720°. Dividindo por 6 ângulos: 720 ÷ 6 = 120°.<br>
-                    <strong>(C) Incorreta:</strong> Quadrado.<br>
-                    <strong>(D) Incorreta:</strong> Triângulo.`
+                    <strong>(A) Incorreta:</strong> Seria a mediana.<br>
+                    <strong>(B) Incorreta:</strong> Aparece só uma vez.<br>
+                    <strong>(C) Correta:</strong> Nenhum número se repete. É um conjunto Amodal.<br>
+                    <strong>(D) Incorreta:</strong> Apenas o maior número.`
             },
-            // NÍVEL 4: CÁLCULOS DE ÂNGULOS EXTERNOS
+            // NÍVEL 4: MEDIANA PAR E INTERPRETAÇÃO
             {
                 id: 10,
-                text: "Quanto mede cada ângulo <strong>externo</strong> de um quadrado?",
-                options: ["45°", "90°", "180°", "360°"],
-                correct: 1,
+                text: "Qual a <strong>Mediana</strong> de: 2, 4, 6, 8 (quantidade par)?",
+                options: ["4", "6", "5", "10"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Octógono.<br>
-                    <strong>(B) Correta:</strong> Fórmula: 360 ÷ n. 360 ÷ 4 = 90°. (Também é o suplemento do interno de 90°).<br>
-                    <strong>(C) Incorreta:</strong> Meia volta.<br>
-                    <strong>(D) Incorreta:</strong> Volta completa.`
+                    <strong>(A) Incorreta:</strong> 4 é um dos meios.<br>
+                    <strong>(B) Incorreta:</strong> 6 é um dos meios.<br>
+                    <strong>(C) Correta:</strong> Os meios são 4 e 6. A média deles é (4+6)÷2 = 5.<br>
+                    <strong>(D) Incorreta:</strong> Somou os meios.`
             },
             {
                 id: 11,
-                text: "Qual polígono regular tem o ângulo externo medindo 60°?",
-                options: ["Quadrado", "Pentágono", "Hexágono", "Triângulo"],
+                text: "Se a média de dois números é 5, qual é a soma deles?",
+                options: ["2,5", "5", "10", "15"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 360/4 = 90°.<br>
-                    <strong>(B) Incorreta:</strong> 360/5 = 72°.<br>
-                    <strong>(C) Correta:</strong> Sabemos que 360 ÷ n = 60. Logo, n = 360 ÷ 60 = 6. É o Hexágono.<br>
-                    <strong>(D) Incorreta:</strong> 360/3 = 120°.`
+                    <strong>(A) Incorreta:</strong> Dividiu de novo.<br>
+                    <strong>(B) Incorreta:</strong> A média não é a soma.<br>
+                    <strong>(C) Correta:</strong> Se Soma ÷ 2 = 5, então Soma = 5 x 2 = 10.<br>
+                    <strong>(D) Incorreta:</strong> Chute.`
             },
             {
                 id: 12,
-                text: "Se o ângulo interno de um polígono regular é 150°, quanto mede o seu ângulo externo?",
-                options: ["30°", "150°", "50°", "180°"],
-                correct: 0,
+                text: "Em uma loja de sapatos, qual medida é mais útil para o dono saber o que comprar mais?",
+                options: ["Média (tamanho 37,2)", "Moda (o que mais sai)", "Mediana (o tamanho do meio)", "Amplitude"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Correta:</strong> O interno e o externo são suplementares (somam 180°). 180 - 150 = 30°.<br>
-                    <strong>(B) Incorreta:</strong> O mesmo valor do interno.<br>
-                    <strong>(C) Incorreta:</strong> A soma daria 200°.<br>
-                    <strong>(D) Incorreta:</strong> A soma total.`
+                    <strong>(A) Incorreta:</strong> Não existe sapato tamanho 37,2.<br>
+                    <strong>(B) Correta:</strong> Ele precisa saber qual número vende mais (frequência) para repor o estoque.<br>
+                    <strong>(C) Incorreta:</strong> O tamanho do meio não indica vendas.<br>
+                    <strong>(D) Incorreta:</strong> Irrelevante para estoque.`
             },
-            // NÍVEL 5: DESAFIOS E LÓGICA
+            // NÍVEL 5: DESAFIOS
             {
                 id: 13,
-                text: "Quantos lados tem um polígono regular cujo ângulo externo mede 45°?",
-                options: ["5 (Pentágono)", "6 (Hexágono)", "8 (Octógono)", "10 (Decágono)"],
-                correct: 2,
+                text: "Notas: 6, 6, 9. Qual é a Média?",
+                options: ["6", "7", "8", "21"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 360/5 = 72°.<br>
-                    <strong>(B) Incorreta:</strong> 360/6 = 60°.<br>
-                    <strong>(C) Correta:</strong> n = 360 ÷ Ângulo Externo. n = 360 ÷ 45 = 8. É o Octógono.<br>
-                    <strong>(D) Incorreta:</strong> 360/10 = 36°.`
+                    <strong>(A) Incorreta:</strong> Moda.<br>
+                    <strong>(B) Correta:</strong> 6+6+9 = 21. 21 ÷ 3 = 7.<br>
+                    <strong>(C) Incorreta:</strong> Cálculo errado.<br>
+                    <strong>(D) Incorreta:</strong> Soma.`
             },
             {
                 id: 14,
-                text: "Qual é a soma dos ângulos internos de um Pentágono (5 lados)?",
-                options: ["180°", "360°", "540°", "720°"],
-                correct: 2,
+                text: "Tenho os números 1, 1, 1, 100. Qual medida representa melhor a maioria?",
+                options: ["A Média (25,7)", "A Moda (1)", "A Amplitude", "Nenhuma"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Triângulo.<br>
-                    <strong>(B) Incorreta:</strong> Quadrilátero.<br>
-                    <strong>(C) Correta:</strong> (n-2)x180. (5-2)x180 = 3 x 180 = 540°.<br>
-                    <strong>(D) Incorreta:</strong> Hexágono.`
+                    <strong>(A) Incorreta:</strong> A média foi distorcida pelo 100 (outlier).<br>
+                    <strong>(B) Correta:</strong> A maioria dos dados é 1. A moda representa melhor esse grupo específico.<br>
+                    <strong>(C) Incorreta:</strong> Mede dispersão.<br>
+                    <strong>(D) Incorreta:</strong> A moda serve bem.`
             },
             {
                 id: 15,
-                text: "O favo de mel das abelhas é formado por qual polígono regular (para encaixar perfeitamente)?",
-                options: ["Círculo", "Pentágono", "Hexágono", "Octógono"],
-                correct: 2,
+                text: "Conjunto: 10, 20, 30. Se adicionar o número 100, o que acontece com a média?",
+                options: ["Diminui", "Aumenta muito", "Fica igual", "Vira zero"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Círculos deixam espaços vazios.<br>
-                    <strong>(B) Incorreta:</strong> Pentágonos não se encaixam perfeitamente sem buracos.<br>
-                    <strong>(C) Correta:</strong> O hexágono regular pavimenta o plano (tesselação) perfeitamente sem deixar espaços, otimizando cera e espaço.<br>
-                    <strong>(D) Incorreta:</strong> Octógonos deixam buracos quadrados.`
+                    <strong>(A) Incorreta:</strong> Adicionamos um número grande.<br>
+                    <strong>(B) Correta:</strong> A média é sensível a valores extremos. O 100 vai puxar a média para cima.<br>
+                    <strong>(C) Incorreta:</strong> Impossível.<br>
+                    <strong>(D) Incorreta:</strong> Sem sentido.`
             }
         ];
 
@@ -781,7 +774,7 @@
             if (currentQuestion === questions.length - 1) {
                 btnNext.textContent = "Finalizar";
                 btnNext.onclick = finishQuiz;
-                btnNext.style.backgroundColor = "#059669"; 
+                btnNext.style.backgroundColor = "#6B46C1"; 
             } else {
                 btnNext.textContent = "Próxima";
                 btnNext.onclick = () => changeQuestion(1);

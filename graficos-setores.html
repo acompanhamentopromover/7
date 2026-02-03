@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polígonos Regulares - Promover</title>
+    <title>Gráficos de Setores - Promover</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,9 @@
             --text-color: #2D3748;
             --border-color: #000000;
             
-            /* CORES DA MATÉRIA: TEMA VERDE MENTA (Geometria/Construção) */
-            --theme-color: #D1FAE5; 
-            --theme-active: #059669; 
+            /* CORES DA MATÉRIA: TEMA VIOLETA (Visual/Criativo/Dados) */
+            --theme-color: #F3E8FF; 
+            --theme-active: #7C3AED; 
             --theme-text-active: #FFFFFF;
             
             /* FEEDBACK */
@@ -156,14 +156,14 @@
             justify-content: center;
             margin: 15px 0;
             padding: 15px;
-            background-color: #D1FAE5;
+            background-color: #F3E8FF;
             border-radius: 12px;
             border: 1px dashed var(--theme-active);
         }
 
         .example-box {
-            background-color: #ECFDF5; /* Verde muito claro */
-            border-left: 5px solid #059669;
+            background-color: #F5F3FF; /* Violeta muito claro */
+            border-left: 5px solid #7C3AED;
             padding: 15px;
             margin: 15px 0;
             border-radius: 8px;
@@ -173,7 +173,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #047857;
+            color: #6D28D9;
             margin-bottom: 5px;
             display: block;
         }
@@ -362,53 +362,42 @@
 
         <div id="viewExplanation" class="section-view" style="display: block;">
             
-            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Polígonos Regulares</h1>
-            <p style="color: #555; margin-bottom: 20px;">São figuras perfeitas onde todos os lados e todos os ângulos são iguais.</p>
+            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Gráficos de Setores</h1>
+            <p style="color: #555; margin-bottom: 20px;">Também conhecidos como "Gráficos de Pizza", eles mostram como um todo é dividido em partes.</p>
             
             <div class="card-content">
-                <h3>💎 A Perfeição Geométrica</h3>
-                <p>Para ser regular, o polígono precisa cumprir duas regras ao mesmo tempo:</p>
+                <h3>🍕 A Fatia da Pizza</h3>
+                <p>O círculo inteiro representa o total (100% ou 360°). Cada fatia (setor) representa uma parte desse total.</p>
                 <br>
                 <div class="visual-row">
                     <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <rect x="15" y="15" width="30" height="30" fill="#D1FAE5" stroke="#059669"/>
-                            <path d="M15 15 L20 20 M45 15 L40 20 M15 45 L20 40 M45 45 L40 40" stroke="#059669" stroke-width="1"/>
+                        <svg class="visual-svg" width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="40" cy="40" r="35" stroke="#7C3AED" fill="none"/>
+                            <path d="M40 40 L40 5 L75 40 Z" fill="#C4B5FD" stroke="#7C3AED"/>
+                            <path d="M40 40 L75 40 A 35 35 0 0 1 40 75 Z" fill="#DDD6FE" stroke="#7C3AED"/>
+                            <path d="M40 40 L40 75 A 35 35 0 0 1 5 40 L40 40" fill="#EDE9FE" stroke="#7C3AED"/>
+                            <path d="M40 40 L5 40 A 35 35 0 0 1 40 5 Z" fill="#F5F3FF" stroke="#7C3AED"/>
                         </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Quadrado</p>
-                        <p style="font-size:0.7rem;">4 lados iguais<br>4 ângulos iguais</p>
-                    </div>
-                    
-                    <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <polygon points="30,5 55,25 45,55 15,55 5,25" fill="#D1FAE5" stroke="#059669"/>
-                        </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Pentágono Regular</p>
-                        <p style="font-size:0.7rem;">5 lados iguais</p>
+                        <p style="font-size:0.75rem; font-weight:bold;">Proporção Visual</p>
                     </div>
                 </div>
             </div>
 
             <div class="card-content">
-                <h3>🔢 Fórmulas Importantes</h3>
-                <p>Como calcular a medida dos ângulos internos?</p>
+                <h3>🔄 Porcentagem e Graus</h3>
+                <p>Para construir o gráfico, precisamos transformar a porcentagem (%) em graus (°), pois o círculo tem 360°.</p>
                 
                 <div class="example-box">
-                    <span class="example-tag">Soma dos Ângulos Internos (S)</span>
-                    <p>S = (n - 2) x 180</p>
-                    <p style="font-size:0.8rem;">Onde "n" é o número de lados.</p>
+                    <span class="example-tag">Conversão Básica</span>
+                    <p><strong>100%</strong> = 360° (Tudo)</p>
+                    <p><strong>50%</strong> = 180° (Metade)</p>
+                    <p><strong>25%</strong> = 90° (Um quarto)</p>
                 </div>
 
                 <div class="example-box">
-                    <span class="example-tag">Cada Ângulo Interno (Ai)</span>
-                    <p>Ai = S / n</p>
-                    <p style="font-size:0.8rem;">Basta dividir a soma total pelo número de lados.</p>
-                </div>
-
-                <div class="example-box">
-                    <span class="example-tag">Ângulo Externo (Ae)</span>
-                    <p>Ae = 360 / n</p>
-                    <p style="font-size:0.8rem;">A soma dos externos é sempre 360°!</p>
+                    <span class="example-tag">Fórmula Geral</span>
+                    <p>Ângulo = (Porcentagem x 360) ÷ 100</p>
+                    <p style="font-size:0.8rem; margin-top:5px;">Ex: 10% de 360° = 36°.</p>
                 </div>
             </div>
 
@@ -420,7 +409,7 @@
         <div id="viewPractice" class="section-view">
             <div style="margin-bottom: 15px;">
                 <h2>Hora de Praticar!</h2>
-                <p style="color: #666; font-size: 0.9rem;">Identifique e calcule os polígonos.</p>
+                <p style="color: #666; font-size: 0.9rem;">Analise as fatias e calcule.</p>
             </div>
             <div class="question-map" id="qMap"></div>
             <div id="quizContainer" style="margin-bottom: 100px;"></div>
@@ -446,177 +435,177 @@
     </footer>
 
     <script>
-        // --- BANCO DE QUESTÕES (POLÍGONOS REGULARES) ---
+        // --- BANCO DE QUESTÕES (GRÁFICOS DE SETORES) ---
         const questions = [
-            // NÍVEL 1: CONCEITOS E NOMES
+            // NÍVEL 1: CONCEITOS BÁSICOS
             {
                 id: 1,
-                text: "O que é necessário para um polígono ser considerado <strong>regular</strong>?",
-                options: ["Ter todos os lados iguais e ângulos diferentes", "Ter todos os lados congruentes e todos os ângulos congruentes", "Ter apenas ângulos iguais", "Ter pelo menos dois lados iguais"],
+                text: "Qual é o nome popular dado ao Gráfico de Setores?",
+                options: ["Gráfico de Barras", "Gráfico de Pizza", "Gráfico de Linha", "Histograma"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Se os ângulos forem diferentes, ele não é regular (ex: losango).<br>
-                    <strong>(B) Correta:</strong> A definição exige as duas condições: lados iguais (equilátero) E ângulos iguais (equiângulo).<br>
-                    <strong>(C) Incorreta:</strong> Um retângulo tem ângulos iguais (90°), mas não é regular pois os lados são diferentes.<br>
-                    <strong>(D) Incorreta:</strong> Isso seria um isósceles, não regular.`
+                    <strong>(A) Incorreta:</strong> Barras são retangulares.<br>
+                    <strong>(B) Correta:</strong> Devido ao formato circular fatiado, é popularmente chamado de Gráfico de Pizza.<br>
+                    <strong>(C) Incorreta:</strong> Linhas conectam pontos.<br>
+                    <strong>(D) Incorreta:</strong> Histograma é para frequências contínuas.`
             },
             {
                 id: 2,
-                text: "Qual é o nome do polígono regular de <strong>3 lados</strong>?",
-                options: ["Triângulo Isósceles", "Triângulo Escaleno", "Triângulo Equilátero", "Triângulo Retângulo"],
+                text: "A soma de todas as porcentagens em um gráfico de setores completo deve ser:",
+                options: ["50%", "360%", "100%", "90%"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Isósceles tem apenas 2 lados iguais.<br>
-                    <strong>(B) Incorreta:</strong> Escaleno tem todos os lados diferentes.<br>
-                    <strong>(C) Correta:</strong> Equilátero é o único triângulo regular (3 lados iguais e 3 ângulos de 60°).<br>
-                    <strong>(D) Incorreta:</strong> Retângulo refere-se ao ângulo de 90°.`
+                    <strong>(A) Incorreta:</strong> Metade.<br>
+                    <strong>(B) Incorreta:</strong> Isso são os graus.<br>
+                    <strong>(C) Correta:</strong> O total de qualquer conjunto de dados estatísticos representa 100%.<br>
+                    <strong>(D) Incorreta:</strong> Incompleto.`
             },
             {
                 id: 3,
-                text: "Qual é o nome do polígono regular de <strong>4 lados</strong>?",
-                options: ["Losango", "Retângulo", "Quadrado", "Trapézio"],
+                text: "Quantos graus (°) tem a circunferência completa do gráfico?",
+                options: ["180°", "100°", "360°", "90°"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> O losango tem lados iguais, mas ângulos podem ser diferentes.<br>
-                    <strong>(B) Incorreta:</strong> O retângulo tem ângulos iguais, mas lados diferentes.<br>
-                    <strong>(C) Correta:</strong> O quadrado é o único quadrilátero regular (lados e ângulos iguais).<br>
-                    <strong>(D) Incorreta:</strong> Trapézio nem tem todos os lados iguais.`
+                    <strong>(A) Incorreta:</strong> Meia volta.<br>
+                    <strong>(B) Incorreta:</strong> Valor da porcentagem total.<br>
+                    <strong>(C) Correta:</strong> Uma volta completa, ou o 'todo' do gráfico, corresponde geometricamente a 360°.<br>
+                    <strong>(D) Incorreta:</strong> Um quarto de volta.`
             },
-            // NÍVEL 2: SOMA DOS ÂNGULOS E FÓRMULAS
+            // NÍVEL 2: RELAÇÃO PORCENTAGEM-GRAUS (BÁSICO)
             {
                 id: 4,
-                text: "Qual é a soma dos ângulos internos de um <strong>quadrado</strong>?",
-                options: ["180°", "360°", "540°", "90°"],
+                text: "Se uma fatia ocupa <strong>50%</strong> do gráfico, quantos graus ela tem?",
+                options: ["90°", "180°", "50°", "360°"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Isso é para triângulos.<br>
-                    <strong>(B) Correta:</strong> Um quadrado tem 4 ângulos de 90°. 4 x 90 = 360°. Ou pela fórmula: (4-2)x180 = 2x180 = 360°.<br>
-                    <strong>(C) Incorreta:</strong> Isso é para pentágonos.<br>
-                    <strong>(D) Incorreta:</strong> Isso é o valor de um ângulo só.`
+                    <strong>(A) Incorreta:</strong> Isso é 25%.<br>
+                    <strong>(B) Correta:</strong> 50% é a metade. Metade de 360° é 180° (meia lua).<br>
+                    <strong>(C) Incorreta:</strong> Confusão com o valor percentual.<br>
+                    <strong>(D) Incorreta:</strong> Isso é 100%.`
             },
             {
                 id: 5,
-                text: "A soma dos ângulos <strong>externos</strong> de qualquer polígono convexo é sempre:",
-                options: ["180°", "360°", "Depende dos lados", "540°"],
-                correct: 1,
+                text: "Um ângulo de <strong>90°</strong> (ângulo reto) corresponde a qual porcentagem?",
+                options: ["25%", "50%", "10%", "75%"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 180° é a soma interna de triângulos.<br>
-                    <strong>(B) Correta:</strong> Não importa se é um triângulo ou um milágono, se você somar os giros externos, sempre completa uma volta (360°).<br>
-                    <strong>(C) Incorreta:</strong> É uma constante fixa.<br>
-                    <strong>(D) Incorreta:</strong> Valor da soma interna do pentágono.`
+                    <strong>(A) Correta:</strong> 90° é um quarto de 360°. Um quarto de 100% é 25%.<br>
+                    <strong>(B) Incorreta:</strong> 180°.<br>
+                    <strong>(C) Incorreta:</strong> 36°.<br>
+                    <strong>(D) Incorreta:</strong> 270° (três quartos).`
             },
             {
                 id: 6,
-                text: "Se o perímetro de um pentágono regular é 50 cm, quanto mede cada lado?",
-                options: ["5 cm", "25 cm", "10 cm", "50 cm"],
+                text: "Visualmente, uma fatia de <strong>25%</strong> se parece com:",
+                options: ["Metade do círculo", "Uma fatia fina", "Um quarto do círculo (um L)", "Quase o círculo todo"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 5 x 5 = 25.<br>
-                    <strong>(B) Incorreta:</strong> 25 x 5 = 125.<br>
-                    <strong>(C) Correta:</strong> Pentágono tem 5 lados iguais. Perímetro dividido por lados: 50 ÷ 5 = 10 cm.<br>
-                    <strong>(D) Incorreta:</strong> Seria o perímetro total.`
+                    <strong>(A) Incorreta:</strong> 50%.<br>
+                    <strong>(B) Incorreta:</strong> Menos de 10%.<br>
+                    <strong>(C) Correta:</strong> 25% é 1/4 do total, formando um ângulo de 90° (formato de L).<br>
+                    <strong>(D) Incorreta:</strong> Mais de 90%.`
             },
-            // NÍVEL 3: CÁLCULOS DE ÂNGULOS INTERNOS
+            // NÍVEL 3: CÁLCULOS
             {
                 id: 7,
-                text: "Quanto mede cada ângulo interno de um <strong>triângulo equilátero</strong>?",
-                options: ["45°", "90°", "60°", "30°"],
-                correct: 2,
+                text: "Quantos graus correspondem a <strong>10%</strong> do gráfico?",
+                options: ["10°", "36°", "100°", "18°"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Metade de 90.<br>
-                    <strong>(B) Incorreta:</strong> Ângulo reto.<br>
-                    <strong>(C) Correta:</strong> A soma é 180°. Dividido por 3 ângulos iguais: 180 ÷ 3 = 60°.<br>
-                    <strong>(D) Incorreta:</strong> Muito pequeno.`
+                    <strong>(A) Incorreta:</strong> Não é conversão direta.<br>
+                    <strong>(B) Correta:</strong> 10% de 360 = 360 ÷ 10 = 36°.<br>
+                    <strong>(C) Incorreta:</strong> Valor percentual.<br>
+                    <strong>(D) Incorreta:</strong> Metade do correto.`
             },
             {
                 id: 8,
-                text: "Um hexágono regular tem 6 lados. Qual a soma dos seus ângulos internos?",
-                options: ["360°", "540°", "720°", "180°"],
-                correct: 2,
+                text: "Se uma categoria representa <strong>20%</strong>, qual o ângulo do setor?",
+                options: ["72°", "20°", "60°", "180°"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Quadrilátero.<br>
-                    <strong>(B) Incorreta:</strong> Pentágono.<br>
-                    <strong>(C) Correta:</strong> Fórmula: (n-2) x 180. (6-2) x 180 = 4 x 180 = 720°.<br>
-                    <strong>(D) Incorreta:</strong> Triângulo.`
+                    <strong>(A) Correta:</strong> 20% é o dobro de 10%. Se 10% = 36°, então 20% = 72°.<br>
+                    <strong>(B) Incorreta:</strong> Valor percentual.<br>
+                    <strong>(C) Incorreta:</strong> Cálculo errado.<br>
+                    <strong>(D) Incorreta:</strong> 50%.`
             },
             {
                 id: 9,
-                text: "Seguindo a questão anterior, quanto mede <strong>um</strong> ângulo interno do hexágono regular?",
-                options: ["100°", "120°", "90°", "60°"],
-                correct: 1,
+                text: "Em um gráfico de esportes, o futebol tem a maior fatia. Isso significa que:",
+                options: ["O futebol é o esporte mais caro", "O futebol é o menos praticado", "O futebol tem a maior frequência/preferência", "O gráfico está errado"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Cálculo errado.<br>
-                    <strong>(B) Correta:</strong> A soma é 720°. Dividindo por 6 ângulos: 720 ÷ 6 = 120°.<br>
-                    <strong>(C) Incorreta:</strong> Quadrado.<br>
-                    <strong>(D) Incorreta:</strong> Triângulo.`
+                    <strong>(A) Incorreta:</strong> O gráfico mostra quantidade/frequência, não preço.<br>
+                    <strong>(B) Incorreta:</strong> Maior fatia = Maior valor.<br>
+                    <strong>(C) Correta:</strong> A área da fatia é proporcional à quantidade de dados. Maior fatia = Maior quantidade.<br>
+                    <strong>(D) Incorreta:</strong> É a interpretação padrão.`
             },
-            // NÍVEL 4: CÁLCULOS DE ÂNGULOS EXTERNOS
+            // NÍVEL 4: INTERPRETAÇÃO E SOMA
             {
                 id: 10,
-                text: "Quanto mede cada ângulo <strong>externo</strong> de um quadrado?",
-                options: ["45°", "90°", "180°", "360°"],
-                correct: 1,
+                text: "Se somarmos as fatias de 30%, 20% e 50%, teremos:",
+                options: ["O gráfico completo", "Metade do gráfico", "Um gráfico vazio", "Não é possível somar"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Octógono.<br>
-                    <strong>(B) Correta:</strong> Fórmula: 360 ÷ n. 360 ÷ 4 = 90°. (Também é o suplemento do interno de 90°).<br>
-                    <strong>(C) Incorreta:</strong> Meia volta.<br>
-                    <strong>(D) Incorreta:</strong> Volta completa.`
+                    <strong>(A) Correta:</strong> 30 + 20 + 50 = 100%. Isso preenche o círculo todo.<br>
+                    <strong>(B) Incorreta:</strong> Seria 50%.<br>
+                    <strong>(C) Incorreta:</strong> Está cheio.<br>
+                    <strong>(D) Incorreta:</strong> Devemos somar para conferir.`
             },
             {
                 id: 11,
-                text: "Qual polígono regular tem o ângulo externo medindo 60°?",
-                options: ["Quadrado", "Pentágono", "Hexágono", "Triângulo"],
-                correct: 2,
+                text: "Numa eleição, o Candidato A tem 60% e o B tem 40%. O ângulo do Candidato A será:",
+                options: ["Maior que 180°", "Menor que 90°", "Igual a 90°", "Exatamente 180°"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 360/4 = 90°.<br>
-                    <strong>(B) Incorreta:</strong> 360/5 = 72°.<br>
-                    <strong>(C) Correta:</strong> Sabemos que 360 ÷ n = 60. Logo, n = 360 ÷ 60 = 6. É o Hexágono.<br>
-                    <strong>(D) Incorreta:</strong> 360/3 = 120°.`
+                    <strong>(A) Correta:</strong> 50% é 180°. Como 60% é mais que a metade, o ângulo será maior que 180° (obtuso/côncavo).<br>
+                    <strong>(B) Incorreta:</strong> Seria menos de 25%.<br>
+                    <strong>(C) Incorreta:</strong> Seria 25%.<br>
+                    <strong>(D) Incorreta:</strong> Seria 50%.`
             },
             {
                 id: 12,
-                text: "Se o ângulo interno de um polígono regular é 150°, quanto mede o seu ângulo externo?",
-                options: ["30°", "150°", "50°", "180°"],
+                text: "Para comparar a evolução de algo ao longo do tempo (ex: crescimento de uma planta), qual gráfico é MELHOR que o de setores?",
+                options: ["Gráfico de Linha", "Gráfico de Pizza", "Nenhum", "Tabela"],
                 correct: 0,
                 explanation: `
-                    <strong>(A) Correta:</strong> O interno e o externo são suplementares (somam 180°). 180 - 150 = 30°.<br>
-                    <strong>(B) Incorreta:</strong> O mesmo valor do interno.<br>
-                    <strong>(C) Incorreta:</strong> A soma daria 200°.<br>
-                    <strong>(D) Incorreta:</strong> A soma total.`
+                    <strong>(A) Correta:</strong> Gráficos de linha mostram tendências temporais melhor. Setores mostram partes de um todo em um momento fixo.<br>
+                    <strong>(B) Incorreta:</strong> Ruim para tempo.<br>
+                    <strong>(C) Incorreta:</strong> Existem opções melhores.<br>
+                    <strong>(D) Incorreta:</strong> Tabela organiza, mas não visualiza a tendência.`
             },
-            // NÍVEL 5: DESAFIOS E LÓGICA
+            // NÍVEL 5: CÁLCULOS E LÓGICA
             {
                 id: 13,
-                text: "Quantos lados tem um polígono regular cujo ângulo externo mede 45°?",
-                options: ["5 (Pentágono)", "6 (Hexágono)", "8 (Octógono)", "10 (Decágono)"],
+                text: "Para desenhar um gráfico de setores, qual instrumento é essencial para medir os graus?",
+                options: ["Régua", "Compasso", "Transferidor", "Calculadora"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 360/5 = 72°.<br>
-                    <strong>(B) Incorreta:</strong> 360/6 = 60°.<br>
-                    <strong>(C) Correta:</strong> n = 360 ÷ Ângulo Externo. n = 360 ÷ 45 = 8. É o Octógono.<br>
-                    <strong>(D) Incorreta:</strong> 360/10 = 36°.`
+                    <strong>(A) Incorreta:</strong> Mede retas.<br>
+                    <strong>(B) Incorreta:</strong> Faz o círculo, mas não mede o ângulo.<br>
+                    <strong>(C) Correta:</strong> O transferidor é a régua curva usada para medir graus e desenhar a abertura correta das fatias.<br>
+                    <strong>(D) Incorreta:</strong> Ajuda na conta, mas não desenha.`
             },
             {
                 id: 14,
-                text: "Qual é a soma dos ângulos internos de um Pentágono (5 lados)?",
-                options: ["180°", "360°", "540°", "720°"],
+                text: "Qual ângulo representa <strong>75%</strong> do gráfico?",
+                options: ["90°", "180°", "270°", "300°"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Triângulo.<br>
-                    <strong>(B) Incorreta:</strong> Quadrilátero.<br>
-                    <strong>(C) Correta:</strong> (n-2)x180. (5-2)x180 = 3 x 180 = 540°.<br>
-                    <strong>(D) Incorreta:</strong> Hexágono.`
+                    <strong>(A) Incorreta:</strong> 25%.<br>
+                    <strong>(B) Incorreta:</strong> 50%.<br>
+                    <strong>(C) Correta:</strong> 75% são três quartos (25% + 25% + 25%). 90° + 90° + 90° = 270°.<br>
+                    <strong>(D) Incorreta:</strong> Cálculo errado.`
             },
             {
                 id: 15,
-                text: "O favo de mel das abelhas é formado por qual polígono regular (para encaixar perfeitamente)?",
-                options: ["Círculo", "Pentágono", "Hexágono", "Octógono"],
-                correct: 2,
+                text: "Se um setor tem 18°, qual a porcentagem que ele representa?",
+                options: ["5%", "10%", "18%", "1%"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Círculos deixam espaços vazios.<br>
-                    <strong>(B) Incorreta:</strong> Pentágonos não se encaixam perfeitamente sem buracos.<br>
-                    <strong>(C) Correta:</strong> O hexágono regular pavimenta o plano (tesselação) perfeitamente sem deixar espaços, otimizando cera e espaço.<br>
-                    <strong>(D) Incorreta:</strong> Octógonos deixam buracos quadrados.`
+                    <strong>(A) Correta:</strong> Se 10% = 36°, então 5% (metade) = 18°. Ou regra de três: (18 x 100) / 360 = 5%.<br>
+                    <strong>(B) Incorreta:</strong> 36°.<br>
+                    <strong>(C) Incorreta:</strong> Confusão valor-grau.<br>
+                    <strong>(D) Incorreta:</strong> 3,6°.`
             }
         ];
 
@@ -781,7 +770,7 @@
             if (currentQuestion === questions.length - 1) {
                 btnNext.textContent = "Finalizar";
                 btnNext.onclick = finishQuiz;
-                btnNext.style.backgroundColor = "#059669"; 
+                btnNext.style.backgroundColor = "#7C3AED"; 
             } else {
                 btnNext.textContent = "Próxima";
                 btnNext.onclick = () => changeQuestion(1);

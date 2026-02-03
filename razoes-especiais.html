@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polígonos Regulares - Promover</title>
+    <title>Densidade e Velocidade - Promover</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,9 @@
             --text-color: #2D3748;
             --border-color: #000000;
             
-            /* CORES DA MATÉRIA: TEMA VERDE MENTA (Geometria/Construção) */
-            --theme-color: #D1FAE5; 
-            --theme-active: #059669; 
+            /* CORES DA MATÉRIA: TEMA VERMELHO (Ação/Intensidade) */
+            --theme-color: #FFCDD2; 
+            --theme-active: #E53935; 
             --theme-text-active: #FFFFFF;
             
             /* FEEDBACK */
@@ -156,14 +156,14 @@
             justify-content: center;
             margin: 15px 0;
             padding: 15px;
-            background-color: #D1FAE5;
+            background-color: #FFCDD2;
             border-radius: 12px;
             border: 1px dashed var(--theme-active);
         }
 
         .example-box {
-            background-color: #ECFDF5; /* Verde muito claro */
-            border-left: 5px solid #059669;
+            background-color: #FFEBEE; /* Vermelho muito claro */
+            border-left: 5px solid #E53935;
             padding: 15px;
             margin: 15px 0;
             border-radius: 8px;
@@ -173,7 +173,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #047857;
+            color: #B71C1C;
             margin-bottom: 5px;
             display: block;
         }
@@ -362,53 +362,57 @@
 
         <div id="viewExplanation" class="section-view" style="display: block;">
             
-            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Polígonos Regulares</h1>
-            <p style="color: #555; margin-bottom: 20px;">São figuras perfeitas onde todos os lados e todos os ângulos são iguais.</p>
+            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Razões Especiais</h1>
+            <p style="color: #555; margin-bottom: 20px;">Duas das razões mais importantes do dia a dia: quão cheio é um lugar e quão rápido algo se move.</p>
             
             <div class="card-content">
-                <h3>💎 A Perfeição Geométrica</h3>
-                <p>Para ser regular, o polígono precisa cumprir duas regras ao mesmo tempo:</p>
+                <h3>🏘️ Densidade Demográfica</h3>
+                <p>Mede se um lugar está "apertado" ou "vazio". É a divisão da população pela área.</p>
                 <br>
                 <div class="visual-row">
                     <div class="visual-item">
                         <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <rect x="15" y="15" width="30" height="30" fill="#D1FAE5" stroke="#059669"/>
-                            <path d="M15 15 L20 20 M45 15 L40 20 M15 45 L20 40 M45 45 L40 40" stroke="#059669" stroke-width="1"/>
+                            <rect x="10" y="10" width="40" height="40" fill="#FFEBEE" stroke="#E53935"/>
+                            <circle cx="20" cy="20" r="3" fill="#E53935"/>
+                            <circle cx="40" cy="20" r="3" fill="#E53935"/>
+                            <circle cx="20" cy="40" r="3" fill="#E53935"/>
+                            <circle cx="40" cy="40" r="3" fill="#E53935"/>
                         </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Quadrado</p>
-                        <p style="font-size:0.7rem;">4 lados iguais<br>4 ângulos iguais</p>
+                        <p style="font-size:0.75rem; font-weight:bold;">Baixa Densidade</p>
                     </div>
                     
                     <div class="visual-item">
                         <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <polygon points="30,5 55,25 45,55 15,55 5,25" fill="#D1FAE5" stroke="#059669"/>
+                            <rect x="10" y="10" width="40" height="40" fill="#FFEBEE" stroke="#E53935"/>
+                            <circle cx="15" cy="15" r="3" fill="#E53935"/> <circle cx="30" cy="15" r="3" fill="#E53935"/> <circle cx="45" cy="15" r="3" fill="#E53935"/>
+                            <circle cx="15" cy="30" r="3" fill="#E53935"/> <circle cx="30" cy="30" r="3" fill="#E53935"/> <circle cx="45" cy="30" r="3" fill="#E53935"/>
+                            <circle cx="15" cy="45" r="3" fill="#E53935"/> <circle cx="30" cy="45" r="3" fill="#E53935"/> <circle cx="45" cy="45" r="3" fill="#E53935"/>
                         </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Pentágono Regular</p>
-                        <p style="font-size:0.7rem;">5 lados iguais</p>
+                        <p style="font-size:0.75rem; font-weight:bold;">Alta Densidade</p>
                     </div>
+                </div>
+                <div class="example-box">
+                    <p style="font-weight:700;">Fórmula:</p>
+                    <p>D = Habitantes ÷ Área</p>
                 </div>
             </div>
 
             <div class="card-content">
-                <h3>🔢 Fórmulas Importantes</h3>
-                <p>Como calcular a medida dos ângulos internos?</p>
-                
-                <div class="example-box">
-                    <span class="example-tag">Soma dos Ângulos Internos (S)</span>
-                    <p>S = (n - 2) x 180</p>
-                    <p style="font-size:0.8rem;">Onde "n" é o número de lados.</p>
+                <h3>🚗 Velocidade Média</h3>
+                <p>Mede a rapidez de um deslocamento. É a divisão da distância pelo tempo.</p>
+                <div class="visual-row" style="margin: 15px 0;">
+                    <div class="visual-item">
+                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="30" cy="30" r="25" stroke="#E53935" fill="none"/>
+                            <line x1="30" y1="30" x2="45" y2="15" stroke="#E53935"/>
+                            <path d="M10 30 A 20 20 0 0 1 50 30" stroke="#E53935" stroke-dasharray="4 2"/>
+                        </svg>
+                        <p style="font-size:0.75rem;">Km/h</p>
+                    </div>
                 </div>
-
                 <div class="example-box">
-                    <span class="example-tag">Cada Ângulo Interno (Ai)</span>
-                    <p>Ai = S / n</p>
-                    <p style="font-size:0.8rem;">Basta dividir a soma total pelo número de lados.</p>
-                </div>
-
-                <div class="example-box">
-                    <span class="example-tag">Ângulo Externo (Ae)</span>
-                    <p>Ae = 360 / n</p>
-                    <p style="font-size:0.8rem;">A soma dos externos é sempre 360°!</p>
+                    <p style="font-weight:700;">Fórmula:</p>
+                    <p>Vm = Distância ÷ Tempo</p>
                 </div>
             </div>
 
@@ -420,7 +424,7 @@
         <div id="viewPractice" class="section-view">
             <div style="margin-bottom: 15px;">
                 <h2>Hora de Praticar!</h2>
-                <p style="color: #666; font-size: 0.9rem;">Identifique e calcule os polígonos.</p>
+                <p style="color: #666; font-size: 0.9rem;">Use as fórmulas para resolver.</p>
             </div>
             <div class="question-map" id="qMap"></div>
             <div id="quizContainer" style="margin-bottom: 100px;"></div>
@@ -446,177 +450,177 @@
     </footer>
 
     <script>
-        // --- BANCO DE QUESTÕES (POLÍGONOS REGULARES) ---
+        // --- BANCO DE QUESTÕES (DENSIDADE E VELOCIDADE) ---
         const questions = [
-            // NÍVEL 1: CONCEITOS E NOMES
+            // NÍVEL 1: CONCEITO DE DENSIDADE
             {
                 id: 1,
-                text: "O que é necessário para um polígono ser considerado <strong>regular</strong>?",
-                options: ["Ter todos os lados iguais e ângulos diferentes", "Ter todos os lados congruentes e todos os ângulos congruentes", "Ter apenas ângulos iguais", "Ter pelo menos dois lados iguais"],
+                text: "O que mede a <strong>Densidade Demográfica</strong>?",
+                options: ["O tamanho do território apenas", "A quantidade de pessoas por unidade de área", "O número total de pessoas no mundo", "A velocidade que a população cresce"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Se os ângulos forem diferentes, ele não é regular (ex: losango).<br>
-                    <strong>(B) Correta:</strong> A definição exige as duas condições: lados iguais (equilátero) E ângulos iguais (equiângulo).<br>
-                    <strong>(C) Incorreta:</strong> Um retângulo tem ângulos iguais (90°), mas não é regular pois os lados são diferentes.<br>
-                    <strong>(D) Incorreta:</strong> Isso seria um isósceles, não regular.`
+                    <strong>(A) Incorreta:</strong> Isso seria apenas a Área.<br>
+                    <strong>(B) Correta:</strong> É a razão (divisão) entre o número de habitantes e o espaço que eles ocupam.<br>
+                    <strong>(C) Incorreta:</strong> Isso é a População Absoluta.<br>
+                    <strong>(D) Incorreta:</strong> Isso seria taxa de crescimento.`
             },
             {
                 id: 2,
-                text: "Qual é o nome do polígono regular de <strong>3 lados</strong>?",
-                options: ["Triângulo Isósceles", "Triângulo Escaleno", "Triângulo Equilátero", "Triângulo Retângulo"],
-                correct: 2,
+                text: "Uma cidade muito 'apertada', com muita gente em pouco espaço, tem:",
+                options: ["Baixa densidade demográfica", "Alta densidade demográfica", "Densidade nula", "Área infinita"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Isósceles tem apenas 2 lados iguais.<br>
-                    <strong>(B) Incorreta:</strong> Escaleno tem todos os lados diferentes.<br>
-                    <strong>(C) Correta:</strong> Equilátero é o único triângulo regular (3 lados iguais e 3 ângulos de 60°).<br>
-                    <strong>(D) Incorreta:</strong> Retângulo refere-se ao ângulo de 90°.`
+                    <strong>(A) Incorreta:</strong> Baixa densidade significa pouca gente espalhada.<br>
+                    <strong>(B) Correta:</strong> Muita gente dividido por pouco espaço resulta em um número alto.<br>
+                    <strong>(C) Incorreta:</strong> Nula seria se não houvesse ninguém.<br>
+                    <strong>(D) Incorreta:</strong> Área infinita faria a densidade ser quase zero.`
             },
             {
                 id: 3,
-                text: "Qual é o nome do polígono regular de <strong>4 lados</strong>?",
-                options: ["Losango", "Retângulo", "Quadrado", "Trapézio"],
+                text: "Qual a fórmula correta para calcular a Densidade Demográfica (D)?",
+                options: ["D = Área ÷ Habitantes", "D = Habitantes x Área", "D = Habitantes ÷ Área", "D = Habitantes + Área"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> O losango tem lados iguais, mas ângulos podem ser diferentes.<br>
-                    <strong>(B) Incorreta:</strong> O retângulo tem ângulos iguais, mas lados diferentes.<br>
-                    <strong>(C) Correta:</strong> O quadrado é o único quadrilátero regular (lados e ângulos iguais).<br>
-                    <strong>(D) Incorreta:</strong> Trapézio nem tem todos os lados iguais.`
+                    <strong>(A) Incorreta:</strong> Inverteu a divisão. O resultado seria 'espaço por pessoa'.<br>
+                    <strong>(B) Incorreta:</strong> Multiplicação não faz sentido aqui.<br>
+                    <strong>(C) Correta:</strong> Dividimos a população (quem ocupa) pela área (o lugar).<br>
+                    <strong>(D) Incorreta:</strong> Soma não se aplica.`
             },
-            // NÍVEL 2: SOMA DOS ÂNGULOS E FÓRMULAS
+            // NÍVEL 2: CÁLCULO DE DENSIDADE
             {
                 id: 4,
-                text: "Qual é a soma dos ângulos internos de um <strong>quadrado</strong>?",
-                options: ["180°", "360°", "540°", "90°"],
+                text: "Uma ilha tem 100 habitantes e área de 2 km². Qual a densidade?",
+                options: ["200 hab/km²", "50 hab/km²", "102 hab/km²", "2 hab/km²"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Isso é para triângulos.<br>
-                    <strong>(B) Correta:</strong> Um quadrado tem 4 ângulos de 90°. 4 x 90 = 360°. Ou pela fórmula: (4-2)x180 = 2x180 = 360°.<br>
-                    <strong>(C) Incorreta:</strong> Isso é para pentágonos.<br>
-                    <strong>(D) Incorreta:</strong> Isso é o valor de um ângulo só.`
+                    <strong>(A) Incorreta:</strong> Multiplicou 100 x 2.<br>
+                    <strong>(B) Correta:</strong> 100 habitantes ÷ 2 km² = 50 habitantes por km².<br>
+                    <strong>(C) Incorreta:</strong> Somou.<br>
+                    <strong>(D) Incorreta:</strong> Dividiu ao contrário.`
             },
             {
                 id: 5,
-                text: "A soma dos ângulos <strong>externos</strong> de qualquer polígono convexo é sempre:",
-                options: ["180°", "360°", "Depende dos lados", "540°"],
-                correct: 1,
+                text: "Uma cidade tem 10.000 habitantes e área de 100 km². Qual a densidade?",
+                options: ["100 hab/km²", "10 hab/km²", "1.000 hab/km²", "10.100 hab/km²"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 180° é a soma interna de triângulos.<br>
-                    <strong>(B) Correta:</strong> Não importa se é um triângulo ou um milágono, se você somar os giros externos, sempre completa uma volta (360°).<br>
-                    <strong>(C) Incorreta:</strong> É uma constante fixa.<br>
-                    <strong>(D) Incorreta:</strong> Valor da soma interna do pentágono.`
+                    <strong>(A) Correta:</strong> 10.000 ÷ 100 (corta dois zeros) = 100 hab/km².<br>
+                    <strong>(B) Incorreta:</strong> Erro de cálculo.<br>
+                    <strong>(C) Incorreta:</strong> Erro de cálculo.<br>
+                    <strong>(D) Incorreta:</strong> Somou.`
             },
             {
                 id: 6,
-                text: "Se o perímetro de um pentágono regular é 50 cm, quanto mede cada lado?",
-                options: ["5 cm", "25 cm", "10 cm", "50 cm"],
+                text: "Se a densidade é 10 hab/km² e a área é 5 km², quantos habitantes existem?",
+                options: ["2 habitantes", "15 habitantes", "50 habitantes", "0,5 habitantes"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 5 x 5 = 25.<br>
-                    <strong>(B) Incorreta:</strong> 25 x 5 = 125.<br>
-                    <strong>(C) Correta:</strong> Pentágono tem 5 lados iguais. Perímetro dividido por lados: 50 ÷ 5 = 10 cm.<br>
-                    <strong>(D) Incorreta:</strong> Seria o perímetro total.`
+                    <strong>(A) Incorreta:</strong> Dividiu 10 por 5.<br>
+                    <strong>(B) Incorreta:</strong> Somou.<br>
+                    <strong>(C) Correta:</strong> Se tem 10 pessoas em cada km² e temos 5 km², então 10 x 5 = 50 pessoas.<br>
+                    <strong>(D) Incorreta:</strong> Dividiu ao contrário.`
             },
-            // NÍVEL 3: CÁLCULOS DE ÂNGULOS INTERNOS
+            // NÍVEL 3: CONCEITO DE VELOCIDADE
             {
                 id: 7,
-                text: "Quanto mede cada ângulo interno de um <strong>triângulo equilátero</strong>?",
-                options: ["45°", "90°", "60°", "30°"],
+                text: "O que significa uma <strong>Velocidade Média</strong> de 60 km/h?",
+                options: ["O carro andou exatamente 60 km em cada hora", "O carro nunca parou", "Em média, o carro percorreu 60 km a cada hora", "O carro acelerou o tempo todo"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Metade de 90.<br>
-                    <strong>(B) Incorreta:</strong> Ângulo reto.<br>
-                    <strong>(C) Correta:</strong> A soma é 180°. Dividido por 3 ângulos iguais: 180 ÷ 3 = 60°.<br>
-                    <strong>(D) Incorreta:</strong> Muito pequeno.`
+                    <strong>(A) Incorreta:</strong> Ele pode ter andado mais rápido em alguns trechos e devagar em outros.<br>
+                    <strong>(B) Incorreta:</strong> Ele pode ter parado, a média conta tudo.<br>
+                    <strong>(C) Correta:</strong> A média distribui a distância total pelo tempo total, como se a velocidade fosse constante.<br>
+                    <strong>(D) Incorreta:</strong> Aceleração é outra grandeza.`
             },
             {
                 id: 8,
-                text: "Um hexágono regular tem 6 lados. Qual a soma dos seus ângulos internos?",
-                options: ["360°", "540°", "720°", "180°"],
+                text: "Qual a fórmula da Velocidade Média (Vm)?",
+                options: ["Vm = Tempo ÷ Distância", "Vm = Distância x Tempo", "Vm = Distância ÷ Tempo", "Vm = Distância + Tempo"],
                 correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Quadrilátero.<br>
-                    <strong>(B) Incorreta:</strong> Pentágono.<br>
-                    <strong>(C) Correta:</strong> Fórmula: (n-2) x 180. (6-2) x 180 = 4 x 180 = 720°.<br>
-                    <strong>(D) Incorreta:</strong> Triângulo.`
+                    <strong>(A) Incorreta:</strong> Inverso (seria lentidão).<br>
+                    <strong>(B) Incorreta:</strong> Multiplicação não mede ritmo.<br>
+                    <strong>(C) Correta:</strong> Dividimos o quanto andou (distância) pelo quanto demorou (tempo).<br>
+                    <strong>(D) Incorreta:</strong> Soma não se aplica.`
             },
             {
                 id: 9,
-                text: "Seguindo a questão anterior, quanto mede <strong>um</strong> ângulo interno do hexágono regular?",
-                options: ["100°", "120°", "90°", "60°"],
-                correct: 1,
+                text: "Se um carro percorre 100 km em 2 horas, qual sua velocidade média?",
+                options: ["200 km/h", "102 km/h", "50 km/h", "20 km/h"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Cálculo errado.<br>
-                    <strong>(B) Correta:</strong> A soma é 720°. Dividindo por 6 ângulos: 720 ÷ 6 = 120°.<br>
-                    <strong>(C) Incorreta:</strong> Quadrado.<br>
-                    <strong>(D) Incorreta:</strong> Triângulo.`
+                    <strong>(A) Incorreta:</strong> Multiplicou.<br>
+                    <strong>(B) Incorreta:</strong> Somou.<br>
+                    <strong>(C) Correta:</strong> 100 km ÷ 2 h = 50 km/h.<br>
+                    <strong>(D) Incorreta:</strong> Cálculo errado.`
             },
-            // NÍVEL 4: CÁLCULOS DE ÂNGULOS EXTERNOS
+            // NÍVEL 4: CÁLCULOS DE VELOCIDADE
             {
                 id: 10,
-                text: "Quanto mede cada ângulo <strong>externo</strong> de um quadrado?",
-                options: ["45°", "90°", "180°", "360°"],
+                text: "Um atleta correu 400 metros em 50 segundos. Qual sua velocidade em m/s?",
+                options: ["4 m/s", "8 m/s", "20 m/s", "450 m/s"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Octógono.<br>
-                    <strong>(B) Correta:</strong> Fórmula: 360 ÷ n. 360 ÷ 4 = 90°. (Também é o suplemento do interno de 90°).<br>
-                    <strong>(C) Incorreta:</strong> Meia volta.<br>
-                    <strong>(D) Incorreta:</strong> Volta completa.`
+                    <strong>(A) Incorreta:</strong> 400/100 seria 4.<br>
+                    <strong>(B) Correta:</strong> 400 ÷ 50 (corta zero) = 40 ÷ 5 = 8 m/s.<br>
+                    <strong>(C) Incorreta:</strong> Erro de cálculo.<br>
+                    <strong>(D) Incorreta:</strong> Somou.`
             },
             {
                 id: 11,
-                text: "Qual polígono regular tem o ângulo externo medindo 60°?",
-                options: ["Quadrado", "Pentágono", "Hexágono", "Triângulo"],
-                correct: 2,
+                text: "Um carro viaja a 80 km/h. Quanto tempo ele leva para percorrer 160 km?",
+                options: ["1 hora", "2 horas", "3 horas", "80 horas"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 360/4 = 90°.<br>
-                    <strong>(B) Incorreta:</strong> 360/5 = 72°.<br>
-                    <strong>(C) Correta:</strong> Sabemos que 360 ÷ n = 60. Logo, n = 360 ÷ 60 = 6. É o Hexágono.<br>
-                    <strong>(D) Incorreta:</strong> 360/3 = 120°.`
+                    <strong>(A) Incorreta:</strong> Em 1h ele anda 80km.<br>
+                    <strong>(B) Correta:</strong> Distância ÷ Velocidade. 160 ÷ 80 = 2 horas.<br>
+                    <strong>(C) Incorreta:</strong> Em 3h andaria 240km.<br>
+                    <strong>(D) Incorreta:</strong> Tempo excessivo.`
             },
             {
                 id: 12,
-                text: "Se o ângulo interno de um polígono regular é 150°, quanto mede o seu ângulo externo?",
-                options: ["30°", "150°", "50°", "180°"],
+                text: "Um trem anda a 100 km/h por 3 horas. Qual a distância percorrida?",
+                options: ["300 km", "33 km", "103 km", "30 km"],
                 correct: 0,
                 explanation: `
-                    <strong>(A) Correta:</strong> O interno e o externo são suplementares (somam 180°). 180 - 150 = 30°.<br>
-                    <strong>(B) Incorreta:</strong> O mesmo valor do interno.<br>
-                    <strong>(C) Incorreta:</strong> A soma daria 200°.<br>
-                    <strong>(D) Incorreta:</strong> A soma total.`
+                    <strong>(A) Correta:</strong> Distância = Velocidade x Tempo. 100 x 3 = 300 km.<br>
+                    <strong>(B) Incorreta:</strong> Dividiu.<br>
+                    <strong>(C) Incorreta:</strong> Somou.<br>
+                    <strong>(D) Incorreta:</strong> Erro de cálculo.`
             },
-            // NÍVEL 5: DESAFIOS E LÓGICA
+            // NÍVEL 5: PROBLEMAS MISTOS E DESAFIOS
             {
                 id: 13,
-                text: "Quantos lados tem um polígono regular cujo ângulo externo mede 45°?",
-                options: ["5 (Pentágono)", "6 (Hexágono)", "8 (Octógono)", "10 (Decágono)"],
-                correct: 2,
+                text: "Cidade A: 1000 pessoas em 10 km². Cidade B: 500 pessoas em 2 km². Qual é mais 'apertada'?",
+                options: ["Cidade A", "Cidade B", "São iguais", "Impossível saber"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 360/5 = 72°.<br>
-                    <strong>(B) Incorreta:</strong> 360/6 = 60°.<br>
-                    <strong>(C) Correta:</strong> n = 360 ÷ Ângulo Externo. n = 360 ÷ 45 = 8. É o Octógono.<br>
-                    <strong>(D) Incorreta:</strong> 360/10 = 36°.`
+                    <strong>(A) Incorreta:</strong> Densidade A = 1000/10 = 100 hab/km².<br>
+                    <strong>(B) Correta:</strong> Densidade B = 500/2 = 250 hab/km². 250 é maior que 100, logo B é mais povoada.<br>
+                    <strong>(C) Incorreta:</strong> 100 é diferente de 250.<br>
+                    <strong>(D) Incorreta:</strong> Temos todos os dados.`
             },
             {
                 id: 14,
-                text: "Qual é a soma dos ângulos internos de um Pentágono (5 lados)?",
-                options: ["180°", "360°", "540°", "720°"],
-                correct: 2,
+                text: "Fiz uma viagem de 150 km em 3 horas. Minha velocidade média foi de:",
+                options: ["153 km/h", "450 km/h", "30 km/h", "50 km/h"],
+                correct: 3,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Triângulo.<br>
-                    <strong>(B) Incorreta:</strong> Quadrilátero.<br>
-                    <strong>(C) Correta:</strong> (n-2)x180. (5-2)x180 = 3 x 180 = 540°.<br>
-                    <strong>(D) Incorreta:</strong> Hexágono.`
+                    <strong>(A) Incorreta:</strong> Somou.<br>
+                    <strong>(B) Incorreta:</strong> Multiplicou.<br>
+                    <strong>(C) Incorreta:</strong> Cálculo errado.<br>
+                    <strong>(D) Correta:</strong> 150 km ÷ 3 h = 50 km/h.`
             },
             {
                 id: 15,
-                text: "O favo de mel das abelhas é formado por qual polígono regular (para encaixar perfeitamente)?",
-                options: ["Círculo", "Pentágono", "Hexágono", "Octógono"],
-                correct: 2,
+                text: "O que acontece com a densidade demográfica se a população dobrar e a área continuar a mesma?",
+                options: ["A densidade cai pela metade", "A densidade dobra", "A densidade não muda", "A densidade triplica"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Círculos deixam espaços vazios.<br>
-                    <strong>(B) Incorreta:</strong> Pentágonos não se encaixam perfeitamente sem buracos.<br>
-                    <strong>(C) Correta:</strong> O hexágono regular pavimenta o plano (tesselação) perfeitamente sem deixar espaços, otimizando cera e espaço.<br>
-                    <strong>(D) Incorreta:</strong> Octógonos deixam buracos quadrados.`
+                    <strong>(A) Incorreta:</strong> Isso ocorreria se a área dobrasse.<br>
+                    <strong>(B) Correta:</strong> Se você tem o dobro de pessoas no mesmo espaço, o lugar fica duas vezes mais cheio. (2P ÷ A = 2D).<br>
+                    <strong>(C) Incorreta:</strong> Muda sim.<br>
+                    <strong>(D) Incorreta:</strong> Só se a população triplicasse.`
             }
         ];
 
@@ -781,7 +785,7 @@
             if (currentQuestion === questions.length - 1) {
                 btnNext.textContent = "Finalizar";
                 btnNext.onclick = finishQuiz;
-                btnNext.style.backgroundColor = "#059669"; 
+                btnNext.style.backgroundColor = "#E53935"; 
             } else {
                 btnNext.textContent = "Próxima";
                 btnNext.onclick = () => changeQuestion(1);
