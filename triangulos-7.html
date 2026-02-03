@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ângulos - Promover</title>
+    <title>Triângulos - Promover</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,9 @@
             --text-color: #2D3748;
             --border-color: #000000;
             
-            /* CORES DA MATÉRIA: TEMA LARANJA (Energia/Abertura) */
-            --theme-color: #FEEBC8; 
-            --theme-active: #DD6B20; 
+            /* CORES DA MATÉRIA: TEMA MAGENTA/ROSA (Forma/Estrutura) */
+            --theme-color: #FBB6CE; 
+            --theme-active: #D53F8C; 
             --theme-text-active: #FFFFFF;
             
             /* FEEDBACK */
@@ -156,14 +156,14 @@
             justify-content: center;
             margin: 15px 0;
             padding: 15px;
-            background-color: #FEEBC8;
+            background-color: #FBB6CE;
             border-radius: 12px;
             border: 1px dashed var(--theme-active);
         }
 
         .example-box {
-            background-color: #FFFAF0; /* Laranja muito claro */
-            border-left: 5px solid #DD6B20;
+            background-color: #FFF5F7; /* Rosa muito claro */
+            border-left: 5px solid #D53F8C;
             padding: 15px;
             margin: 15px 0;
             border-radius: 8px;
@@ -173,7 +173,7 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             font-weight: 800;
-            color: #C05621;
+            color: #97266D;
             margin-bottom: 5px;
             display: block;
         }
@@ -362,63 +362,44 @@
 
         <div id="viewExplanation" class="section-view" style="display: block;">
             
-            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Ângulos</h1>
-            <p style="color: #555; margin-bottom: 20px;">Ângulo é a abertura entre duas semirretas. Vamos medir o mundo ao nosso redor!</p>
+            <h1 style="font-size: 1.5rem; margin-bottom: 15px; line-height: 1.2;">Triângulos</h1>
+            <p style="color: #555; margin-bottom: 20px;">Aprenda a regra mágica da soma dos ângulos e quando é possível construir um triângulo.</p>
             
             <div class="card-content">
-                <h3>📐 Tipos de Ângulos</h3>
-                <p>Classificamos os ângulos pelo tamanho da abertura (em graus °).</p>
+                <h3>✨ Soma dos Ângulos Internos</h3>
+                <p>Não importa o formato do triângulo: a soma dos seus três ângulos de dentro é <strong>SEMPRE 180°</strong>.</p>
                 <br>
                 <div class="visual-row">
                     <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M50 50 L10 50 L40 10" stroke="#DD6B20" fill="none"/>
-                            <path d="M20 50 Q20 40 28 35" stroke="#DD6B20" stroke-width="1"/>
+                        <svg class="visual-svg" width="80" height="60" viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="3">
+                            <path d="M10 50 L70 50 L40 10 Z" fill="#FFF5F7" stroke="#D53F8C"/>
+                            <path d="M18 50 A 10 10 0 0 0 15 45" stroke="#D53F8C"/>
+                            <path d="M62 50 A 10 10 0 0 1 65 45" stroke="#D53F8C"/>
+                            <path d="M40 18 A 10 10 0 0 1 45 20" stroke="#D53F8C"/>
                         </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Agudo</p>
-                        <p style="font-size:0.7rem;">Menor que 90°</p>
-                    </div>
-                    
-                    <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M10 10 V50 H50" stroke="#DD6B20" fill="none"/>
-                            <rect x="10" y="40" width="10" height="10" stroke="#DD6B20" stroke-width="1"/>
-                            <circle cx="15" cy="45" r="1" fill="#DD6B20"/>
-                        </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Reto</p>
-                        <p style="font-size:0.7rem;">Exatos 90°</p>
-                    </div>
-
-                    <div class="visual-item">
-                        <svg class="visual-svg" width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M5 50 L30 50 L55 20" stroke="#DD6B20" fill="none"/>
-                            <path d="M40 50 Q40 40 45 35" stroke="#DD6B20" stroke-width="1"/>
-                        </svg>
-                        <p style="font-size:0.75rem; font-weight:bold;">Obtuso</p>
-                        <p style="font-size:0.7rem;">Maior que 90°</p>
+                        <p style="font-size:0.75rem;">A + B + C = 180°</p>
                     </div>
                 </div>
             </div>
 
             <div class="card-content">
-                <h3>🤝 Pares Importantes</h3>
+                <h3>🚧 Condição de Existência</h3>
+                <p>Para um triângulo fechar, o lado maior tem que ser <strong>MENOR</strong> que a soma dos outros dois.</p>
                 
                 <div class="example-box">
-                    <span class="example-tag">Complementares</span>
-                    <p>A soma é <strong>90°</strong> (formam um L).</p>
-                    <p style="font-size:0.8rem; margin-top:5px;">Ex: 30° e 60°.</p>
+                    <span class="example-tag">Exemplo Possível ✅</span>
+                    <p>Lados: 3, 4, 5</p>
+                    <p>O maior é 5.</p>
+                    <p>3 + 4 = 7 (7 é maior que 5)</p>
+                    <p style="font-weight:700;">Fecha o triângulo!</p>
                 </div>
 
                 <div class="example-box">
-                    <span class="example-tag">Suplementares</span>
-                    <p>A soma é <strong>180°</strong> (meia volta).</p>
-                    <p style="font-size:0.8rem; margin-top:5px;">Ex: 100° e 80°.</p>
-                </div>
-
-                <div class="example-box">
-                    <span class="example-tag">O.P.V.</span>
-                    <p>Opostos pelo Vértice (formam um X).</p>
-                    <p>Eles são sempre <strong>iguais</strong>.</p>
+                    <span class="example-tag">Exemplo Impossível ❌</span>
+                    <p>Lados: 2, 3, 8</p>
+                    <p>O maior é 8.</p>
+                    <p>2 + 3 = 5 (5 é menor que 8)</p>
+                    <p style="font-weight:700;">Não fecha! O 8 é grande demais.</p>
                 </div>
             </div>
 
@@ -430,7 +411,7 @@
         <div id="viewPractice" class="section-view">
             <div style="margin-bottom: 15px;">
                 <h2>Hora de Praticar!</h2>
-                <p style="color: #666; font-size: 0.9rem;">Quantos graus tem essa abertura?</p>
+                <p style="color: #666; font-size: 0.9rem;">Verifique se os triângulos existem e calcule os ângulos.</p>
             </div>
             <div class="question-map" id="qMap"></div>
             <div id="quizContainer" style="margin-bottom: 100px;"></div>
@@ -456,177 +437,177 @@
     </footer>
 
     <script>
-        // --- BANCO DE QUESTÕES (ÂNGULOS) ---
+        // --- BANCO DE QUESTÕES (TRIÂNGULOS) ---
         const questions = [
-            // NÍVEL 1: CLASSIFICAÇÃO
+            // NÍVEL 1: SOMA DOS ÂNGULOS (CONCEITO)
             {
                 id: 1,
-                text: "Como se chama o ângulo que mede <strong>exatos 90 graus</strong>?",
-                options: ["Agudo", "Reto", "Obtuso", "Raso"],
+                text: "Qual é a soma dos três ângulos internos de qualquer triângulo?",
+                options: ["90°", "180°", "360°", "100°"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Agudo é menor que 90° (fechado).<br>
-                    <strong>(B) Correta:</strong> O ângulo reto tem 90°, como o canto de um quadrado.<br>
-                    <strong>(C) Incorreta:</strong> Obtuso é maior que 90° (aberto).<br>
-                    <strong>(D) Incorreta:</strong> Raso é 180° (reto deitado).`
+                    <strong>(A) Incorreta:</strong> 90° é a soma dos ângulos complementares.<br>
+                    <strong>(B) Correta:</strong> É uma regra fundamental da geometria: a soma interna é sempre 180°.<br>
+                    <strong>(C) Incorreta:</strong> 360° é a soma para quadriláteros (4 lados).<br>
+                    <strong>(D) Incorreta:</strong> Valor sem relação geométrica direta.`
             },
             {
                 id: 2,
-                text: "Um ângulo de <strong>120 graus</strong> é classificado como:",
-                options: ["Agudo", "Reto", "Obtuso", "Volta completa"],
-                correct: 2,
+                text: "Um triângulo pode ter <strong>dois</strong> ângulos retos (90°)?",
+                options: ["Sim", "Não", "Só se for grande", "Depende dos lados"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 120° é grande demais para ser agudo (<90°).<br>
-                    <strong>(B) Incorreta:</strong> Não é 90°.<br>
-                    <strong>(C) Correta:</strong> É maior que 90° e menor que 180°, logo é obtuso.<br>
-                    <strong>(D) Incorreta:</strong> Volta completa é 360°.`
+                    <strong>(A) Incorreta:</strong> Se tivesse dois de 90°, a soma já daria 180°, sobrando 0° para o terceiro.<br>
+                    <strong>(B) Correta:</strong> Dois ângulos retos somam 180°, não deixando espaço para o terceiro ângulo. As retas seriam paralelas e nunca se encontrariam.<br>
+                    <strong>(C) Incorreta:</strong> O tamanho não muda as regras angulares.<br>
+                    <strong>(D) Incorreta:</strong> Impossível independentemente dos lados.`
             },
             {
                 id: 3,
-                text: "Qual é a medida de um ângulo <strong>raso</strong> (meia volta)?",
-                options: ["90°", "100°", "180°", "360°"],
-                correct: 2,
+                text: "Se dois ângulos de um triângulo medem 50° e 60°, quanto mede o terceiro?",
+                options: ["70°", "80°", "100°", "90°"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 90° é um quarto de volta.<br>
-                    <strong>(B) Incorreta:</strong> Valor aleatório.<br>
-                    <strong>(C) Correta:</strong> Meia volta completa um semicírculo, que tem 180°.<br>
-                    <strong>(D) Incorreta:</strong> 360° é a volta inteira.`
+                    <strong>(A) Correta:</strong> 50° + 60° = 110°. Para chegar a 180°, faltam 70° (180 - 110 = 70).<br>
+                    <strong>(B) Incorreta:</strong> A soma daria 190°.<br>
+                    <strong>(C) Incorreta:</strong> A soma daria 210°.<br>
+                    <strong>(D) Incorreta:</strong> A soma daria 200°.`
             },
-            // NÍVEL 2: RELÓGIO E VISUALIZAÇÃO
+            // NÍVEL 2: CONDIÇÃO DE EXISTÊNCIA (BÁSICO)
             {
                 id: 4,
-                text: "Os ponteiros do relógio marcam <strong>3:00</strong>. Qual o ângulo formado?",
-                options: ["30°", "60°", "90°", "120°"],
-                correct: 2,
+                text: "É possível construir um triângulo com lados medindo 2cm, 3cm e 8cm?",
+                options: ["Sim", "Não", "Talvez", "Se for retângulo, sim"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Seria às 1:00.<br>
-                    <strong>(B) Incorreta:</strong> Seria às 2:00.<br>
-                    <strong>(C) Correta:</strong> O ponteiro das horas está no 3 e o dos minutos no 12. Eles formam um L perfeito, ou seja, 90°.<br>
-                    <strong>(D) Incorreta:</strong> Seria às 4:00.`
+                    <strong>(A) Incorreta:</strong> Os lados pequenos não alcançam um ao outro.<br>
+                    <strong>(B) Correta:</strong> A soma dos menores (2 + 3 = 5) é menor que o lado maior (8). Eles não se encontram para fechar o triângulo.<br>
+                    <strong>(C) Incorreta:</strong> A regra é exata.<br>
+                    <strong>(D) Incorreta:</strong> Não fecha de jeito nenhum.`
             },
             {
                 id: 5,
-                text: "Uma volta completa corresponde a quantos graus?",
-                options: ["180°", "360°", "100°", "90°"],
-                correct: 1,
+                text: "Para um triângulo existir, o lado maior deve ser:",
+                options: ["Maior que a soma dos outros", "Igual à soma dos outros", "Menor que a soma dos outros", "O dobro dos outros"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Meia volta.<br>
-                    <strong>(B) Correta:</strong> O círculo completo tem 360 graus.<br>
-                    <strong>(C) Incorreta:</strong> Comum em porcentagem (100%), mas não em ângulos.<br>
-                    <strong>(D) Incorreta:</strong> Um quarto de volta.`
+                    <strong>(A) Incorreta:</strong> Se for maior, os outros não alcançam as pontas.<br>
+                    <strong>(B) Incorreta:</strong> Se for igual, eles ficam alinhados (uma reta), não um triângulo.<br>
+                    <strong>(C) Correta:</strong> Os dois lados menores precisam ser grandes o suficiente para se encontrarem acima do lado maior.<br>
+                    <strong>(D) Incorreta:</strong> Regra inexistente.`
             },
             {
                 id: 6,
-                text: "Qual a melhor estimativa para a abertura de uma tesoura levemente aberta?",
-                options: ["10° (Agudo)", "90° (Reto)", "150° (Obtuso)", "200° (Côncavo)"],
+                text: "Lados: 3cm, 4cm e 5cm. Formam um triângulo?",
+                options: ["Sim", "Não", "Apenas se dobrar o tamanho", "Impossível saber"],
                 correct: 0,
                 explanation: `
-                    <strong>(A) Correta:</strong> Uma tesoura pouco aberta forma um bico fino, um ângulo pequeno e agudo.<br>
-                    <strong>(B) Incorreta:</strong> Seria uma tesoura muito aberta (em L).<br>
-                    <strong>(C) Incorreta:</strong> Quase totalmente aberta.<br>
-                    <strong>(D) Incorreta:</strong> Quebraria a tesoura.`
+                    <strong>(A) Correta:</strong> O maior é 5. A soma dos outros é 3 + 4 = 7. Como 7 > 5, o triângulo fecha perfeitamente.<br>
+                    <strong>(B) Incorreta:</strong> Ele fecha.<br>
+                    <strong>(C) Incorreta:</strong> Funciona com essas medidas.<br>
+                    <strong>(D) Incorreta:</strong> Podemos saber pela regra.`
             },
-            // NÍVEL 3: COMPLEMENTARES E SUPLEMENTARES
+            // NÍVEL 3: TIPOS DE TRIÂNGULOS E ÂNGULOS
             {
                 id: 7,
-                text: "Dois ângulos são <strong>complementares</strong>. Se um mede 40°, quanto mede o outro?",
-                options: ["40°", "50°", "140°", "60°"],
-                correct: 1,
+                text: "Em um triângulo <strong>equilátero</strong> (3 lados iguais), quanto mede cada ângulo interno?",
+                options: ["90°", "45°", "60°", "30°"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 40+40 = 80 (não dá 90).<br>
-                    <strong>(B) Correta:</strong> Complementares somam 90°. 90 - 40 = 50°.<br>
-                    <strong>(C) Incorreta:</strong> Isso seria o suplementar (180 - 40).<br>
-                    <strong>(D) Incorreta:</strong> 60+40 = 100.`
+                    <strong>(A) Incorreta:</strong> 90 x 3 = 270.<br>
+                    <strong>(B) Incorreta:</strong> 45 x 3 = 135.<br>
+                    <strong>(C) Correta:</strong> Se os lados são iguais, os ângulos também são. 180° divididos por 3 dá 60° para cada um.<br>
+                    <strong>(D) Incorreta:</strong> 30 x 3 = 90.`
             },
             {
                 id: 8,
-                text: "Qual é o <strong>suplemento</strong> de um ângulo de 100°?",
-                options: ["80°", "10°", "90°", "260°"],
+                text: "Um triângulo retângulo tem um ângulo de 90° e outro de 40°. O terceiro mede:",
+                options: ["50°", "40°", "140°", "60°"],
                 correct: 0,
                 explanation: `
-                    <strong>(A) Correta:</strong> Suplementares somam 180°. 180 - 100 = 80°.<br>
-                    <strong>(B) Incorreta:</strong> 100+10 = 110.<br>
-                    <strong>(C) Incorreta:</strong> 100+90 = 190.<br>
-                    <strong>(D) Incorreta:</strong> Isso seria para completar 360° (replementar).`
+                    <strong>(A) Correta:</strong> 90 + 40 = 130. Para 180, faltam 50°.<br>
+                    <strong>(B) Incorreta:</strong> A soma daria 170°.<br>
+                    <strong>(C) Incorreta:</strong> Passaria muito de 180°.<br>
+                    <strong>(D) Incorreta:</strong> A soma daria 190°.`
             },
             {
                 id: 9,
-                text: "Se x e 20° são complementares (formam 90°), qual o valor de x?",
-                options: ["160°", "110°", "70°", "20°"],
-                correct: 2,
+                text: "Em um triângulo isósceles, dois ângulos são iguais. Se o ângulo diferente mede 80°, quanto medem os outros dois?",
+                options: ["50° e 50°", "80° e 20°", "100° e 0°", "60° e 40°"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Erro de conceito (usou 180).<br>
-                    <strong>(B) Incorreta:</strong> Conta errada.<br>
-                    <strong>(C) Correta:</strong> x + 20 = 90. Logo, x = 90 - 20 = 70°.<br>
-                    <strong>(D) Incorreta:</strong> 20+20=40.`
+                    <strong>(A) Correta:</strong> Sobram 100° (180 - 80). Como os dois restantes são iguais, dividimos 100 por 2 = 50° cada.<br>
+                    <strong>(B) Incorreta:</strong> 80+80+20=180, mas diz que dois são iguais (seriam 80 e 80), o que é possível, mas a pergunta implica que 80 é o diferente.<br>
+                    <strong>(C) Incorreta:</strong> Não existe ângulo de 0° em triângulo.<br>
+                    <strong>(D) Incorreta:</strong> Não seriam iguais.`
             },
-            // NÍVEL 4: BISSETRIZ E OPV
+            // NÍVEL 4: EXISTÊNCIA (INTERMEDIÁRIO)
             {
                 id: 10,
-                text: "O que a <strong>bissetriz</strong> faz com um ângulo?",
-                options: ["Dobra o ângulo", "Divide o ângulo em dois iguais", "Transforma em 90°", "Apaga o ângulo"],
-                correct: 1,
+                text: "Tenho dois palitos: 10cm e 6cm. Qual tamanho o terceiro palito <strong>NÃO</strong> pode ter para fechar um triângulo?",
+                options: ["5cm", "15cm", "17cm", "10cm"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Bissetriz corta, não multiplica.<br>
-                    <strong>(B) Correta:</strong> Bi (dois) + Setor (corte). É a semirreta que divide o ângulo exatamente ao meio.<br>
-                    <strong>(C) Incorreta:</strong> Não necessariamente.<br>
-                    <strong>(D) Incorreta:</strong> O ângulo continua lá.`
+                    <strong>(A) Incorreta:</strong> 5, 6, 10 fecha (5+6 > 10).<br>
+                    <strong>(B) Incorreta:</strong> 6, 10, 15 fecha (6+10 > 15).<br>
+                    <strong>(C) Correta:</strong> Se o terceiro for 17, ele será o maior. A soma dos outros (10+6=16) não alcança 17. Não fecha.<br>
+                    <strong>(D) Incorreta:</strong> 6, 10, 10 fecha.`
             },
             {
                 id: 11,
-                text: "Se um ângulo de 60° é dividido pela bissetriz, quanto mede cada parte?",
-                options: ["20°", "30°", "40°", "120°"],
-                correct: 1,
+                text: "Qual trio de lados forma um triângulo?",
+                options: ["2, 2, 5", "3, 3, 6", "4, 4, 7", "1, 2, 3"],
+                correct: 2,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> 20 é um terço.<br>
-                    <strong>(B) Correta:</strong> A bissetriz divide por 2. 60 ÷ 2 = 30°.<br>
-                    <strong>(C) Incorreta:</strong> Erro de cálculo.<br>
-                    <strong>(D) Incorreta:</strong> Isso é o dobro.`
+                    <strong>(A) Incorreta:</strong> 2+2=4 (menor que 5).<br>
+                    <strong>(B) Incorreta:</strong> 3+3=6 (igual a 6, vira uma reta).<br>
+                    <strong>(C) Correta:</strong> 4+4=8. Como 8 é maior que 7, fecha o triângulo.<br>
+                    <strong>(D) Incorreta:</strong> 1+2=3 (igual a 3, vira reta).`
             },
             {
                 id: 12,
-                text: "Ângulos <strong>Opostos pelo Vértice (O.P.V.)</strong> são:",
-                options: ["Sempre iguais (congruentes)", "Sempre diferentes", "Somam 180°", "Somam 90°"],
+                text: "Se os ângulos são x, 2x e 3x, quanto vale x?",
+                options: ["30°", "20°", "60°", "10°"],
                 correct: 0,
                 explanation: `
-                    <strong>(A) Correta:</strong> Eles formam um X e os lados opostos têm a mesma abertura exata.<br>
-                    <strong>(B) Incorreta:</strong> São iguais.<br>
-                    <strong>(C) Incorreta:</strong> Isso são os adjacentes suplementares.<br>
-                    <strong>(D) Incorreta:</strong> Isso são complementares.`
+                    <strong>(A) Correta:</strong> x + 2x + 3x = 180 -> 6x = 180 -> x = 30. Ângulos: 30°, 60°, 90°.<br>
+                    <strong>(B) Incorreta:</strong> Daria 20+40+60 = 120.<br>
+                    <strong>(C) Incorreta:</strong> Daria 360 no total.<br>
+                    <strong>(D) Incorreta:</strong> Daria 60 no total.`
             },
-            // NÍVEL 5: CÁLCULOS E DESAFIOS
+            // NÍVEL 5: DESAFIOS E LÓGICA
             {
                 id: 13,
-                text: "Dois ângulos são O.P.V. Um mede <strong>50°</strong>. Quanto mede o outro?",
-                options: ["130°", "40°", "50°", "100°"],
-                correct: 2,
+                text: "Um triângulo pode ter dois ângulos obtusos (maiores que 90°)?",
+                options: ["Sim, se for grande", "Nunca", "Sim, se for escaleno", "Talvez"],
+                correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Confundiu com suplementar.<br>
-                    <strong>(B) Incorreta:</strong> Confundiu com complementar.<br>
-                    <strong>(C) Correta:</strong> Se são Opostos pelo Vértice, são IGUAIS. Se um é 50°, o outro é 50°.<br>
-                    <strong>(D) Incorreta:</strong> Dobrou o valor.`
+                    <strong>(A) Incorreta:</strong> Tamanho não importa.<br>
+                    <strong>(B) Correta:</strong> Se um tem 91° e o outro 91°, a soma já dá 182°, passando do limite de 180°.<br>
+                    <strong>(C) Incorreta:</strong> Escaleno refere-se aos lados.<br>
+                    <strong>(D) Incorreta:</strong> É impossível matematicamente.`
             },
             {
                 id: 14,
-                text: "Em um triângulo, a soma dos três ângulos internos é sempre:",
-                options: ["90°", "180°", "360°", "Depende do tamanho"],
+                text: "Num triângulo, o lado maior sempre está oposto ao:",
+                options: ["Menor ângulo", "Maior ângulo", "Ângulo reto", "Vértice de cima"],
                 correct: 1,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Pouco.<br>
-                    <strong>(B) Correta:</strong> Regra de ouro da geometria: A soma interna de qualquer triângulo é 180°.<br>
-                    <strong>(C) Incorreta:</strong> Isso é para quadriláteros.<br>
-                    <strong>(D) Incorreta:</strong> Não depende do tamanho, é uma propriedade fixa.`
+                    <strong>(A) Incorreta:</strong> Lado menor fica oposto ao menor ângulo.<br>
+                    <strong>(B) Correta:</strong> É uma propriedade: a maior abertura (ângulo) "enxerga" o maior lado à sua frente.<br>
+                    <strong>(C) Incorreta:</strong> Nem sempre tem ângulo reto.<br>
+                    <strong>(D) Incorreta:</strong> A posição do desenho não importa.`
             },
             {
                 id: 15,
-                text: "Se 2x = 80° (ângulos OPV), qual o valor de x?",
-                options: ["160°", "80°", "40°", "20°"],
-                correct: 2,
+                text: "Lados 7, 24 e 25 formam um triângulo?",
+                options: ["Sim", "Não", "Só se for equilátero", "Impossível saber"],
+                correct: 0,
                 explanation: `
-                    <strong>(A) Incorreta:</strong> Multiplicou em vez de dividir.<br>
-                    <strong>(B) Incorreta:</strong> O ângulo total é 80, x é parte da equação.<br>
-                    <strong>(C) Correta:</strong> Resolvemos a equação: x = 80 ÷ 2. Logo x = 40°.<br>
-                    <strong>(D) Incorreta:</strong> Dividiu por 4.`
+                    <strong>(A) Correta:</strong> O maior é 25. A soma dos outros é 7 + 24 = 31. Como 31 > 25, ele existe.<br>
+                    <strong>(B) Incorreta:</strong> Ele existe.<br>
+                    <strong>(C) Incorreta:</strong> Não é equilátero (lados diferentes).<br>
+                    <strong>(D) Incorreta:</strong> Basta aplicar a regra.`
             }
         ];
 
@@ -791,7 +772,7 @@
             if (currentQuestion === questions.length - 1) {
                 btnNext.textContent = "Finalizar";
                 btnNext.onclick = finishQuiz;
-                btnNext.style.backgroundColor = "#DD6B20"; 
+                btnNext.style.backgroundColor = "#D53F8C"; 
             } else {
                 btnNext.textContent = "Próxima";
                 btnNext.onclick = () => changeQuestion(1);
