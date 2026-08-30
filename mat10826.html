@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7º Ano - Aumentos e Descontos</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            /* Paleta Neobrutalista Minimalista */
+            --bg-color: #fafafa;
+            --text-color: #111111;
+            --border-color: #111111;
+            --white: #FFFFFF;
+            
+            --theme-light: #fef08a; /* Amarelo alerta (Dinheiro/Porcentagem) */
+            --theme-medium: #a855f7; /* Roxo vibrante */
+            --theme-dark: #111111; /* Preto */
+            --theme-contrast: #4ade80; /* Verde (Aumento/Lucro) */
+            --theme-alert: #f87171; /* Vermelho (Desconto/Perda) */
+            
+            --correct-bg: #86efac;
+            --wrong-bg: #fca5a5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding: 20px 15px 120px 15px;
+            /* Grid Background muito suave */
+            background-image: linear-gradient(#e5e5e5 1px, transparent 1px), linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
+            background-size: 25px 25px;
+        }
+
+        .container { 
+            width: 100%; max-width: 650px; display: flex; flex-direction: column; gap: 20px; 
+        }
+
+        /* HEADER */
+        .logo-header { text-align: left; margin-bottom: 10px; border-bottom: 3px solid #000; padding-bottom: 10px; }
+        
+        h1 { 
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem;
+            font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle { 
+            font-size: 1rem; font-weight: 700; color: var(--theme-medium); text-transform: uppercase;
+        }
+
+        /* TOGGLE BUTTONS */
+        .toggle-container { 
+            display: flex; gap: 10px; position: sticky; top: 10px; z-index: 50; 
+        }
+        
+        .toggle-btn { 
+            flex: 1; padding: 12px 0; border: 2px solid var(--border-color);
+            background: var(--white); font-weight: 900; font-size: 1rem;
+            box-shadow: 3px 3px 0px var(--border-color); cursor: pointer;
+            transition: all 0.1s; border-radius: 4px; text-transform: uppercase;
+        }
+        
+        .toggle-btn.active { 
+            background: var(--theme-dark); color: var(--white);
+            transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--border-color); 
+        }
+        
+        .view-section { display: none; flex-direction: column; gap: 25px; }
+        .view-section.active { display: flex; }
+
+        /* TEORIA */
+        .theory-box { 
+            background: var(--white); border: 2px solid var(--border-color);
+            padding: 25px; box-shadow: 4px 4px 0px var(--border-color);
+            border-radius: 6px; font-weight: 500; line-height: 1.6;
+        }
+        
+        .theory-box h3 { 
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem;
+            border-bottom: 2px solid #000; padding-bottom: 8px;
+            margin-bottom: 15px; display: inline-block; font-weight: 900;
+        }
+        
+        .highlight-box { 
+            background: var(--theme-light); border: 2px solid #000;
+            padding: 15px; font-weight: 700; border-radius: 4px;
+            margin: 15px 0; box-shadow: 2px 2px 0px #000;
+        }
+        
+        .example-box {
+            background: var(--bg-color); border: 2px dashed var(--theme-medium);
+            padding: 15px; font-size: 0.95rem; margin-top: 15px; border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .svg-container {
+            width: 100%; display: flex; justify-content: center; margin: 15px 0;
+            background: var(--white); border: 2px solid #000; border-radius: 4px; padding: 15px;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        /* FRAÇÕES NA VERTICAL */
+        .frac {
+            display: inline-flex; flex-direction: column; align-items: center;
+            vertical-align: middle; margin: 0 4px; font-size: 0.9em; line-height: 1.2;
+            font-weight: 700;
+        }
+        .frac .num { border-bottom: 2px solid currentColor; padding: 0 4px; width: 100%; text-align: center; }
+        .frac .den { padding: 0 4px; width: 100%; text-align: center; }
+
+        /* QUIZ */
+        .quiz-question-card { 
+            background: var(--white); border: 2px solid #000; border-radius: 6px;
+            padding: 25px; box-shadow: 4px 4px 0px #000; margin-bottom: 10px;
+        }
+        
+        .difficulty-badge { 
+            font-size: 0.8rem; border: 2px solid #000; background: var(--theme-light);
+            padding: 4px 12px; font-weight: 900; text-transform: uppercase;
+            display: inline-block; margin-bottom: 15px; border-radius: 4px;
+        }
+        
+        .option-btn { 
+            width: 100%; text-align: left; background: var(--bg-color);
+            border: 2px solid #000; padding: 12px; margin-bottom: 10px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; border-radius: 4px;
+            display: flex; align-items: center; transition: all 0.1s;
+        }
+        
+        .option-btn:hover:not(:disabled) { 
+            background: var(--white); box-shadow: 3px 3px 0px var(--theme-medium); 
+            transform: translate(-1px, -1px);
+        }
+        
+        .option-btn.correct { background: var(--correct-bg); border-color: #000; font-weight: 700; }
+        .option-btn.wrong { background: var(--wrong-bg); opacity: 0.7; }
+        .option-btn.disabled { pointer-events: none; }
+        
+        .opt-circle { 
+            width: 32px; height: 32px; border: 2px solid #000; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; font-weight: 900;
+            margin-right: 15px; background: var(--white); flex-shrink: 0; font-size: 0.9rem;
+        }
+        
+        .btn-action { 
+            width: 100%; background: var(--theme-dark); border: 2px solid #000; 
+            padding: 18px; font-weight: 900; color: var(--white); text-transform: uppercase; 
+            box-shadow: 4px 4px 0px var(--theme-medium); font-size: 1.1rem; cursor: pointer; 
+            transition: all 0.1s; border-radius: 4px; margin-top: 10px;
+        }
+        
+        .btn-action:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px #000; }
+
+        /* FOOTER & PROGRESS */
+        .quiz-footer { 
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--white); border-top: 3px solid #000; padding: 15px;
+            display: none; justify-content: space-between; z-index: 100;
+            box-shadow: 0px -4px 10px rgba(0,0,0,0.05); align-items: center;
+        }
+        
+        .nav-btn { 
+            background: var(--white); border: 2px solid #000; padding: 10px 20px;
+            font-weight: 900; border-radius: 4px; cursor: pointer; box-shadow: 2px 2px 0px #000;
+            text-transform: uppercase; font-size: 0.9rem;
+        }
+        
+        .nav-btn:active { transform: translate(2px,2px); box-shadow: 0px 0px 0px #000;}
+
+        .progress-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+            background: #e5e5e5;
+        }
+        .progress-fill {
+            height: 100%; background: var(--theme-contrast); width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .results-box {
+            text-align: center; padding: 35px 20px; background: var(--white);
+            border: 2px solid #000; border-radius: 6px; box-shadow: 5px 5px 0px var(--theme-medium);
+            margin-top: 20px; display: none; flex-direction: column; gap: 15px;
+            align-items: center;
+        }
+        .reset-btn {
+            background: var(--white); border: 2px solid #000; padding: 15px 25px;
+            font-weight: 900; border-radius: 4px; cursor: pointer;
+            box-shadow: 3px 3px 0px #000; margin-top: 15px; width: 100%; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="logo-header">
+            <h1>Matemática - 7º Ano</h1>
+            <div class="subtitle">Aumentos e Descontos Sucessivos</div>
+        </header>
+
+        <div class="toggle-container">
+            <button class="toggle-btn active" id="btnExp" onclick="changeView('explanation')">Teoria</button>
+            <button class="toggle-btn" id="btnPrac" onclick="changeView('practice')">Simulado (15Q)</button>
+        </div>
+
+        <main id="viewExplanation" class="view-section active">
+            
+            <div class="theory-box">
+                <h3>1. O Fator de Multiplicação (f)</h3>
+                <p>Esqueça a regra de três para aumentos e descontos sucessivos. Ela é lenta e leva ao erro. A ferramenta correta é o <strong>Fator de Multiplicação (f)</strong>. Com ele, resolvemos tudo usando uma única conta de vezes.</p>
+                
+                <ul style="margin-left: 20px; margin-top: 15px; line-height: 1.8;">
+                    <li><strong>Fator de Aumento:</strong> <span style="background:var(--correct-bg); padding:2px 5px; border:1px solid #000; border-radius:3px;">f = 1 + taxa</span></li>
+                    <li><strong>Fator de Desconto:</strong> <span style="background:var(--wrong-bg); padding:2px 5px; border:1px solid #000; border-radius:3px;">f = 1 - taxa</span></li>
+                </ul>
+
+                <div class="example-box">
+                    <strong>Exemplos:</strong><br>
+                    • Aumento de 15% ➔ f = 1 + 0,15 = <strong>1,15</strong><br>
+                    • Desconto de 20% ➔ f = 1 - 0,20 = <strong>0,80</strong>
+                </div>
+            </div>
+
+            <div class="theory-box">
+                <h3>2. O Efeito Cascata (Sucessivos)</h3>
+                <p>Em aumentos ou descontos sucessivos, a porcentagem sempre incide sobre o <strong>valor anterior atualizado</strong>, nunca sobre o original. Basta multiplicar os fatores um pelo outro!</p>
+                
+                <div class="svg-container">
+                    <svg viewBox="0 0 380 120" width="100%" height="120" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Bloco 1 -->
+                        <rect x="5" y="30" width="70" height="50" fill="#fef08a" stroke="#000" stroke-width="2" rx="4"/>
+                        <text x="40" y="60" text-anchor="middle" font-weight="bold" font-size="13">R$ 100</text>
+                        <text x="40" y="95" text-anchor="middle" font-size="10" font-weight="bold">Base</text>
+
+                        <!-- Seta 1 -->
+                        <path d="M 75 55 L 140 55" stroke="#000" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="110" y="42" text-anchor="middle" font-size="12" font-weight="bold" fill="#16a34a">+20%</text>
+                        <text x="110" y="72" text-anchor="middle" font-size="11" font-weight="bold">× 1,20</text>
+
+                        <!-- Bloco 2 -->
+                        <rect x="150" y="30" width="70" height="50" fill="#bfdbfe" stroke="#000" stroke-width="2" rx="4"/>
+                        <text x="185" y="60" text-anchor="middle" font-weight="bold" font-size="13">R$ 120</text>
+                        <text x="185" y="95" text-anchor="middle" font-size="10" font-weight="bold">Intermediário</text>
+
+                        <!-- Seta 2 -->
+                        <path d="M 220 55 L 285 55" stroke="#000" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="255" y="42" text-anchor="middle" font-size="12" font-weight="bold" fill="#dc2626">-20%</text>
+                        <text x="255" y="72" text-anchor="middle" font-size="11" font-weight="bold">× 0,80</text>
+
+                        <!-- Bloco 3 -->
+                        <rect x="295" y="30" width="70" height="50" fill="#fca5a5" stroke="#000" stroke-width="2" rx="4"/>
+                        <text x="330" y="60" text-anchor="middle" font-weight="bold" font-size="13">R$ 96</text>
+                        <text x="330" y="95" text-anchor="middle" font-size="10" font-weight="bold">Final</text>
+
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#000"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="theory-box">
+                <h3>3. O Erro de Somar Porcentagens</h3>
+                <p>A "casca de banana" mais comum é achar que dois aumentos de 10% dão 20%.</p>
+                
+                <div class="highlight-box">
+                    <strong>NUNCA SOME PORCENTAGENS!</strong><br>
+                    Se o preço sobe 10% e depois mais 10%, os fatores são:<br>
+                    1,10 × 1,10 = <strong>1,21</strong>.<br>
+                    O aumento real foi de <strong>21%</strong>, e não 20%.
+                </div>
+            </div>
+
+            <div class="theory-box">
+                <h3>4. O Caminho de Volta (Vice-Versa)</h3>
+                <p>Se um produto sofreu um aumento, qual deve ser o desconto para ele voltar ao preço inicial? O produto do fator de ida pelo fator de volta tem que ser igual a 1 (o valor original intacto).</p>
+                
+                <div class="highlight-box" style="text-align: center; font-size: 1.1rem;">
+                    <strong>F<sub>ida</sub> × F<sub>volta</sub> = 1</strong>
+                </div>
+
+                <div class="example-box">
+                    <strong>Exemplo de Aplicação:</strong><br>
+                    Se subiu 25% (F<sub>ida</sub> = 1,25), o desconto NÃO é 25%. Fazemos:<br>
+                    1,25 × F<sub>volta</sub> = 1 ➔ F<sub>volta</sub> = <span class="frac"><span class="num">1</span><span class="den">1,25</span></span> = <strong>0,80</strong>.<br><br>
+                    Logo, o desconto para voltar ao preço deve ser de <strong>20%</strong>.
+                </div>
+            </div>
+
+            <button class="btn-action" onclick="changeView('practice')">
+                Ir Para as 15 Questões
+            </button>
+        </main>
+
+        <main id="viewPractice" class="view-section">
+            <div id="quizContainer"></div>
+            <div id="resultsContainer" class="results-box"></div>
+        </main>
+    </div>
+
+    <!-- RODAPÉ DE NAVEGAÇÃO -->
+    <footer class="quiz-footer" id="quizFooter">
+        <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+        <button class="nav-btn" id="btnPrev" onclick="navigate(-1)">← Voltar</button>
+        <span id="qCount" style="font-weight: 900; font-size: 1.1rem;">1/15</span>
+        <button class="nav-btn" style="background: var(--theme-light);" id="btnNext" onclick="navigate(1)">Avançar →</button>
+    </footer>
+
+    <script>
+        const questionsDatabase = [
+            // FÁCEIS (1-5)
+            {
+                level: "Fácil - Fixação",
+                text: "Para aplicar um aumento de 35% no preço de um produto de forma direta, por qual fator decimal o preço deve ser multiplicado?",
+                options: ["0,35", "1,35", "3,50", "0,65"],
+                correctIndex: 1,
+                explanation: "Fator de aumento soma-se à base (1). f = 1 + 0,35 = 1,35."
+            },
+            {
+                level: "Fácil - Fixação",
+                text: "Uma loja está liquidando seu estoque com 18% de desconto. Qual é o fator de multiplicação que representa esse desconto?",
+                options: ["0,18", "1,18", "0,82", "0,08"],
+                correctIndex: 2,
+                explanation: "Fator de desconto subtrai-se da base (1). f = 1 - 0,18 = 0,82."
+            },
+            {
+                level: "Fácil - Fixação",
+                text: "Uma conta de R$ 200,00 foi paga com atraso, sofrendo um acréscimo (aumento) de 5%. Qual foi o valor final pago?",
+                options: ["R$ 205,00", "R$ 215,00", "R$ 210,00", "R$ 250,00"],
+                correctIndex: 2,
+                explanation: "Aumento de 5% gera o fator 1,05. Valor final = 200 × 1,05 = R$ 210,00."
+            },
+            {
+                level: "Fácil - Fixação",
+                text: "Um fone de ouvido que custava R$ 500,00 entrou em promoção com um desconto de 30%. Qual o valor atual do aparelho?",
+                options: ["R$ 350,00", "R$ 150,00", "R$ 370,00", "R$ 470,00"],
+                correctIndex: 0,
+                explanation: "Desconto de 30% gera o fator 0,70. Valor final = 500 × 0,70 = R$ 350,00."
+            },
+            {
+                level: "Fácil - Fixação",
+                text: "Para calcular dois descontos sucessivos de 10% em uma mercadoria, qual conta de fatores devemos montar?",
+                options: ["0,10 × 0,10", "1,10 × 1,10", "0,90 + 0,90", "0,90 × 0,90"],
+                correctIndex: 3,
+                explanation: "Cada desconto de 10% vira o fator 0,90. Sendo sucessivos, eles se multiplicam: 0,90 × 0,90."
+            },
+            // MÉDIAS (6-10)
+            {
+                level: "Média - Situação-Problema",
+                text: "Para atrair clientes, um lojista deu dois aumentos sucessivos no preço de uma calça: o primeiro de 20% e o segundo de 10%. Qual foi o percentual de aumento único equivalente a esses dois aumentos?",
+                options: ["30%", "32%", "22%", "35%"],
+                correctIndex: 1,
+                explanation: "Nunca some as porcentagens. Multiplique os fatores: 1,20 × 1,10 = 1,32 (Aumento de 32%)."
+            },
+            {
+                level: "Média - Situação-Problema",
+                text: "Um produto que custava R$ 100,00 sofreu um aumento de 20%. Uma semana depois, como não vendeu, o gerente aplicou um desconto de 20% sobre o novo preço. Qual o valor final do produto?",
+                options: ["R$ 100,00", "R$ 96,00", "R$ 104,00", "R$ 90,00"],
+                correctIndex: 1,
+                explanation: "A clássica pegadinha do 'vai e volta'. Valor = 100 × 1,20 × 0,80 = R$ 96,00."
+            },
+            {
+                level: "Média - Situação-Problema",
+                text: "A inflação em determinado trimestre foi registrada em 4%, 5% e 2% em meses consecutivos. Qual é o fator final acumulado dessa inflação no período?",
+                options: ["1,04 × 1,05 × 1,02", "0,04 + 0,05 + 0,02", "1,40 × 1,50 × 1,20", "1,11"],
+                correctIndex: 0,
+                explanation: "A inflação é um aumento sucessivo. As taxas viram os fatores 1,04, 1,05 e 1,02 e se multiplicam."
+            },
+            {
+                level: "Média - Situação-Problema",
+                text: "Uma loja virtual ofereceu um desconto de 20% na 'Black Friday' e um cupom adicional de 10% para quem pagasse no PIX. O fator de multiplicação total e o desconto real concedido são, respectivamente:",
+                options: ["Fator 0,70; Desconto de 30%", "Fator 0,72; Desconto de 28%", "Fator 0,80; Desconto de 20%", "Fator 0,72; Desconto de 72%"],
+                correctIndex: 1,
+                explanation: "Fatores 0,80 e 0,90. Total = 0,80 × 0,90 = 0,72. O que falta para 1 é 0,28 (Desconto de 28%)."
+            },
+            {
+                level: "Média - Situação-Problema",
+                text: "O salário de Marcos era R$ 2.000,00. Ele sofreu uma redução (desconto) de 10%. Após alguns meses, recebeu um reajuste (aumento) de 10% sobre o salário reduzido. O salário final de Marcos passou a ser:",
+                options: ["R$ 2.000,00", "R$ 1.980,00", "R$ 2.020,00", "R$ 1.900,00"],
+                correctIndex: 1,
+                explanation: "Descontar e aumentar na mesma proporção gera perda. Valor = 2000 × 0,90 × 1,10 = R$ 1.980,00."
+            },
+            // DIFÍCEIS (11-15)
+            {
+                level: "Difícil - Desafio",
+                text: "Um fabricante precisa que a embalagem de seu produto volte ao preço original de mercado. Sabendo que o preço havia sofrido um aumento de 25%, de quanto deve ser o percentual de desconto agora para que o preço retorne ao valor de antes?",
+                options: ["Exatamente 25%", "30%", "20%", "15%"],
+                correctIndex: 2,
+                explanation: "Fator ida = 1,25. Volta = 1 / 1,25 = 0,80. Fator 0,80 significa um desconto de 20%."
+            },
+            {
+                level: "Difícil - Desafio",
+                text: "Para cobrir custos, um comerciante deseja dar um desconto de 20% em sua loja, mas quer que o preço final com desconto seja igual ao valor de fábrica (valor de custo) da mercadoria. Qual deve ser a porcentagem de aumento que ele deve colocar sobre o preço de fábrica ao criar a etiqueta?",
+                options: ["20%", "25%", "30%", "40%"],
+                correctIndex: 1,
+                explanation: "Desconto de 20% (f = 0,80). Fator ida = 1 / 0,80 = 1,25. Aumento de 25%."
+            },
+            {
+                level: "Difícil - Desafio",
+                text: "As ações de uma empresa desabaram e perderam 50% do seu valor na segunda-feira. Qual deve ser o percentual de aumento que as ações precisam ter na terça-feira apenas para empatar e voltar ao valor original de segunda-feira cedo?",
+                options: ["50%", "75%", "100%", "25%"],
+                correctIndex: 2,
+                explanation: "Fator ida = 0,50 (metade). Fator Volta = 1 / 0,50 = 2,00. Fator 2 significa dobrar (+100%)."
+            },
+            {
+                level: "Difícil - Desafio",
+                text: "Três descontos sucessivos de 10% equivalem a um único desconto real aproximado de:",
+                options: ["30%", "27,1%", "33,1%", "25%"],
+                correctIndex: 1,
+                explanation: "Três fatores de 0,90. Total = 0,90 × 0,90 × 0,90 = 0,729. Desconto = 1 - 0,729 = 0,271 (27,1%)."
+            },
+            {
+                level: "Difícil - Desafio",
+                text: "Na compra de uma televisão, duas lojas têm ofertas diferentes. A Loja A oferece um desconto direto de 40%. A Loja B oferece dois descontos 'em cascata' de 20% seguidos de mais 20%. Qual loja oferece o menor preço final para o cliente?",
+                options: ["A Loja A oferece o menor preço.", "A Loja B oferece o menor preço.", "As duas lojas oferecem exatamente o mesmo preço.", "Não é possível determinar sem o valor da televisão."],
+                correctIndex: 0,
+                explanation: "Loja A: Fator 0,60 (paga 60%). Loja B: Fator 0,80 × 0,80 = 0,64 (paga 64%). Loja A é mais barata."
+            }
+        ];
+
+        // LocalStorage Engine
+        const SAVED_KEY = 'promover_math_7ano_aumentos';
+        let savedAnswers = new Array(15).fill(null);
+        try {
+            const localData = localStorage.getItem(SAVED_KEY);
+            if (localData) savedAnswers = JSON.parse(localData);
+        } catch (e) { console.error("Erro ao ler localStorage", e); }
+
+        const state = { currentIndex: 0, answers: savedAnswers };
+
+        // Navegação de Telas
+        function changeView(view) {
+            document.getElementById('viewExplanation').classList.remove('active');
+            document.getElementById('viewPractice').classList.remove('active');
+            document.getElementById('btnExp').classList.remove('active');
+            document.getElementById('btnPrac').classList.remove('active');
+            document.getElementById('quizFooter').style.display = 'none';
+
+            if (view === 'explanation') {
+                document.getElementById('viewExplanation').classList.add('active');
+                document.getElementById('btnExp').classList.add('active');
+            } else {
+                document.getElementById('viewPractice').classList.add('active');
+                document.getElementById('btnPrac').classList.add('active');
+                document.getElementById('quizFooter').style.display = 'flex';
+                
+                // Vai para a primeira questão não respondida ou para a primeira se todas estiverem respondidas
+                const firstUnanswered = state.answers.findIndex(a => a === null);
+                if (firstUnanswered !== -1) {
+                    state.currentIndex = firstUnanswered;
+                } else if (state.answers.every(a => a !== null)) {
+                    state.currentIndex = 0; // Volta pro começo se já acabou pra ver os erros
+                }
+
+                renderQ();
+                updateProgress();
+                window.scrollTo(0,0);
+            }
+        }
+
+        // Renderiza a Questão Atual
+        function renderQ() {
+            const q = questionsDatabase[state.currentIndex];
+            const ans = state.answers[state.currentIndex];
+            const letters = ['A', 'B', 'C', 'D'];
+
+            const html = `
+                <div class="quiz-question-card">
+                    <div class="difficulty-badge">${q.level}</div>
+                    <h3 style="font-size:1.15rem; font-weight:900; margin-bottom: 20px; line-height: 1.4;">
+                        ${state.currentIndex + 1}. ${q.text}
+                    </h3>
+                    ${q.options.map((opt, i) => {
+                        let cls = '';
+                        if (ans !== null) {
+                            if (i === q.correctIndex) cls = 'correct';
+                            else if (i === ans) cls = 'wrong';
+                            else cls = 'disabled';
+                        }
+                        return `<button class="option-btn ${cls}" 
+                            onclick="answer(${i})" ${ans !== null ? 'disabled' : ''}>
+                            <div class="opt-circle">${letters[i]}</div>
+                            <div>${opt}</div>
+                        </button>`;
+                    }).join('')}
+                    ${ans !== null ? `<div class="highlight-box" style="margin-top: 20px; font-weight: 600;">
+                        <strong>Análise Rápida:</strong><br>${q.explanation}
+                    </div>` : ''}
+                </div>
+            `;
+            document.getElementById('quizContainer').innerHTML = html;
+            
+            // Lógica de Botões do Footer
+            document.getElementById('btnPrev').disabled = state.currentIndex === 0;
+            document.getElementById('qCount').textContent = `${state.currentIndex + 1}/15`;
+            
+            const btnN = document.getElementById('btnNext');
+            btnN.textContent = state.currentIndex === 14 ? "Finalizar" : "Avançar →";
+            
+            // Confete se acertou na hora
+            if(ans === q.correctIndex && state.answers.filter(a => a !== null).length <= 15) {
+                confetti({ particleCount: 60, spread: 50, origin: { y: 0.7 }, colors: ['#86efac', '#a855f7', '#fef08a'] });
+            }
+        }
+
+        // Registrar Resposta
+        function answer(idx) {
+            if (state.answers[state.currentIndex] !== null) return; // Trava contra duplo clique
+            state.answers[state.currentIndex] = idx;
+            
+            try {
+                localStorage.setItem(SAVED_KEY, JSON.stringify(state.answers));
+            } catch(e) {}
+
+            renderQ();
+            updateProgress();
+            
+            // Auto avanço se não for a última
+            if (state.currentIndex < 14 && state.answers.filter(a => a !== null).length < 15) {
+                 setTimeout(() => navigate(1), 2000); // Avança após 2 segundos pra ler a explicação
+            }
+        }
+
+        // Barra de Progresso
+        function updateProgress() {
+            const answered = state.answers.filter(a => a !== null).length;
+            const pct = (answered / 15) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
+            
+            if (answered === 15) {
+                showResults();
+            } else {
+                document.getElementById('resultsContainer').style.display = 'none';
+            }
+        }
+
+        // Tela Final de Resultados
+        function showResults() {
+            const corrects = state.answers.reduce((acc, ans, i) => acc + (ans === questionsDatabase[i].correctIndex ? 1 : 0), 0);
+            let message = "";
+            if (corrects >= 12) message = "🏆 Excelente! Você dominou o Efeito Cascata!";
+            else if (corrects >= 8) message = "👍 Muito bom! Quase lá.";
+            else message = "📚 Continue praticando, revise a aba de Teoria!";
+
+            const resHtml = `
+                <h2 style="font-family: 'Space Grotesk'; font-size: 2rem; margin-bottom: 5px;">Missão Cumprida!</h2>
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--theme-medium); margin-bottom: 10px;">${message}</p>
+                <div style="font-size: 3rem; font-weight: 900; background: var(--bg-color); border: 3px solid #000; padding: 10px 40px; border-radius: 6px; box-shadow: 4px 4px 0px #000;">
+                    ${corrects}/15
+                </div>
+                <button class="reset-btn" onclick="resetProgress()">Zerar Simulado</button>
+            `;
+            const rContainer = document.getElementById('resultsContainer');
+            rContainer.innerHTML = resHtml;
+            rContainer.style.display = 'flex';
+            
+            // Rolar suavemente para ver o resultado se estiver na última questão
+            if (state.currentIndex === 14) {
+                setTimeout(() => rContainer.scrollIntoView({ behavior: 'smooth', block: 'end' }), 500);
+            }
+            
+            confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+        }
+
+        // Reset Completo
+        function resetProgress() {
+            if(confirm("Tem certeza que deseja apagar todo o seu progresso?")) {
+                try { localStorage.removeItem(SAVED_KEY); } catch(e) {}
+                state.answers = new Array(15).fill(null);
+                state.currentIndex = 0;
+                document.getElementById('resultsContainer').style.display = 'none';
+                renderQ();
+                updateProgress();
+                window.scrollTo(0,0);
+            }
+        }
+
+        // Botões de Navegação (Anterior/Próxima)
+        function navigate(dir) {
+            const n = state.currentIndex + dir;
+            if (n >= 0 && n < 15) {
+                state.currentIndex = n;
+                renderQ();
+                if(state.answers.filter(a => a !== null).length === 15) showResults();
+            }
+        }
+    </script>
+</body>
+</html>
