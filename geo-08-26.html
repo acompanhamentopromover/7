@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia 7º Ano: Roteiro de Prova</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f4f0;
+            --text-color: #000000;
+            --border-color: #000000;
+            --white: #ffffff;
+            
+            /* Paleta Neobrutalista - Geografia */
+            --theme-light: #bbf7d0; /* Verde Claro */
+            --theme-medium: #4ade80; /* Verde Vibrante */
+            --theme-dark: #16a34a; /* Verde Escuro */
+            --theme-contrast: #fde047; /* Amarelo Contraste */
+            --theme-accent: #22d3ee; /* Azul Cyan para Eletricidade */
+
+            --correct-bg: #4ade80;
+            --wrong-bg: #f87171;
+            
+            --shadow-sm: 2px 2px 0px var(--border-color);
+            --shadow-md: 4px 4px 0px var(--border-color);
+            --shadow-lg: 6px 6px 0px var(--border-color);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding: 20px 15px 120px 15px;
+            background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+        }
+
+        .container {
+            width: 100%; max-width: 650px;
+            display: flex; flex-direction: column; gap: 25px;
+        }
+
+        .logo-header { text-align: center; margin-bottom: 10px; }
+        
+        .css-logo {
+            font-size: 1.2rem; font-weight: 900; background: var(--theme-dark);
+            color: var(--white); border: 3px solid var(--border-color); 
+            padding: 8px 15px; box-shadow: var(--shadow-md); 
+            display: inline-block; transform: rotate(-1deg); margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 2rem;
+            font-weight: 900; text-transform: uppercase; border-bottom: 4px solid #000;
+            display: inline-block; padding-bottom: 5px; background: var(--theme-light);
+        }
+
+        .subtitle {
+            font-size: 1.1rem; font-weight: 700; margin-top: 10px;
+            background: var(--theme-contrast); padding: 5px 15px; 
+            border: 3px solid #000; display: inline-block; box-shadow: var(--shadow-md);
+        }
+
+        /* --- BOTÕES E NAVEGAÇÃO --- */
+        .toggle-container {
+            display: flex; gap: 10px; position: sticky; top: 10px; z-index: 50;
+        }
+
+        .toggle-btn {
+            flex: 1; padding: 12px 0; border: 3px solid var(--border-color);
+            background: var(--white); font-weight: 900; font-size: 1rem;
+            box-shadow: var(--shadow-md); cursor: pointer; transition: all 0.1s;
+            text-transform: uppercase;
+        }
+
+        .toggle-btn.active {
+            background: var(--theme-dark); color: var(--white);
+            transform: translate(2px, 2px); box-shadow: var(--shadow-sm);
+        }
+
+        .view-section { display: none; flex-direction: column; gap: 25px; }
+        .view-section.active { display: flex; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- TEORIA --- */
+        .content-group { position: relative; padding-top: 10px; }
+        
+        .section-badge {
+            position: absolute; top: -5px; left: -10px; z-index: 10;
+            background: var(--theme-contrast); border: 3px solid #000; 
+            padding: 5px 15px; font-weight: 900; box-shadow: var(--shadow-sm); 
+            font-size: 1rem; transform: rotate(-2deg);
+        }
+
+        .theory-box {
+            background: var(--white); border: 3px solid var(--border-color);
+            padding: 30px 20px 20px 20px; box-shadow: var(--shadow-lg);
+            font-weight: 500; line-height: 1.6; font-size: 0.95rem;
+        }
+
+        .theory-box h3 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem;
+            font-weight: 900; border-bottom: 3px solid #000; padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .theory-box ul { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+        .theory-box li { margin-bottom: 8px; }
+        .theory-box strong { font-weight: 700; color: var(--theme-dark); }
+
+        .highlight-box {
+            background: var(--theme-light); border: 3px solid #000;
+            padding: 15px; font-weight: 700; box-shadow: var(--shadow-sm);
+            margin: 15px 0;
+        }
+
+        .svg-container {
+            width: 100%; display: flex; justify-content: center;
+            margin: 15px 0; padding: 15px; background: var(--bg-color);
+            border: 3px solid #000;
+        }
+
+        /* --- FRAÇÕES MATEMÁTICAS --- */
+        .frac {
+            display: inline-flex; flex-direction: column;
+            vertical-align: middle; margin: 0 2px; text-align: center;
+            font-weight: 700;
+        }
+        .frac > span:first-child { border-bottom: 2px solid #000; padding: 0 2px; }
+        .frac > span:last-child { padding: 0 2px; }
+
+        /* --- QUIZ UI --- */
+        .quiz-question-card {
+            background: var(--white); border: 3px solid #000;
+            padding: 20px; box-shadow: var(--shadow-lg); margin-bottom: 10px;
+        }
+
+        .difficulty-badge {
+            background: var(--theme-contrast); border: 2px solid #000;
+            padding: 3px 10px; font-weight: 900; text-transform: uppercase;
+            box-shadow: var(--shadow-sm); display: inline-block; margin-bottom: 15px;
+            font-size: 0.8rem;
+        }
+
+        .option-btn {
+            width: 100%; text-align: left; background: var(--white);
+            border: 3px solid #000; padding: 12px; margin-bottom: 10px; 
+            font-weight: 600; font-size: 0.95rem; cursor: pointer; 
+            box-shadow: var(--shadow-md); display: flex; align-items: center; 
+            transition: all 0.1s; font-family: 'Poppins', sans-serif;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translate(-2px, -2px); box-shadow: var(--shadow-lg);
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: translate(2px, 2px); box-shadow: var(--shadow-sm);
+        }
+
+        .opt-circle {
+            width: 30px; height: 30px; border: 2px solid #000;
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 900; margin-right: 15px; background: var(--theme-light); 
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct { background: var(--correct-bg); }
+        .option-btn.wrong { background: var(--wrong-bg); opacity: 0.7; }
+        .option-btn.disabled { pointer-events: none; }
+
+        .btn-action {
+            width: 100%; background: var(--theme-dark); color: var(--white);
+            border: 3px solid #000; padding: 15px; font-weight: 900; 
+            font-size: 1.1rem; text-transform: uppercase; box-shadow: var(--shadow-lg);
+            cursor: pointer; transition: all 0.1s; margin-top: 10px;
+        }
+        .btn-action:active { transform: translate(4px, 4px); box-shadow: var(--shadow-sm); }
+
+        /* --- FOOTER E PROGRESSO --- */
+        .quiz-footer {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--white); border-top: 4px solid #000; 
+            padding: 15px 15px 25px 15px; display: none; flex-direction: column; gap: 10px;
+            z-index: 100; box-shadow: 0 -4px 0 rgba(0,0,0,1);
+        }
+
+        .nav-buttons { display: flex; justify-content: space-between; gap: 10px; }
+
+        .nav-btn {
+            flex: 1; background: var(--white); border: 3px solid #000; 
+            padding: 10px; font-weight: 900; box-shadow: var(--shadow-md); 
+            cursor: pointer; text-transform: uppercase;
+        }
+        .nav-btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: var(--shadow-sm); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        .progress-bar-container {
+            width: 100%; height: 15px; border: 3px solid #000;
+            background: var(--bg-color); position: relative; overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%; background: var(--theme-medium); width: 0%;
+            transition: width 0.3s ease; border-right: 3px solid #000;
+        }
+
+        /* --- TELA DE RESULTADOS --- */
+        #resultScreen {
+            text-align: center; background: var(--white); border: 4px solid #000;
+            padding: 30px; box-shadow: var(--shadow-lg); display: none;
+        }
+        .score-circle {
+            width: 100px; height: 100px; border: 4px solid #000; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 900; background: var(--theme-contrast);
+            margin: 0 auto 20px auto; box-shadow: var(--shadow-md);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo">PROMOVER</div>
+        <h1>GEOGRAFIA / 7º ANO</h1>
+        <div class="subtitle">Setores, Balança e Matrizes</div>
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="changeView('explanation')">Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="changeView('practice')">Prática</button>
+    </div>
+
+    <!-- VIEW TEORIA -->
+    <main id="viewExplanation" class="view-section active">
+        
+        <!-- Tópico 1: Setores -->
+        <div class="content-group">
+            <div class="section-badge">1. Os 3 Setores</div>
+            <div class="theory-box">
+                <h3>Setores da Economia</h3>
+                <p>Tudo o que gera dinheiro no país está dividido em setores:</p>
+                <ul>
+                    <li><strong>Primário:</strong> Extração direta da natureza. Ex: Agricultura, Pecuária, Mineração. (Matéria-prima).</li>
+                    <li><strong>Secundário:</strong> Transformação. Ex: Indústrias, fábricas, construção civil. (Pega a matéria-prima e faz um produto).</li>
+                    <li><strong>Terciário:</strong> Serviços e Comércio. Ex: Escolas, hospitais, lojas, bancos. É o setor que mais emprega no Brasil.</li>
+                </ul>
+                <div class="svg-container">
+                    <svg width="280" height="100" viewBox="0 0 280 100">
+                        <!-- Primário -->
+                        <rect x="10" y="30" width="70" height="40" fill="#bbf7d0" stroke="#000" stroke-width="2"/>
+                        <text x="45" y="55" font-family="Poppins" font-size="12" font-weight="bold" text-anchor="middle">Agro/Mina</text>
+                        <!-- Seta 1 -->
+                        <path d="M 85 50 L 105 50" stroke="#000" stroke-width="3" marker-end="url(#arrow)"/>
+                        <!-- Secundário -->
+                        <rect x="110" y="30" width="70" height="40" fill="#fde047" stroke="#000" stroke-width="2"/>
+                        <text x="145" y="55" font-family="Poppins" font-size="12" font-weight="bold" text-anchor="middle">Indústria</text>
+                        <!-- Seta 2 -->
+                        <path d="M 185 50 L 205 50" stroke="#000" stroke-width="3" marker-end="url(#arrow)"/>
+                        <!-- Terciário -->
+                        <rect x="210" y="30" width="70" height="40" fill="#4ade80" stroke="#000" stroke-width="2"/>
+                        <text x="245" y="55" font-family="Poppins" font-size="12" font-weight="bold" text-anchor="middle">Lojas</text>
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#000" />
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tópico 2: Balança Comercial -->
+        <div class="content-group">
+            <div class="section-badge" style="background:var(--theme-light);">2. O Cálculo ($)</div>
+            <div class="theory-box">
+                <h3>Balança Comercial</h3>
+                <p>É o registro do que o país vende para fora e do que compra de fora.</p>
+                <div class="highlight-box">
+                    Fórmula: Saldo = Exportações (Vendas) - Importações (Compras)
+                </div>
+                <ul>
+                    <li><strong>Exportações > Importações:</strong> Entrou mais dinheiro do que saiu. Temos um <strong>SUPERÁVIT</strong> (Positivo +).</li>
+                    <li><strong>Importações > Exportações:</strong> Saiu mais dinheiro do que entrou. Temos um <strong>DÉFICIT</strong> (Negativo -).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tópico 3: Matrizes -->
+        <div class="content-group">
+            <div class="section-badge" style="background:var(--theme-accent);">3. A Grande Pegadinha</div>
+            <div class="theory-box">
+                <h3>Matriz Energética vs. Elétrica</h3>
+                <p>Muitos confundem as duas. A regra é clara:</p>
+                <ul>
+                    <li><strong>Matriz Energética:</strong> É TUDO que gera energia (luz, calor, movimento). Inclui a gasolina do carro, o gás do fogão, o carvão da siderúrgica. A matriz energética brasileira e mundial ainda depende muito de <strong>combustíveis fósseis</strong> (Petróleo).</li>
+                    <li><strong>Matriz Elétrica:</strong> É apenas o que gera <strong>Eletricidade</strong> (luz para as tomadas). Aqui o Brasil dá um show: nossa matriz elétrica é altamente <strong>Renovável</strong>, dominada por Usinas Hidrelétricas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="btn-action" onclick="changeView('practice')">Ir para as Questões</button>
+    </main>
+
+    <!-- VIEW PRÁTICA -->
+    <main id="viewPractice" class="view-section">
+        
+        <!-- Tela de Resultados (Oculta por padrão) -->
+        <div id="resultScreen">
+            <h2 style="font-family:'Space Grotesk'; font-size: 1.8rem; font-weight:900; margin-bottom: 10px;">Fim de Prova!</h2>
+            <div class="score-circle" id="scoreCircle">0/15</div>
+            <p id="scoreMessage" style="font-weight:700; margin-bottom: 20px;">Analisando...</p>
+            <button class="btn-action" onclick="resetQuiz()">Tentar Novamente</button>
+        </div>
+
+        <div id="quizContainer"></div>
+    </main>
+</div>
+
+<!-- FOOTER DE NAVEGAÇÃO E PROGRESSO -->
+<footer class="quiz-footer" id="quizFooter">
+    <div class="nav-buttons">
+        <button class="nav-btn" id="btnPrev" onclick="navigate(-1)">Anterior</button>
+        <button class="nav-btn" style="background: var(--theme-dark); color: white;" id="btnNext" onclick="navigate(1)">Próxima</button>
+    </div>
+    <div style="font-size: 0.8rem; font-weight: 700; text-align: center;" id="progressText">0 de 15 respondidas</div>
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+</footer>
+
+<script>
+    // Banco de Questões (15 Questões Baseadas no Roteiro)
+    const questionsDatabase = [
+        {
+            level: "Fácil",
+            text: "O setor da economia responsável por atividades como agricultura, pecuária e mineração é classificado como:",
+            options: [
+                "Setor Secundário.",
+                "Setor Primário.",
+                "Setor Terciário.",
+                "Setor Quaternário."
+            ],
+            correctIndex: 1,
+            explanation: {
+                correctText: "O Setor Primário lida com a extração e produção direta de matérias-primas na natureza.",
+                otherOptions: ["É a indústria.", "", "É o comércio/serviços.", "É a tecnologia."]
+            }
+        },
+        {
+            level: "Fácil",
+            text: "Quando um país vende mercadorias para o exterior, dizemos que ele está realizando uma:",
+            options: [
+                "Importação.",
+                "Terceirização.",
+                "Exportação.",
+                "Industrialização."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "Exportar significa 'mandar para fora', ou seja, vender produtos para outros países.",
+                otherOptions: ["É comprar de fora.", "É contratar serviços de terceiros.", "", "É criar indústrias."]
+            }
+        },
+        {
+            level: "Fácil",
+            text: "Como é chamado o conjunto de todas as fontes usadas APENAS para gerar a eletricidade que chega nas nossas tomadas?",
+            options: [
+                "Matriz Energética.",
+                "Matriz Primária.",
+                "Balança Comercial.",
+                "Matriz Elétrica."
+            ],
+            correctIndex: 3,
+            explanation: {
+                correctText: "Matriz Elétrica engloba exclusivamente a geração de energia elétrica (ex: hidrelétricas).",
+                otherOptions: ["Engloba todas as energias, inclusive combustíveis.", "Termo incorreto.", "É sobre dinheiro e comércio.", ""]
+            }
+        },
+        {
+            level: "Fácil",
+            text: "Se um país importa mais produtos do que exporta, a balança comercial terá um saldo:",
+            options: [
+                "Superavitário (Positivo).",
+                "Deficitário (Negativo).",
+                "Equilibrado (Zero).",
+                "Lucrativo."
+            ],
+            correctIndex: 1,
+            explanation: {
+                correctText: "Se as compras (importações) são maiores que as vendas (exportações), sai mais dinheiro do que entra = Déficit.",
+                otherOptions: ["Acontece quando se vende mais do que compra.", "", "Acontece quando valores são iguais.", "Não é o termo econômico correto."]
+            }
+        },
+        {
+            level: "Fácil",
+            text: "Lojas, hospitais, escolas e bancos fazem parte de qual setor da economia?",
+            options: [
+                "Primário.",
+                "Secundário.",
+                "Terciário.",
+                "Agrícola."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "O setor terciário abrange o comércio e a prestação de serviços à população.",
+                otherOptions: ["Lida com natureza.", "Lida com fábricas.", "", "É parte do setor primário."]
+            }
+        },
+        {
+            level: "Média",
+            text: "No Brasil, qual é a principal fonte geradora da nossa Matriz ELÉTRICA?",
+            options: [
+                "Petróleo.",
+                "Usinas Nucleares.",
+                "Energia Solar.",
+                "Usinas Hidrelétricas."
+            ],
+            correctIndex: 3,
+            explanation: {
+                correctText: "Devido aos rios caudalosos e relevo de planalto, a hidreletricidade domina a geração de eletricidade no Brasil.",
+                otherOptions: ["Domina a matriz energética (transporte), não elétrica.", "Representa uma parte mínima no Brasil.", "Está crescendo, mas não é a principal.", ""]
+            }
+        },
+        {
+            level: "Média",
+            text: "Um país exportou R$ 300 bilhões e importou R$ 250 bilhões no ano. Qual o saldo e a situação da balança comercial?",
+            options: [
+                "Saldo + R$ 50 bilhões (Déficit).",
+                "Saldo - R$ 50 bilhões (Superávit).",
+                "Saldo + R$ 50 bilhões (Superávit).",
+                "Saldo - R$ 550 bilhões (Déficit)."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "300 (Vendas) - 250 (Compras) = +50. Como o saldo é positivo, temos um Superávit.",
+                otherOptions: ["O valor está certo, mas positivo é superávit.", "Sinal errado.", "", "Subtração errada."]
+            }
+        },
+        {
+            level: "Média",
+            text: "Por que a Matriz ENERGÉTICA do Brasil (e do mundo) é considerada mais poluente que a Matriz Elétrica brasileira?",
+            options: [
+                "Porque a matriz energética inclui os combustíveis dos veículos (petróleo).",
+                "Porque a matriz elétrica usa muito carvão mineral no Brasil.",
+                "Porque não existem fontes renováveis na matriz energética.",
+                "Porque o Brasil exporta muita energia elétrica."
+            ],
+            correctIndex: 0,
+            explanation: {
+                correctText: "A matriz energética engloba os transportes, que dependem massivamente de gasolina e diesel (petróleo), elevando a poluição.",
+                otherOptions: ["", "O Brasil quase não usa carvão.", "Falso, há renováveis (ex: etanol).", "Isso não afeta o nível de poluição direta do consumo interno."]
+            }
+        },
+        {
+            level: "Média",
+            text: "Calcule o saldo da balança: Importações = 120 milhões. Exportações = 90 milhões.",
+            options: [
+                "Superávit de 30 milhões.",
+                "Déficit de 30 milhões.",
+                "Equilíbrio de 30 milhões.",
+                "Déficit de 210 milhões."
+            ],
+            correctIndex: 1,
+            explanation: {
+                correctText: "Exportações (90) - Importações (120) = -30. Sendo negativo, é um Déficit.",
+                otherOptions: ["Só seria superávit se exportasse mais.", "", "Equilíbrio seria saldo zero.", "Errou o cálculo (somou em vez de subtrair)."]
+            }
+        },
+        {
+            level: "Média",
+            text: "Uma fábrica que transforma algodão em tecido de algodão pertence a qual setor da economia?",
+            options: [
+                "Primário.",
+                "Secundário.",
+                "Terciário.",
+                "Quaternário."
+            ],
+            correctIndex: 1,
+            explanation: {
+                correctText: "Todo processo industrial de transformação de matéria-prima (algodão) em produto (tecido) é setor Secundário.",
+                otherOptions: ["Seria a plantação do algodão.", "", "Seria a loja vendendo a roupa.", "Seria a pesquisa tecnológica do tecido."]
+            }
+        },
+        {
+            level: "Difícil",
+            text: "Países subdesenvolvidos tendem a exportar produtos do setor primário (baratos) e importar produtos do setor secundário (caros). O que isso geralmente causa na Balança Comercial desses países?",
+            options: [
+                "Gera sempre grandes superávits garantidos.",
+                "Equilibra automaticamente a economia global.",
+                "Facilita a ocorrência de déficits comerciais.",
+                "Anula a necessidade de usar energia elétrica."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "Ao vender barato (soja) e comprar caro (celulares), o país gasta mais do que ganha, tendendo a gerar Déficit.",
+                otherOptions: ["Ao contrário, gera risco de déficit.", "Não equilibra, gera desigualdade.", "", "Totalmente sem sentido."]
+            }
+        },
+        {
+            level: "Difícil",
+            text: "Se o Brasil enfrentar uma longa seca, os reservatórios das hidrelétricas baixam. Para não faltar luz, o governo liga as Termelétricas (que queimam gás/carvão). O que acontece com as matrizes?",
+            options: [
+                "A matriz elétrica fica mais limpa e barata.",
+                "A matriz elétrica fica temporariamente mais poluente (fóssil).",
+                "A matriz energética deixa de usar petróleo.",
+                "A balança comercial tem um superávit imediato."
+            ],
+            correctIndex: 1,
+            explanation: {
+                correctText: "Ao ligar termelétricas, a geração de eletricidade passa a usar combustíveis fósseis, aumentando a poluição e encarecendo a conta.",
+                otherOptions: ["Fica mais suja e cara.", "", "A energética não se altera tanto neste aspecto restrito.", "Não tem relação direta imediata com a balança."]
+            }
+        },
+        {
+            level: "Difícil",
+            text: "A gasolina, o etanol, o gás de cozinha e a eletricidade da sua casa formam, JUNTOS, o conceito de:",
+            options: [
+                "Matriz Elétrica.",
+                "Setor Secundário.",
+                "Matriz Energética.",
+                "Setor Primário."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "A soma de TODAS as fontes usadas para movimentar tudo no país (carros, fogões, luz) compõe a Matriz Energética.",
+                otherOptions: ["Elétrica não inclui gasolina de carro.", "Setores são divisões econômicas.", "", "O primário é apenas extração natural."]
+            }
+        },
+        {
+            level: "Difícil",
+            text: "No Brasil, observa-se o fenômeno da 'terceirização' da economia. Isso significa que:",
+            options: [
+                "As indústrias estão dominando as cidades.",
+                "A agricultura parou de exportar.",
+                "A maior parte da população trabalha no comércio e serviços.",
+                "A balança comercial está sempre negativa."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "Terciarização é o inchaço do Setor Terciário. A maioria dos empregos no Brasil está em lojas, serviços, aplicativos, etc.",
+                otherOptions: ["Isso seria industrialização.", "A agricultura brasileira exporta muito.", "", "Não tem relação direta com terceirização."]
+            }
+        },
+        {
+            level: "Difícil",
+            text: "Para obter um SUPERÁVIT na Balança Comercial, qual estratégia financeira um país deve adotar?",
+            options: [
+                "Aumentar o valor em dólares das suas Importações.",
+                "Reduzir suas Exportações a zero.",
+                "Fazer com que o valor total das Exportações supere o das Importações.",
+                "Aumentar apenas a produção da Matriz Elétrica."
+            ],
+            correctIndex: 2,
+            explanation: {
+                correctText: "Superávit matemático exige que o valor arrecadado nas vendas (Exportações) seja maior que os gastos com compras (Importações).",
+                otherOptions: ["Isso geraria déficit.", "Isso garantiria déficit extremo.", "", "Matriz elétrica não altera saldo comercial diretamente."]
+            }
+        }
+    ];
+
+    // MOTOR INTOCÁVEL + LOCALSTORAGE
+    const STORAGE_KEY = 'geo7_progress';
+    let state = { currentIndex: 0, answers: new Array(15).fill(null) };
+
+    // Carregar progresso salvo
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved) {
+        state = JSON.parse(saved);
+        // Garante que o array tenha o tamanho certo caso o código mude
+        if(state.answers.length !== 15) {
+            state = { currentIndex: 0, answers: new Array(15).fill(null) };
+        }
+    }
+
+    function saveProgress() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        updateProgressUI();
+    }
+
+    function updateProgressUI() {
+        const answered = state.answers.filter(a => a !== null).length;
+        const total = state.answers.length;
+        const pct = (answered / total) * 100;
+        
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('progressText').innerText = answered + " de " + total + " respondidas";
+
+        // Verifica se terminou
+        if(answered === total && document.getElementById('viewPractice').classList.contains('active')) {
+            showResults();
+        }
+    }
+
+    function changeView(view) {
+        document.getElementById('viewExplanation').classList.remove('active');
+        document.getElementById('viewPractice').classList.remove('active');
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.remove('active');
+        document.getElementById('quizFooter').style.display = 'none';
+        document.getElementById('resultScreen').style.display = 'none';
+        document.getElementById('quizContainer').style.display = 'block';
+
+        if (view === 'explanation') {
+            document.getElementById('viewExplanation').classList.add('active');
+            document.getElementById('btnExp').classList.add('active');
+        } else {
+            document.getElementById('viewPractice').classList.add('active');
+            document.getElementById('btnPrac').classList.add('active');
+            
+            // Se já respondeu tudo, vai direto pro resultado
+            const answered = state.answers.filter(a => a !== null).length;
+            if(answered === state.answers.length) {
+                showResults();
+            } else {
+                document.getElementById('quizFooter').style.display = 'flex';
+                renderQ();
+            }
+        }
+        window.scrollTo(0,0);
+        updateProgressUI();
+    }
+
+    function renderQ() {
+        const q = questionsDatabase[state.currentIndex];
+        const ans = state.answers[state.currentIndex];
+        
+        const html = `
+            <div class="quiz-question-card">
+                <div class="difficulty-badge">${q.level}</div>
+                <h3 style="font-size:1.15rem; font-weight:900; margin-bottom: 20px; line-height: 1.4;">
+                    ${state.currentIndex + 1}. ${q.text}
+                </h3>
+                ${q.options.map((opt, i) => {
+                    let cls = '';
+                    if (ans !== null) {
+                        if (i === q.correctIndex) cls = 'correct';
+                        else if (i === ans) cls = 'wrong';
+                        else cls = 'disabled';
+                    }
+                    return `<button class="option-btn ${cls}" onclick="answer(${i})" ${ans !== null ? 'disabled' : ''}>
+                                <div class="opt-circle">${['A','B', 'C', 'D'][i]}</div>
+                                <div>${opt}</div>
+                            </button>`;
+                }).join('')}
+                
+                ${ans !== null ? `
+                    <div class="highlight-box" style="margin-top: 20px; animation: fadeIn 0.3s ease;">
+                        <strong>Correção:</strong> ${q.explanation.correctText}
+                    </div>` : ''}
+            </div>
+        `;
+
+        document.getElementById('quizContainer').innerHTML = html;
+        document.getElementById('btnPrev').disabled = state.currentIndex === 0;
+        
+        const btnN = document.getElementById('btnNext');
+        btnN.textContent = state.currentIndex === (questionsDatabase.length - 1) ? "Fim" : "Próxima";
+    }
+
+    function answer(idx) {
+        if (state.answers[state.currentIndex] !== null) return;
+        state.answers[state.currentIndex] = idx;
+        saveProgress();
+        renderQ();
+    }
+
+    function navigate(dir) {
+        const n = state.currentIndex + dir;
+        if (n >= 0 && n < questionsDatabase.length) { 
+            state.currentIndex = n; 
+            saveProgress();
+            renderQ(); 
+        }
+    }
+
+    function showResults() {
+        document.getElementById('quizContainer').style.display = 'none';
+        document.getElementById('quizFooter').style.display = 'none';
+        const resultScreen = document.getElementById('resultScreen');
+        resultScreen.style.display = 'block';
+
+        let score = 0;
+        state.answers.forEach((ans, idx) => {
+            if(ans === questionsDatabase[idx].correctIndex) score++;
+        });
+
+        document.getElementById('scoreCircle').innerText = score + "/15";
+        
+        let msg = "";
+        if(score >= 12) msg = "Excelente! Você dominou o roteiro.";
+        else if (score >= 8) msg = "Bom trabalho! Mas vale revisar os pontos de dúvida.";
+        else msg = "Você precisa revisar a teoria com urgência antes da prova!";
+        
+        document.getElementById('scoreMessage').innerText = msg;
+
+        // Confetti effect
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#4ade80', '#fde047', '#000000']
+        });
+    }
+
+    function resetQuiz() {
+        if(confirm("Tem certeza que deseja apagar seu progresso e recomeçar?")) {
+            state = { currentIndex: 0, answers: new Array(15).fill(null) };
+            saveProgress();
+            changeView('practice');
+        }
+    }
+
+</script>
+</body>
+</html>
