@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Português 7º Ano - Orações Coordenadas e Discurso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            /* Tema Língua Portuguesa 7º Ano - Roxo Literário e Âmbar */
+            --bg-color: #FAF5FF;
+            --text-color: #0F172A;
+            --border-color: #1E293B;
+            --white: #FFFFFF;
+            --theme-light: #F3E8FF;
+            --theme-medium: #C084FC;
+            --theme-dark: #6D28D9; /* Roxo forte */
+            --theme-contrast: #F59E0B; /* Âmbar vibrante */
+            --theme-accent: #0D9488;
+            --theme-text-active: #FFFFFF;
+
+            /* NÃO ALTERAR AS CORES ABAIXO */
+            --correct-bg: #D1FAE5;
+            --correct-border: #059669;
+            --wrong-bg: #FFE4E6;
+            --wrong-border: #BE123C;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+            display: flex; flex-direction: column; align-items: center; 
+            min-height: 100vh; padding: 20px; padding-bottom: 100px;
+            background-image: linear-gradient(var(--theme-light) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+            75% { transform: translateX(-6px); }
+            100% { transform: translateX(0); }
+        }
+        .shake-effect { animation: shake 0.4s ease-in-out; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); color: var(--theme-contrast); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); color: var(--theme-contrast); }
+            100% { transform: scale(1); }
+        }
+
+        .logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+        .css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+        h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+        .subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center; }
+
+        .container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+
+        .toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+        .toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+        .toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+
+        .view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+
+        .search-container { position: relative; width: 100%; }
+        .search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+        .search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+        #no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+
+        .content-group { display: flex; flex-direction: column; gap: 12px; }
+        .section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+        
+        .theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+        .theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+        .theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+
+        .visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+        .highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+        .highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+
+        .difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+        .dif-facil { background: #D1FAE5; color: #065F46; }
+        .dif-medio { background: #FEF08A; color: #713F12; }
+        .dif-dificil { background: #FECACA; color: #7F1D1D; }
+
+        .question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+        .question-map::-webkit-scrollbar { display: none; }
+        .map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+        .map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+        .map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+        .map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+
+        .option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+        .option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+        .opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+        
+        .option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+        .option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+        .option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+        .option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+        .option-btn.disabled { pointer-events: none; opacity: 0.7; }
+
+        .feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+        .feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items:center; gap:8px; color: var(--theme-dark); }
+        .feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+        .feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+        .feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+
+        .result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+        .stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+        .percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+        
+        .btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+        .btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+        
+        .quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+        .nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase; }
+        .btn-next { background-color: var(--theme-dark); color: white; }
+        .btn-prev { background-color: white; color: var(--text-color); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🖋️</span> ESCOLA PROMOVER</div>
+        <h1>PORTUGUÊS - 7º ANO</h1>
+        <p class="subtitle">Orações Coordenadas e Discurso Direto e Indireto</p>
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">Prática (15)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" style="display: flex;">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar (ex: Adversativa, Assindética, Indireto, Pois)...">
+        </div>
+        <div id="no-results"><p>Termo não encontrado. Tente outra palavra-chave!</p></div>
+
+        <!-- TEORIA 1: ORAÇÕES COORDENADAS -->
+        <div class="content-group">
+            <span class="section-badge">🔗 1. Período Composto por Coordenação</span>
+            
+            <!-- Conceito Base: Assindética vs Sindética -->
+            <div class="theory-box">
+                <h3>🧩 O que são Orações Coordenadas?</h3>
+                <p>Uma <strong>oração</strong> é toda frase (ou parte de frase) que gira em torno de um <strong>verbo</strong>. No <strong>Período Composto por Coordenação</strong>, as orações têm <em>sentido completo e independente</em> (uma não funciona como termo sintático da outra; elas apenas se somam ou se conectam lado a lado).</p>
+
+                <div class="visual-area" style="flex-direction: column; gap: 10px; font-size: 0.95rem; color: var(--text-color);">
+                    <div style="font-size: 0.85rem; text-transform: uppercase; color: var(--theme-dark); font-weight: 900;">Esquema Visual: Assindética vs. Sindética</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; width: 100%; text-align: left;">
+                        <div style="background: #F3E8FF; padding: 12px; border-radius: 10px; border: 2px solid var(--theme-dark);">
+                            <strong style="color: var(--theme-dark); font-size: 1rem;">🚫 1. Coordenada Assindética</strong>
+                            <p style="font-size: 0.85rem; margin-top: 4px; font-weight: 500;">
+                                <strong>NÃO possui conjunção</strong> (síndeto). As orações são separadas apenas por pausa/pontuação (vírgula, ponto e vírgula).<br>
+                                <span style="display: inline-block; margin-top: 6px; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #C084FC;">
+                                    <em>Ex: "Cheguei<strong>,</strong> vi<strong>,</strong> venci."</em>
+                                </span>
+                            </p>
+                        </div>
+                        <div style="background: #FEF3C7; padding: 12px; border-radius: 10px; border: 2px solid #D97706;">
+                            <strong style="color: #B45309; font-size: 1rem;">🔗 2. Coordenada Sindética</strong>
+                            <p style="font-size: 0.85rem; margin-top: 4px; font-weight: 500;">
+                                <strong>POSSUI conjunção coordenativa</strong> ligando as orações e definindo a relação de sentido.<br>
+                                <span style="display: inline-block; margin-top: 6px; background: white; padding: 4px 8px; border-radius: 6px; border: 1px solid #F59E0B;">
+                                    <em>Ex: "Estudou muito<strong>, mas</strong> cansou."</em>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- As 5 Classificações das Orações Coordenadas Sindéticas -->
+            <div class="theory-box">
+                <h3>🎯 As 5 Classificações das Orações Sindéticas</h3>
+                <p>O nome da Oração Coordenada Sindética depende 100% do sentido da <strong>conjunção</strong> que a introduz. Veja o painel ilustrado:</p>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- 1. Aditiva -->
+                    <div style="background: #ECFDF5; border: 2px solid #059669; border-radius: 10px; padding: 12px;">
+                        <div style="font-weight: 900; color: #065F46; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span>➕ 1. Sindética ADITIVA (Ideia de Soma / Adição)</span>
+                            <span style="background: #059669; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">e, nem, mas também, como também</span>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-top: 6px; color: #064E3B;">
+                            • <em>"Arrumou a mochila <strong>e</strong> foi para o colégio."</em><br>
+                            • <em>"Não fez a tarefa <strong>nem</strong> justificou ao professor."</em> (Atenção: <strong>NEM</strong> = e não ➔ é sempre Aditiva!)
+                        </p>
+                    </div>
+
+                    <!-- 2. Adversativa -->
+                    <div style="background: #FFF1F2; border: 2px solid #E11D48; border-radius: 10px; padding: 12px;">
+                        <div style="font-weight: 900; color: #9F1239; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span>⚡ 2. Sindética ADVERSATIVA (Oposição / Contraste / Quebra de Expectativa)</span>
+                            <span style="background: #E11D48; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">mas, porém, contudo, todavia, entretanto, no entanto</span>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-top: 6px; color: #881337;">
+                            • <em>"O time jogou muito bem, <strong>porém</strong> não venceu a partida."</em> (Usa-se vírgula antes da conjunção adversativa!).
+                        </p>
+                    </div>
+
+                    <!-- 3. Alternativa -->
+                    <div style="background: #EFF6FF; border: 2px solid #2563EB; border-radius: 10px; padding: 12px;">
+                        <div style="font-weight: 900; color: #1E40AF; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span>🔀 3. Sindética ALTERNATIVA (Escolha / Alternância / Exclusão)</span>
+                            <span style="background: #2563EB; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">ou, ou... ou, ora... ora, já... já, quer... quer</span>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-top: 6px; color: #1E3A8A;">
+                            • <em>"<strong>Ora</strong> faz sol forte, <strong>ora</strong> chove de repente."</em> | <em>"Estude agora <strong>ou</strong> ficará acumulado."</em>
+                        </p>
+                    </div>
+
+                    <!-- 4. Conclusiva -->
+                    <div style="background: #FEFCE8; border: 2px solid #CA8A04; border-radius: 10px; padding: 12px;">
+                        <div style="font-weight: 900; color: #854D0E; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span>🏁 4. Sindética CONCLUSIVA (Dedução / Consequência Lógica)</span>
+                            <span style="background: #CA8A04; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">logo, portanto, por isso, assim, pois (depois do verbo)</span>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-top: 6px; color: #713F12;">
+                            • <em>"Dediquei-me aos estudos o mês inteiro, <strong>portanto</strong> tirei uma excelente nota."</em>
+                        </p>
+                    </div>
+
+                    <!-- 5. Explicativa -->
+                    <div style="background: #F3E8FF; border: 2px solid #7C3AED; border-radius: 10px; padding: 12px;">
+                        <div style="font-weight: 900; color: #5B21B6; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span>💡 5. Sindética EXPLICATIVA (Justificativa / Motivo de uma Ordem)</span>
+                            <span style="background: #7C3AED; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">porque, que, porquanto, pois (antes do verbo)</span>
+                        </div>
+                        <p style="font-size: 0.85rem; margin-top: 6px; color: #4C1D95;">
+                            • <em>"Leve o guarda-chuva hoje, <strong>porque</strong> o céu está cheio de nuvens escuras."</em> (Quase sempre vem após verbo no Imperativo!).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pegadinhas de Prova: E, MAS TAMBÉM e POIS -->
+                <div class="highlight-box warning">
+                    <strong>⚠️ 3 Pegadinhas Clássicas de Prova no 7º Ano:</strong><br>
+                    1. <strong>"Não só... mas também":</strong> Apesar de ter a palavra "mas", expressa <strong>SOMA (Aditiva)</strong>! Ex: <em>"Não só estuda, mas também trabalha."</em><br>
+                    2. <strong>Conjunção "E" com valor Adversativo:</strong> Quando o "e" equivale a "mas", a oração é <strong>Adversativa</strong>! Ex: <em>"Deitou cedo <strong>e</strong> não conseguiu dormir."</em><br>
+                    3. <strong>O segredo da conjunção "POIS":</strong><br>
+                    • <strong>Antes do verbo</strong> (= porque) ➔ <strong>Explicativa:</strong> <em>"Não grite, <strong>pois</strong> o bebê <u>dorme</u>."</em><br>
+                    • <strong>Depois do verbo e entre vírgulas</strong> (= portanto) ➔ <strong>Conclusiva:</strong> <em>"O time treinou muito; <u>vencerá</u>, <strong>pois</strong>, o campeonato."</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEORIA 2: DISCURSO DIRETO E INDIRETO -->
+        <div class="content-group">
+            <span class="section-badge">💬 2. Discurso Direto e Indireto</span>
+            
+            <div class="theory-box">
+                <h3>🎭 Como introduzir a fala dos personagens?</h3>
+                <p>Nos textos narrativos (contos, crônicas, romances, notícias), o narrador pode reproduzir a fala das personagens de duas formas principais:</p>
+
+                <!-- Comparação Lado a Lado -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px;">
+                    <div style="background: #F8FAFC; border: 2px solid var(--border-color); border-radius: 10px; padding: 14px;">
+                        <div style="font-weight: 900; color: var(--theme-dark); border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; margin-bottom: 8px;">
+                            🗣️ Discurso DIRETO (Voz da Personagem)
+                        </div>
+                        <p style="font-size: 0.85rem; color: #334155;">
+                            O personagem fala com suas próprias palavras, de forma viva e literal.<br><br>
+                            <strong>Marcas obrigatórias:</strong><br>
+                            • Verbos de elocução (<em>disse, perguntou, exclamou, respondeu</em>);<br>
+                            • Dois-pontos (<strong>:</strong>), travessão (<strong>—</strong>) ou aspas (<strong>" "</strong>);<br>
+                            • 1ª pessoa (<em>eu, nós, meu</em>) e tempo Presente/Futuro.
+                        </p>
+                        <div style="margin-top: 8px; background: #EDE9FE; padding: 8px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; color: #4C1D95;">
+                            Lucas afirmou:<br>— <strong>Eu</strong> revisar<strong>ei</strong> <strong>este</strong> conteúdo <strong>hoje</strong>!
+                        </div>
+                    </div>
+
+                    <div style="background: #F8FAFC; border: 2px solid var(--border-color); border-radius: 10px; padding: 14px;">
+                        <div style="font-weight: 900; color: #0D9488; border-bottom: 2px solid #CCFBF1; padding-bottom: 5px; margin-bottom: 8px;">
+                            📝 Discurso INDIRETO (Voz do Narrador)
+                        </div>
+                        <p style="font-size: 0.85rem; color: #334155;">
+                            O narrador conta com suas próprias palavras o que o personagem disse.<br><br>
+                            <strong>Marcas obrigatórias:</strong><br>
+                            • <u>Sem</u> travessão e <u>sem</u> dois-pontos;<br>
+                            • Usa conectivos integrantes (<strong>que</strong>, <strong>se</strong>);<br>
+                            • 3ª pessoa (<em>ele, ela, seu</em>) e verbos no Passado.
+                        </p>
+                        <div style="margin-top: 8px; background: #CCFBF1; padding: 8px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; color: #115E59;">
+                            Lucas afirmou <strong>que</strong> (ele) revisar<strong>ia</strong> <strong>aquele</strong> conteúdo <strong>naquele dia</strong>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela Visual de Transposição -->
+                <div class="visual-area" style="flex-direction: column; gap: 10px; font-size: 0.85rem; color: var(--text-color); background: #1E1B4B; border-color: #818CF8;">
+                    <div style="color: #FDE047; font-weight: 900; font-size: 0.95rem; text-transform: uppercase;">
+                        🔄 Tabela de Ouro: Transformando Direto ➔ Indireto
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; text-align: left; font-weight: 500;">
+                        <div style="background: rgba(255,255,255,0.12); color: #E2E8F0; padding: 8px 10px; border-radius: 6px;">
+                            <strong style="color: #FDE047;">NO DISCURSO DIRETO:</strong><br>
+                            • <strong>Presente:</strong> <em>"Eu <u>estudo</u>..."</em><br>
+                            • <strong>Pretérito Perfeito:</strong> <em>"Eu <u>comprei</u>..."</em><br>
+                            • <strong>Futuro do Presente:</strong> <em>"Eu <u>viajarei</u>..."</em><br>
+                            • <strong>Imperativo:</strong> <em>"<u>Faça</u> o dever!"</em><br>
+                            • <strong>Pronomes:</strong> <em>eu, nós, meu, este, isto</em><br>
+                            • <strong>Espaço/Tempo:</strong> <em>aqui, hoje, ontem, amanhã</em>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.18); color: #FFFFFF; padding: 8px 10px; border-radius: 6px; border-left: 3px solid #34D399;">
+                            <strong style="color: #6EE7B7;">VIRA NO INDIRETO:</strong><br>
+                            • <strong>Pret. Imperfeito:</strong> <em>...que ele <u>estudava</u>.</em><br>
+                            • <strong>Mais-que-perfeito:</strong> <em>...que <u>comprara</u> (tinha comprado).</em><br>
+                            • <strong>Futuro do Pretérito:</strong> <em>...que ele <u>viajaria</u>.</em><br>
+                            • <strong>Subjuntivo:</strong> <em>...que <u>fizesse</u> o dever.</em><br>
+                            • <strong>Pronomes:</strong> <em>ele, eles, seu, aquele, aquilo</em><br>
+                            • <strong>Espaço/Tempo:</strong> <em>ali/lá, naquele dia, na véspera, no dia seguinte</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>🔍 Dica para Interrogativas no Discurso Indireto:</strong><br>
+                    Quando a fala direta é uma <strong>pergunta</strong>, o ponto de interrogação desaparece no discurso indireto e usamos a conjunção <strong>"SE"</strong> (ou pronomes interrogativos):<br>
+                    • <strong>Direto:</strong> <em>A mãe perguntou: — Você <u>fez</u> a tarefa hoje?</em><br>
+                    • <strong>Indireto:</strong> <em>A mãe perguntou <strong>se</strong> ele <u>fizera</u> (tinha feito) a tarefa naquele dia.</em>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (15 Q) →
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo - 7º Ano</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">
+                15 questões rigorosas sobre Orações Coordenadas e Discurso Direto/Indireto. Acerte <strong>80% (12/15)</strong> para provar seu domínio!
+            </p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 15</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const contentGroups = document.querySelectorAll('.content-group');
+    const noResultsMsg = document.getElementById('no-results');
+
+    searchInput.addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        let totalVisible = 0;
+        contentGroups.forEach(group => {
+            const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (textContent.includes(term)) {
+                group.style.display = 'flex';
+                totalVisible++;
+            } else {
+                group.style.display = 'none';
+            }
+        });
+        noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+    });
+
+    // 15 Questões Rigorosas (5 Fáceis, 5 Médias, 5 Difíceis) - 7º Ano
+    const questions = [
+        // === FÁCEIS (5) ===
+        {
+            id: 1, level: "Fácil",
+            text: "Observe o período: 'O professor entrou na sala, abriu o diário, iniciou a chamada.' As três orações desse período relacionam-se sem o uso de nenhuma conjunção, sendo separadas apenas por vírgulas. Portanto, são classificadas como:",
+            options: [
+                "Orações Coordenadas Sindéticas Aditivas",
+                "Orações Coordenadas Assindéticas",
+                "Orações Coordenadas Sindéticas Explicativas",
+                "Orações Coordenadas Sindéticas Conclusivas"
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Orações coordenadas que se ligam apenas por pausa/vírgula, sem conectivo (sem síndeto/conjunção), são chamadas de Assindéticas.",
+                options: [
+                    "Para ser sindética aditiva, precisaria de uma conjunção expressa como 'e' ou 'nem'.",
+                    "Certa",
+                    "Não há conjunção explicativa ('porque', 'pois') no período.",
+                    "Não há conjunção conclusiva ('logo', 'portanto') no período."
+                ]
+            }
+        },
+        {
+            id: 2, level: "Fácil",
+            text: "No período composto: 'Os alunos do 7º ano pesquisaram o tema, montaram os cartazes E apresentaram um ótimo seminário', a oração introduzida pela conjunção em destaque expressa ideia de:",
+            options: [
+                "Oposição ou contraste (Adversativa)",
+                "Soma ou adição de ações (Aditiva)",
+                "Alternância ou escolha (Alternativa)",
+                "Justificativa de uma ordem (Explicativa)"
+            ],
+            correct: 1,
+            explanation: {
+                correct: "A conjunção 'e' soma uma nova ação às anteriores, classificando a oração como Coordenada Sindética Aditiva.",
+                options: [
+                    "Não há quebra de expectativa nem oposição entre pesquisar, montar e apresentar.",
+                    "Certa",
+                    "Alternância usaria conectivos como 'ou', 'ora... ora'.",
+                    "Não há justificativa de ordem anterior."
+                ]
+            }
+        },
+        {
+            id: 3, level: "Fácil",
+            text: "Leia a frase: 'Marina treinou bastante durante toda a semana, PORÉM sentiu dor muscular no dia da corrida.' A oração iniciada pela conjunção 'porém' classifica-se como Oração Coordenada Sindética:",
+            options: [
+                "Conclusiva",
+                "Alternativa",
+                "Adversativa",
+                "Explicativa"
+            ],
+            correct: 2,
+            explanation: {
+                correct: "A conjunção 'porém' (assim como mas, contudo, todavia, entretanto) indica oposição/quebra de expectativa, sendo Sindética Adversativa.",
+                options: [
+                    "Sentir dor muscular contrasta com o fato de estar bem preparada, não sendo conclusão lógica.",
+                    "Não há ideia de escolha entre duas opções.",
+                    "Certa",
+                    "Explicativa indicaria o motivo de uma ordem, usando 'porque' ou 'pois'."
+                ]
+            }
+        },
+        {
+            id: 4, level: "Fácil",
+            text: "Leia o trecho narrativo: \nA bibliotecária aproximou-se da mesa e avisou:\n— Por favor, façam silêncio durante a leitura!\nA fala da personagem foi registrada no texto por meio do:",
+            options: [
+                "Discurso Indireto, pois o narrador resume a fala com a conjunção 'que'.",
+                "Discurso Direto, marcado por dois-pontos, travessão e a própria voz da personagem.",
+                "Discurso Indireto Livre, sem pontuação nem verbo de elocução.",
+                "Discurso Descritivo em 3ª pessoa do passado."
+            ],
+            correct: 1,
+            explanation: {
+                correct: "O uso do verbo de elocução ('avisou') seguido de dois-pontos e travessão reproduzindo literalmente a voz da personagem caracteriza o Discurso Direto.",
+                options: [
+                    "No discurso indireto não há travessão nem fala em 1ª/2ª pessoa.",
+                    "Certa",
+                    "Há verbo de elocução ('avisou') e pontuação explícita de diálogo.",
+                    "O verbo 'façam' está no imperativo direto, dirigido aos alunos no momento da fala."
+                ]
+            }
+        },
+        {
+            id: 5, level: "Fácil",
+            text: "Qual das frases abaixo está inteiramente construída em DISCURSO INDIRETO?",
+            options: [
+                "O goleiro comemorou: — Defendi o pênalti mais difícil do campeonato!",
+                "— Onde você guardou meu caderno de desenho? — perguntou Sofia.",
+                "O diretor informou aos estudantes que a feira de ciências ocorreria na sexta-feira.",
+                "Lucas olhou para o relógio e disse: 'Preciso correr para não perder o ônibus'."
+            ],
+            correct: 2,
+            explanation: {
+                correct: "No discurso indireto, o narrador usa suas próprias palavras e a conjunção integrante 'que' ('informou que... ocorreria') sem usar travessão ou aspas.",
+                options: [
+                    "Apresenta dois-pontos e travessão com fala em 1ª pessoa (Discurso Direto).",
+                    "Apresenta travessão e pergunta direta da personagem (Discurso Direto).",
+                    "Certa",
+                    "Apresenta dois-pontos e a fala literal entre aspas (Discurso Direto)."
+                ]
+            }
+        },
+
+        // === MÉDIAS (5) ===
+        {
+            id: 6, level: "Médio",
+            text: "Compare os dois períodos a seguir:\nI. 'Entre rápido em casa, PORQUE já começou a trovejar.'\nII. 'O trânsito estava totalmente engarrafado, PORTANTO chegamos atrasados.'\nAs orações destacadas em I e II classificam-se, respectivamente, como Coordenadas Sindéticas:",
+            options: [
+                "Conclusiva e Explicativa",
+                "Explicativa e Conclusiva",
+                "Adversativa e Aditiva",
+                "Explicativa e Adversativa"
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Em I, 'porque' justifica a ordem dada no imperativo ('Entre rápido') ➔ Explicativa. Em II, 'portanto' apresenta a consequência lógica do engarrafamento ➔ Conclusiva.",
+                options: [
+                    "Pegadinha: inverteu a ordem! 'Porque' após ordem é explicativa, e 'portanto' é conclusiva.",
+                    "Certa",
+                    "Nenhuma das duas expressa contraste ou simples soma.",
+                    "'Portanto' indica conclusão lógica, e não oposição (adversativa)."
+                ]
+            }
+        },
+        {
+            id: 7, level: "Médio",
+            text: "Analise o período: 'Aquele atleta não compareceu ao treino de ontem NEM enviou justificativa ao treinador.' A segunda oração, iniciada por 'nem', é classificada como:",
+            options: [
+                "Coordenada Assindética, pois 'nem' é apenas um advérbio.",
+                "Coordenada Sindética Adversativa, pois indica oposição.",
+                "Coordenada Sindética Alternativa, pois indica exclusão.",
+                "Coordenada Sindética Aditiva, pois 'nem' equivale a 'e não' (soma de negações)."
+            ],
+            correct: 3,
+            explanation: {
+                correct: "A conjunção 'nem' soma duas declarações negativas ('não compareceu' + 'e não enviou'), classificando a oração como Sindética Aditiva.",
+                options: [
+                    "'Nem' funciona aqui como conjunção coordenativa ligando duas orações.",
+                    "Não há contraste entre faltar e não avisar; ambas as ações negativas se somam.",
+                    "Alternativa usaria 'ou... ou', indicando escolha entre duas opções.",
+                    "Certa"
+                ]
+            }
+        },
+        {
+            id: 8, level: "Médio",
+            text: "Leia o período: 'ORA o gato dormia profundamente no sofá da sala, ORA corria atrás do novelo de lã pelo quintal.' O par de conectivos em destaque introduz uma Oração Coordenada Sindética:",
+            options: [
+                "Alternativa",
+                "Aditiva",
+                "Explicativa",
+                "Conclusiva"
+            ],
+            correct: 0,
+            explanation: {
+                correct: "Conjunções repetidas como 'ora... ora', 'ou... ou', 'quer... quer' expressam alternância de ações ou escolha, sendo Sindéticas Alternativas.",
+                options: [
+                    "Certa",
+                    "As ações não ocorrem somadas ao mesmo tempo, mas em momentos alternados.",
+                    "Não há justificativa ou explicação de um fato anterior.",
+                    "Não há dedução lógica ou fechamento de raciocínio."
+                ]
+            }
+        },
+        {
+            id: 9, level: "Médio",
+            text: "Transpondo a frase em Discurso Direto:\nA aluna disse à professora: — Eu entreguei o meu resumo ontem.\npara o DISCURSO INDIRETO, a forma gramaticalmente correta é:",
+            options: [
+                "A aluna disse à professora que eu entreguei o meu resumo ontem.",
+                "A aluna disse à professora que ela entregara (ou tinha entregado) o seu resumo na véspera.",
+                "A aluna disse à professora: ela entregava o resumo dela hoje.",
+                "A aluna perguntou à professora se entregaria o resumo no dia seguinte."
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Na mudança para o indireto: 'eu/meu' viram 'ela/seu', o Pretérito Perfeito ('entreguei') recua para o Mais-que-perfeito ('entregara/tinha entregado') e 'ontem' vira 'na véspera' (ou 'no dia anterior').",
+                options: [
+                    "Manteve 'eu', 'entreguei' e 'ontem' sem fazer as adaptações obrigatórias de 3ª pessoa e tempo.",
+                    "Certa",
+                    "Manteve os dois-pontos do discurso direto e trocou 'ontem' por 'hoje'.",
+                    "Transformou uma afirmação do passado em uma pergunta no futuro."
+                ]
+            }
+        },
+        {
+            id: 10, level: "Médio",
+            text: "Ao converter a frase: 'O técnico afirmou: — Nós venceremos este torneio aqui!' para o Discurso Indireto, os elementos sublinhados ('venceremos', 'este' e 'aqui') devem ser substituídos, respectivamente, por:",
+            options: [
+                "venceríamos, este, aqui",
+                "venceram, esse, cá",
+                "venceriam, aquele, ali (ou lá)",
+                "venciam, isto, hoje"
+            ],
+            correct: 2,
+            explanation: {
+                correct: "No discurso indireto: o Futuro do Presente ('venceremos') vira Futuro do Pretérito em 3ª pessoa ('venceriam'); o pronome 'este' vira 'aquele'; e o advérbio 'aqui' vira 'ali' ou 'lá'.",
+                options: [
+                    "Manteve a 1ª pessoa ('venceríamos') e não adaptou 'este' nem 'aqui'.",
+                    "Trocou o futuro pelo pretérito perfeito e manteve 'cá' (marca de 1ª pessoa).",
+                    "Certa",
+                    "'Venciam' é pretérito imperfeito (usado quando o direto está no presente)."
+                ]
+            }
+        },
+
+        // === DIFÍCEIS (5) ===
+        {
+            id: 11, level: "Difícil",
+            text: "A conjunção 'POIS' muda de classificação conforme sua posição na frase. Analise:\nI. 'Não deixe a janela aberta, POIS vai chover forte.'\nII. 'O candidato atingiu a pontuação máxima; será, POIS, aprovado no exame.'\nEm I e II, as orações destacadas são, respectivamente:",
+            options: [
+                "Conclusiva e Explicativa",
+                "Explicativa e Conclusiva",
+                "Ambas são Explicativas",
+                "Ambas são Conclusivas"
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Em I, 'pois' vem ANTES do verbo ('vai chover') e equivale a 'porque' ➔ Explicativa. Em II, 'pois' vem DEPOIS do verbo ('será') entre vírgulas e equivale a 'portanto' ➔ Conclusiva!",
+                options: [
+                    "Inverteu a regra clássica da posição da conjunção 'pois'.",
+                    "Certa",
+                    "Em II, o 'pois' posposto ao verbo e isolado por vírgulas tem valor conclusivo ('portanto').",
+                    "Em I, o 'pois' anteposto ao verbo justifica a ordem 'Não deixe', sendo explicativo."
+                ]
+            }
+        },
+        {
+            id: 12, level: "Difícil",
+            text: "Cuidado com as aparências! Analise os períodos:\nI. 'Camila não só escreveu o roteiro da peça, MAS TAMBÉM dirigiu os atores.'\nII. 'O paciente tomou o analgésico receitado, E a dor de cabeça não passou.'\nPelo sentido real que estabelecem, as orações destacadas classificam-se, respectivamente, como:",
+            options: [
+                "Adversativa e Aditiva",
+                "Aditiva e Adversativa",
+                "Aditiva e Conclusiva",
+                "Alternativa e Explicativa"
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Em I, a expressão correlativa 'não só... mas também' soma duas ações (Aditiva). Em II, a conjunção 'e' tem valor de oposição/quebra de expectativa, equivalendo a 'mas' (Adversativa)!",
+                options: [
+                    "Pegadinha clássica: guiou-se apenas pela presença da palavra 'mas' em I e 'e' em II sem analisar o sentido.",
+                    "Certa",
+                    "Em II, a dor não passar após o remédio é uma quebra de expectativa (adversativa), não uma conclusão.",
+                    "Não há escolha em I nem explicação de ordem em II."
+                ]
+            }
+        },
+        {
+            id: 13, level: "Difícil",
+            text: "Transformando a pergunta direta:\nO fiscal perguntou ao candidato: — Você trouxe a sua caneta preta hoje?\npara o DISCURSO INDIRETO, obtém-se corretamente:",
+            options: [
+                "O fiscal perguntou ao candidato: se ele trouxe a caneta preta hoje?",
+                "O fiscal perguntou ao candidato que ele trouxesse a sua caneta preta naquele dia.",
+                "O fiscal perguntou ao candidato se ele trouxera (ou tinha trazido) a sua caneta preta naquele dia.",
+                "O fiscal perguntou ao candidato se você trazia a caneta preta ontem."
+            ],
+            correct: 2,
+            explanation: {
+                correct: "Em perguntas diretas de sim/não, o discurso indireto retira a interrogação, usa a conjunção 'se', muda 'trouxe' para 'trouxera/tinha trazido' e 'hoje' para 'naquele dia'.",
+                options: [
+                    "No discurso indireto não se usam dois-pontos nem ponto de interrogação no final.",
+                    "Usou 'que... trouxesse' (que indicaria uma ordem/pedido, e não uma pergunta sobre fato passado).",
+                    "Certa",
+                    "Manteve o pronome de tratamento 'você' e trocou 'hoje' por 'ontem' em vez de 'naquele dia'."
+                ]
+            }
+        },
+        {
+            id: 14, level: "Difícil",
+            text: "Agora faça o caminho inverso! Considere a frase em Discurso Indireto:\n'O guia avisou aos turistas que eles deveriam permanecer ali até o dia seguinte.'\nAssinale a alternativa que reconstrói fielmente essa fala no DISCURSO DIRETO:",
+            options: [
+                "O guia avisou aos turistas: — Eles devem permanecer lá até amanhã.",
+                "O guia avisou aos turistas: — Vocês deverão permanecer aqui até amanhã.",
+                "O guia avisou aos turistas: — Nós deveríamos permanecer aqui até ontem.",
+                "O guia avisou aos turistas que: — Permaneçam ali até o dia seguinte!"
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Voltando para o Discurso Direto: 'eles' (turistas com quem o guia fala) vira 'vocês'; 'deveriam' (futuro do pretérito) volta para 'deverão' (futuro do presente); 'ali' vira 'aqui' e 'o dia seguinte' vira 'amanhã'.",
+                options: [
+                    "Ao falar diretamente com os turistas, o guia usa 'vocês' e 'aqui', não 'eles' e 'lá'.",
+                    "Certa",
+                    "Trocou a pessoa do discurso para 'nós' e usou 'ontem' em vez de 'amanhã'.",
+                    "Misturou a conjunção 'que' do discurso indireto com o travessão do discurso direto."
+                ]
+            }
+        },
+        {
+            id: 15, level: "Difícil",
+            text: "Leia o trecho: 'A cientista analisou as amostras no laboratório, descobriu a causa da infecção E publicou o artigo na revista, MAS alguns colegas questionaram o método.' Quantas orações existem nesse período e qual é a classificação das duas primeiras, respectivamente?",
+            options: [
+                "3 orações; ambas são Coordenadas Sindéticas Aditivas.",
+                "4 orações; a 1ª e a 2ª são Orações Coordenadas Assindéticas.",
+                "4 orações; a 1ª é Assindética e a 2ª é Sindética Explicativa.",
+                "2 orações; a 1ª é Sindética Aditiva e a 2ª é Sindética Adversativa."
+            ],
+            correct: 1,
+            explanation: {
+                correct: "Contamos 4 verbos, logo há 4 orações: 1ª ('analisou...'), 2ª (', descobriu...'), 3ª ('e publicou...') e 4ª (', mas... questionaram'). As duas primeiras não têm conjunção, sendo ambas Assindéticas!",
+                options: [
+                    "Há 4 verbos (analisou, descobriu, publicou, questionaram), portanto são 4 orações.",
+                    "Certa",
+                    "A 2ª oração (', descobriu a causa da infecção') é introduzida apenas por vírgula, sendo Assindética.",
+                    "Existem 4 orações no período; apenas a 3ª é aditiva ('e') e a 4ª é adversativa ('mas')."
+                ]
+            }
+        }
+    ];
+
+    // --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+    const storageKey = 'promover_quiz_7ano_port_coord_discurso_15q';
+    let currentQuestion = 0;
+    
+    let savedAnswers = localStorage.getItem(storageKey);
+    let userAnswers = savedAnswers ? JSON.parse(savedAnswers) : new Array(questions.length).fill(null);
+
+    function setMode(mode) {
+        const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+        views.forEach(v => document.getElementById(v).style.display = 'none');
+        document.getElementById('quizFooter').style.display = 'none';
+
+        if(mode === 'explanation') {
+            document.getElementById('viewExplanation').style.display = 'flex';
+            document.getElementById('btnExp').classList.add('active');
+            document.getElementById('btnPrac').classList.remove('active');
+        } else if (mode === 'practice') {
+            document.getElementById('viewPractice').style.display = 'block';
+            document.getElementById('quizFooter').style.display = 'flex';
+            document.getElementById('btnExp').classList.remove('active');
+            document.getElementById('btnPrac').classList.add('active');
+            renderQuestion();
+            renderMap();
+        } else if (mode === 'result') {
+            document.getElementById('viewResult').style.display = 'block';
+            document.getElementById('quizFooter').style.display = 'none';
+        }
+        window.scrollTo(0,0);
+    }
+
+    function renderQuestion() {
+        if(questions.length === 0) return;
+        const q = questions[currentQuestion];
+        const container = document.getElementById('quizContainer');
+        const letters = ['A', 'B', 'C', 'D'];
+        const ans = userAnswers[currentQuestion];
+
+        let badgeClass = '';
+        if(q.level === 'Fácil') badgeClass = 'dif-facil';
+        else if(q.level === 'Médio') badgeClass = 'dif-medio';
+        else badgeClass = 'dif-dificil';
+
+        container.innerHTML = `
+            <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+                <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+                <div style="margin-bottom: 20px;">
+                    <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+                    <h2 style="font-size: 1.1rem; margin-top: 5px; color: var(--text-color); font-weight: 800; white-space: pre-line; line-height: 1.5;">${q.text}</h2>
+                </div>
+                
+                <div class="options-list">
+                    ${q.options.map((opt, i) => {
+                        let cls = '';
+                        if (ans !== null) {
+                            if (i === q.correct) cls = 'correct';
+                            else if (i === ans) cls = 'wrong';
+                            else cls = 'disabled';
+                        }
+                        return `
+                        <button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                            <div class="opt-circle">${letters[i]}</div>
+                            <div>${opt}</div>
+                        </button>`;
+                    }).join('')}
+                </div>
+                
+                ${ans !== null ? `
+                <div class="feedback-box">
+                    <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                        ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '⚠️ Ops! Falha Detectada:'}
+                    </div>
+                    <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+                    <div style="margin-top: 10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                        ${q.explanation.correct}
+                    </div>
+                    
+                    <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                        <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                        ${q.explanation.options.map((exp, i) => i !== q.correct ? `
+                            <div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>(${letters[i]})</strong> ${exp}</div>
+                        ` : '').join('')}
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+        `;
+        updateNav();
+    }
+
+    function handleAnswer(idx) {
+        if (userAnswers[currentQuestion] !== null) return;
+        
+        userAnswers[currentQuestion] = idx;
+        localStorage.setItem(storageKey, JSON.stringify(userAnswers));
+        
+        if (idx === questions[currentQuestion].correct) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        } else {
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.classList.remove('shake-effect');
+            void quizContainer.offsetWidth; 
+            quizContainer.classList.add('shake-effect');
+            setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+        }
+        
+        renderQuestion();
+        renderMap();
+    }
+
+    function renderMap() {
+        if(questions.length === 0) return;
+        const map = document.getElementById('qMap');
+        map.innerHTML = questions.map((q, i) => {
+            let cls = 'map-dot';
+            if (i === currentQuestion) cls += ' active';
+            if (userAnswers[i] !== null) {
+                cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+            }
+            return `<div class="${cls}" onclick="goTo(${i})">${i + 1}</div>`;
+        }).join('');
+
+        setTimeout(() => {
+            const activeDot = map.querySelector('.map-dot.active');
+            if (activeDot) {
+                activeDot.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }, 50);
+    }
+
+    function goTo(i) {
+        if (window.confetti) confetti.reset();
+        currentQuestion = i;
+        renderQuestion();
+        renderMap();
+    }
+
+    function changeQuestion(d) {
+        let n = currentQuestion + d;
+        if (n >= 0 && n < questions.length) goTo(n);
+    }
+
+    function updateNav() {
+        document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+        const next = document.getElementById('btnNext');
+        if (currentQuestion === questions.length - 1) {
+            next.textContent = "Finalizar Diagnóstico";
+            next.onclick = finish;
+        } else {
+            next.textContent = "Avançar";
+            next.onclick = () => changeQuestion(1);
+        }
+    }
+
+    function finish() {
+        let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+        let percent = Math.round((correct / questions.length) * 100);
+        
+        if (window.confetti) confetti.reset();
+        
+        document.getElementById('finalPercent').textContent = percent + "%";
+        document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+        document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐" : percent >= 60 ? "⭐⭐" : "⭐";
+
+        let summary = '<div style="text-align:left; margin-top:20px;">';
+        
+        if (percent < 80) {
+            summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+                <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a nota de corte (80% - 12 acertos). Revise a teoria ilustrada de Orações Coordenadas e Discurso antes de tentar novamente!
+            </div>`;
+            document.getElementById('action-buttons').innerHTML = '<button class="btn-action" onclick="reset()">Limpar Histórico e Refazer Prova</button>';
+        } else {
+            summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+                <strong>🏆 Excelente Desempenho!</strong> Você domina perfeitamente a classificação das Orações Coordenadas e a transposição entre Discurso Direto e Indireto!
+            </div>`;
+            document.getElementById('action-buttons').innerHTML = '<button class="btn-action" onclick="reset()">Refazer Prova (Zerar Histórico)</button>';
+        }
+
+        if (correct < questions.length) {
+            summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+            questions.forEach((q, i) => {
+                if(userAnswers[i] !== q.correct && userAnswers[i] !== null) {
+                    summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                        <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                        <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">Seu Erro: ${q.options[userAnswers[i]]}</span>
+                        <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                    </div>`;
+                }
+            });
+        }
+        
+        summary += '</div>';
+        document.getElementById('review-container').innerHTML = summary;
+        setMode('result');
+    }
+
+    function reset() {
+        localStorage.removeItem(storageKey);
+        userAnswers = new Array(questions.length).fill(null);
+        currentQuestion = 0;
+        setMode('practice');
+    }
+
+    setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+</script>
+</body>
+</html>
