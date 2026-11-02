@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estatística 7º Ano - Promover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+    --bg-color: #ECFEFF;
+    --text-color: #0F172A;
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-light: #CFFAFE;
+    --theme-medium: #22D3EE;
+    --theme-dark: #155E75;
+    --theme-contrast: #C2410C;
+    --theme-accent: #0891B2;
+    --theme-text-active: #FFFFFF;
+    /* NÃO ALTERAR AS CORES ABAIXO */
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <h1>Matemática I – 7º&nbsp;Ano</h1>
+        <p class="subtitle">Estatística: população, amostra, variáveis e frequências (págs. 153 a 161)</p>
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (30)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" style="display: flex;">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- TEMA 1 -->
+        <div class="content-group">
+            <span class="section-badge">1. Para que serve a Estatística?</span>
+            <div class="theory-box">
+                <h3>📊 O que é Estatística?</h3>
+                <p>A <strong>Estatística</strong> é a parte da Matemática que <strong>coleta, organiza, analisa e interpreta dados</strong>. Com ela, um monte de informações soltas vira uma conclusão que ajuda a tomar decisões.</p>
+                <p><strong>Dado</strong> é cada informação coletada. Exemplo: se você perguntar a idade de 30 colegas, cada resposta é um dado.</p>
+                <div class="visual-area" style="font-size: 0.9rem; gap: 8px;">
+                    <span>1. Planejar</span><span>➜</span><span>2. Coletar</span><span>➜</span><span>3. Organizar</span><span>➜</span><span>4. Analisar</span><span>➜</span><span>5. Concluir</span>
+                </div>
+                <div class="highlight-box">
+                    <strong>No dia a dia:</strong> o IBGE conta a população para o governo planejar escolas e hospitais; uma loja descobre o que vende mais; a escola pergunta qual merenda os alunos preferem.
+                </div>
+                <div class="highlight-box warning">
+                    <strong>Cuidado:</strong> a Estatística ajuda a fazer boas previsões, mas não dá certeza absoluta sobre o futuro.
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMA 2 -->
+        <div class="content-group">
+            <span class="section-badge">2. População e amostra</span>
+            <div class="theory-box">
+                <h3>👥 Quem participa da pesquisa?</h3>
+                <p><strong>População:</strong> é o grupo <strong>completo</strong> que queremos estudar. Não precisa ser de pessoas: pode ser de animais, carros, lâmpadas ou escolas.</p>
+                <p><strong>Amostra:</strong> é uma <strong>parte</strong> da população, escolhida para participar da pesquisa.</p>
+                <p><strong>Censo:</strong> é a pesquisa feita com <strong>todos</strong> os elementos da população.</p>
+                <div class="visual-area" style="font-size: 1rem; flex-direction: column; gap: 8px;">
+                    <span>🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦<br>🟦🟦🟦🟧🟦🟦🟦🟦🟦🟦<br>🟦🟦🟦🟦🟦🟦🟧🟦🟦🟦</span>
+                    <span>Todos os quadrados = população (30)<br>🟧 Quadrados laranja = amostra (2)</span>
+                </div>
+                <p><strong>Exemplo:</strong> uma escola tem 600 alunos e entrevista 60 deles sobre o horário do recreio. A população são os 600 alunos, e a amostra são os 60 entrevistados.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🍲 Por que usar amostra?</h3>
+                <p>Para provar uma sopa, você não toma a panela inteira: mexe bem e prova uma colher. A amostra funciona assim. Ela é usada quando:</p>
+                <ul style="padding-left: 20px;">
+                    <li>a população é muito grande;</li>
+                    <li>falta tempo ou dinheiro para pesquisar todos;</li>
+                    <li>o teste estraga o produto, como acender palitos de fósforo.</li>
+                </ul>
+                <div class="highlight-box warning">
+                    <strong>Amostra boa é amostra representativa:</strong> ela precisa ter os diferentes grupos da população. Perguntar só ao time de futebol qual é o esporte preferido da escola daria um resultado distorcido. Um sorteio entre todas as turmas é bem melhor.
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMA 3 -->
+        <div class="content-group">
+            <span class="section-badge">3. Variáveis estatísticas</span>
+            <div class="theory-box">
+                <h3>🔎 O que é uma variável?</h3>
+                <p><strong>Variável</strong> é a característica que está sendo pesquisada. Ela tem esse nome porque a resposta pode variar de um elemento para outro.</p>
+                <p>Exemplo: em "cor favorita", a <strong>variável</strong> é a cor favorita, e azul, verde e vermelho são os <strong>valores</strong> dela.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🔤 Variável qualitativa</h3>
+                <p>A resposta é uma <strong>qualidade</strong>, uma característica, e não uma medida.</p>
+                <p><strong>Nominal:</strong> as respostas <strong>não têm ordem</strong>. Exemplos: cor favorita, time do coração, cidade onde nasceu.</p>
+                <p><strong>Ordinal:</strong> as respostas <strong>têm uma ordem natural</strong>. Exemplos: satisfação (ruim, regular, bom, ótimo) e escolaridade (fundamental, médio, superior).</p>
+            </div>
+            <div class="theory-box">
+                <h3>🔢 Variável quantitativa</h3>
+                <p>A resposta é um <strong>número</strong> que representa uma quantidade.</p>
+                <p><strong>Discreta:</strong> vem de uma <strong>contagem</strong>. Exemplos: número de irmãos, gols em uma partida, livros lidos.</p>
+                <p><strong>Contínua:</strong> vem de uma <strong>medição</strong> e pode ter valores com vírgula. Exemplos: altura, massa, temperatura, tempo gasto.</p>
+                <div class="visual-area" style="font-size: 0.9rem; gap: 10px;">
+                    <span>Contou? ➜ Discreta</span><span>Mediu? ➜ Contínua</span>
+                </div>
+                <div class="highlight-box warning">
+                    <strong>Pegadinha:</strong> nem todo número é quantidade! Número da camisa, CEP e telefone apenas <strong>identificam</strong> algo. Somar dois CEPs não faz sentido, por isso essas variáveis são <strong>qualitativas</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMA 4 -->
+        <div class="content-group">
+            <span class="section-badge">4. Frequência absoluta e relativa</span>
+            <div class="theory-box">
+                <h3>🧮 Frequência absoluta</h3>
+                <p>É <strong>quantas vezes</strong> uma resposta apareceu. Basta contar!</p>
+                <p>Exemplo: os 20 alunos do 7º A escolheram seu esporte preferido. Se 8 escolheram futebol, a frequência absoluta do futebol é <strong>8</strong>.</p>
+                <div class="highlight-box">
+                    A soma de todas as frequências absolutas é igual ao <strong>total de dados</strong> da pesquisa.
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>📐 Frequência relativa</h3>
+                <p>Mostra <strong>que parte do total</strong> cada resposta representa. Pode ser escrita como fração, número decimal ou porcentagem.</p>
+                <div class="visual-area" style="font-size: 1rem;">
+                    Frequência relativa = frequência absoluta ÷ total de dados
+                </div>
+                <p>No exemplo do futebol: 8 ÷ 20 = 0,4. Multiplicando por 100, encontramos <strong>40%</strong>.</p>
+                <table border="1" cellpadding="6" style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem;">
+                    <tr style="background: var(--theme-light);"><th>Esporte</th><th>Frequência absoluta</th><th>Frequência relativa</th></tr>
+                    <tr><td>Futebol</td><td>8</td><td>40%</td></tr>
+                    <tr><td>Vôlei</td><td>6</td><td>30%</td></tr>
+                    <tr><td>Basquete</td><td>4</td><td>20%</td></tr>
+                    <tr><td>Natação</td><td>2</td><td>10%</td></tr>
+                    <tr style="background: var(--theme-light);"><th>Total</th><th>20</th><th>100%</th></tr>
+                </table>
+                <div class="highlight-box">
+                    <strong>Confira sempre:</strong> a soma das frequências relativas precisa dar <strong>100%</strong>.
+                </div>
+                <div class="highlight-box warning">
+                    <strong>Número maior nem sempre é parte maior:</strong> no 7º A, 8 de 20 alunos gostam de futebol (40%). No 7º B, 9 de 30 gostam (30%). O 7º B tem mais alunos que gostam de futebol, mas, no 7º A, esses alunos representam uma parte maior da turma.
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>🔁 Fazendo o caminho de volta</h3>
+                <p><strong>Tenho a porcentagem e quero a quantidade:</strong> 30% de 40 alunos é igual a 30 ÷ 100 × 40 = <strong>12 alunos</strong>.</p>
+                <p><strong>Tenho a quantidade e quero o total:</strong> se 15 pessoas são 25% do grupo e 25% é um quarto do total, então o total é 15 × 4 = <strong>60 pessoas</strong>.</p>
+                <p><strong>Falta uma porcentagem na tabela:</strong> some as que você já tem e veja quanto falta para chegar a 100%.</p>
+            </div>
+        </div>
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (30 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">30 questões rigorosas. Acerte <strong>80% (24/30)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 30</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+const questions = [
+    // ---------- FÁCEIS ----------
+    {
+        id: 1, level: "Fácil",
+        text: "Qual é o principal objetivo da Estatística?",
+        options: ["Resolver equações usando regras fixas", "Medir ângulos e áreas de figuras", "Coletar, organizar e analisar dados", "Dizer com certeza o que vai acontecer"],
+        correct: 2,
+        explanation: {
+            correct: "A Estatística trabalha com dados: coleta, organiza e analisa para chegar a conclusões.",
+            options: ["Equações são estudadas na Álgebra.", "Ângulos e áreas são estudados na Geometria.", "Certa", "A Estatística ajuda a prever, mas não garante o futuro."]
+        }
+    },
+    {
+        id: 2, level: "Fácil",
+        text: "Uma escola quer saber a merenda preferida dos seus 800 alunos. Nessa pesquisa, a população é formada por:",
+        options: ["Os 800 alunos da escola", "Os alunos que gostam de merenda", "As merendas servidas na escola", "Os funcionários da cozinha"],
+        correct: 0,
+        explanation: {
+            correct: "População é o grupo completo que se quer estudar. Aqui, são todos os 800 alunos.",
+            options: ["Certa", "A pesquisa é sobre todos os alunos, não só sobre uma parte.", "As merendas são o assunto da pesquisa, não a população.", "Os funcionários não fazem parte do grupo estudado."]
+        }
+    },
+    {
+        id: 3, level: "Fácil",
+        text: "Em uma pesquisa, o que é a amostra?",
+        options: ["Todos os elementos da população", "O resultado final da pesquisa", "A pergunta feita aos participantes", "Uma parte escolhida da população"],
+        correct: 3,
+        explanation: {
+            correct: "Amostra é uma parte da população, escolhida para participar da pesquisa.",
+            options: ["Todos os elementos formam a população, não a amostra.", "O resultado é a conclusão da pesquisa.", "A pergunta trata da variável pesquisada.", "Certa"]
+        }
+    },
+    {
+        id: 4, level: "Fácil",
+        text: "Qual das variáveis abaixo é quantitativa?",
+        options: ["Cor dos olhos", "Time do coração", "Altura dos alunos", "Matéria preferida"],
+        correct: 2,
+        explanation: {
+            correct: "A altura é um número obtido por medição, então é uma variável quantitativa.",
+            options: ["A cor é uma qualidade, não uma quantidade.", "O time é uma preferência, descrita em palavras.", "Certa", "A matéria é uma preferência, descrita em palavras."]
+        }
+    },
+    {
+        id: 5, level: "Fácil",
+        text: "Em uma pesquisa sobre a fruta preferida, 12 alunos escolheram maçã. O número 12 é a:",
+        options: ["Frequência relativa da maçã", "População da pesquisa", "Variável da pesquisa", "Frequência absoluta da maçã"],
+        correct: 3,
+        explanation: {
+            correct: "Frequência absoluta é quantas vezes uma resposta apareceu: a maçã apareceu 12 vezes.",
+            options: ["A relativa compara a resposta com o total de dados.", "A população é o grupo inteiro pesquisado.", "A variável é a fruta preferida.", "Certa"]
+        }
+    },
+    {
+        id: 6, level: "Fácil",
+        text: "Quando uma pesquisa investiga todos os elementos da população, ela recebe o nome de:",
+        options: ["Censo", "Amostra", "Frequência", "Variável"],
+        correct: 0,
+        explanation: {
+            correct: "O censo pesquisa todos os elementos. O IBGE faz isso para contar a população do Brasil.",
+            options: ["Certa", "A amostra é só uma parte da população.", "Frequência indica quantas vezes uma resposta aparece.", "Variável é a característica pesquisada."]
+        }
+    },
+    {
+        id: 7, level: "Fácil",
+        text: "Qual situação é um exemplo de uso da Estatística?",
+        options: ["Calcular o troco de uma compra no mercado", "Perguntar aos moradores o que acham da praça", "Medir o comprimento da sala com uma trena", "Dividir uma pizza em oito pedaços iguais"],
+        correct: 1,
+        explanation: {
+            correct: "Uma pesquisa de opinião coleta dados para analisar e tirar conclusões.",
+            options: ["Calcular o troco é uma conta de subtração, sem análise de dados.", "Certa", "Medir a sala gera uma medida, mas não há análise de dados.", "Dividir a pizza envolve frações, não a análise de dados."]
+        }
+    },
+    {
+        id: 8, level: "Fácil",
+        text: "Em um grupo de 10 alunos, 5 gostam de ler. Qual é a frequência relativa dos alunos que gostam de ler?",
+        options: ["5%", "10%", "50%", "15%"],
+        correct: 2,
+        explanation: {
+            correct: "5 ÷ 10 = 0,5. Multiplicando por 100, temos 50%.",
+            options: ["5 é a frequência absoluta, não a porcentagem.", "10 é o total de alunos, não a porcentagem.", "Certa", "Os números foram somados, mas o certo é dividir."]
+        }
+    },
+    {
+        id: 9, level: "Fácil",
+        text: "Em uma pesquisa sobre animais de estimação, as respostas foram: gato, cão, cão, peixe, cão, gato. Qual é a frequência absoluta de cão?",
+        options: ["2", "3", "6", "1"],
+        correct: 1,
+        explanation: {
+            correct: "Contando as respostas, a palavra cão aparece 3 vezes.",
+            options: ["2 é a frequência absoluta de gato.", "Certa", "6 é o total de respostas.", "1 é a frequência absoluta de peixe."]
+        }
+    },
+    {
+        id: 10, level: "Fácil",
+        text: "Ao somar todas as frequências relativas de uma pesquisa, em porcentagem, o resultado deve ser:",
+        options: ["O total de entrevistados", "50%", "10%", "100%"],
+        correct: 3,
+        explanation: {
+            correct: "Todas as partes juntas formam o total, e o total corresponde a 100%.",
+            options: ["O total de entrevistados é a soma das frequências absolutas.", "50% representa apenas metade do total.", "10% representa apenas uma pequena parte do total.", "Certa"]
+        }
+    },
+
+    // ---------- MÉDIAS ----------
+    {
+        id: 11, level: "Médio",
+        text: "Para conhecer a opinião dos alunos de uma escola sobre o horário do recreio, qual é a melhor amostra?",
+        options: ["Alunos sorteados de todas as turmas", "Todos os alunos de uma turma do 9º ano", "Os 30 primeiros alunos a chegar à escola", "Os alunos que participam do grêmio"],
+        correct: 0,
+        explanation: {
+            correct: "O sorteio entre todas as turmas dá chance a todos e representa melhor a escola.",
+            options: ["Certa", "Uma única turma não representa os alunos de outras idades.", "Quem chega cedo pode ter uma rotina diferente da dos demais.", "O grêmio é um grupo específico e não representa todos."]
+        }
+    },
+    {
+        id: 12, level: "Médio",
+        text: "Uma fábrica acende alguns palitos de fósforo de cada lote para testar a qualidade. Por que ela não testa todos os palitos?",
+        options: ["Porque a amostra sempre dá um resultado exato", "Porque é proibido testar todos os palitos", "Porque os palitos não podem ser contados", "Porque o teste acabaria com todo o produto"],
+        correct: 3,
+        explanation: {
+            correct: "Cada palito testado é queimado. Testar todos deixaria a fábrica sem produto para vender.",
+            options: ["Uma amostra dá uma boa estimativa, mas pode ter pequenos erros.", "Não existe essa proibição: o problema é perder o produto.", "A fábrica consegue saber quantos palitos produz.", "Certa"]
+        }
+    },
+    {
+        id: 13, level: "Médio",
+        text: "Em uma cidade de 20&nbsp;000 moradores, 1&nbsp;500 foram entrevistados sobre o transporte público. A população e a amostra são, nesta ordem:",
+        options: ["1&nbsp;500 entrevistados e 20&nbsp;000 moradores", "20&nbsp;000 moradores e 1&nbsp;500 entrevistados", "20&nbsp;000 moradores e 18&nbsp;500 não entrevistados", "1&nbsp;500 entrevistados e 18&nbsp;500 não entrevistados"],
+        correct: 1,
+        explanation: {
+            correct: "A população é o grupo inteiro (20&nbsp;000). A amostra é a parte entrevistada (1&nbsp;500).",
+            options: ["A ordem foi invertida: a população é o grupo maior.", "Certa", "Quem não foi entrevistado não faz parte da amostra.", "A população inclui todos os moradores da cidade."]
+        }
+    },
+    {
+        id: 14, level: "Médio",
+        text: "A variável 'nível de satisfação', com as respostas ruim, regular, bom e ótimo, é classificada como:",
+        options: ["Qualitativa nominal", "Qualitativa ordinal", "Quantitativa discreta", "Quantitativa contínua"],
+        correct: 1,
+        explanation: {
+            correct: "As respostas são palavras e têm uma ordem natural, de ruim até ótimo.",
+            options: ["Na nominal, as respostas não têm ordem.", "Certa", "A discreta vem de uma contagem.", "A contínua vem de uma medição."]
+        }
+    },
+    {
+        id: 15, level: "Médio",
+        text: "A variável 'quantidade de livros lidos em um ano' é classificada como:",
+        options: ["Qualitativa nominal", "Qualitativa ordinal", "Quantitativa discreta", "Quantitativa contínua"],
+        correct: 2,
+        explanation: {
+            correct: "Os livros são contados um a um, então a variável é quantitativa discreta.",
+            options: ["A resposta é um número que indica quantidade.", "A resposta é um número, não uma qualidade em ordem.", "Certa", "A contínua vem de medição, e aqui houve contagem."]
+        }
+    },
+    {
+        id: 16, level: "Médio",
+        text: "Qual destas variáveis é quantitativa contínua?",
+        options: ["Número de irmãos", "Marca do celular", "Gols em uma partida", "Temperatura ao meio-dia"],
+        correct: 3,
+        explanation: {
+            correct: "A temperatura é medida com um termômetro e pode ter valores com vírgula, como 29,5 °C.",
+            options: ["Irmãos são contados, então a variável é discreta.", "Marca é uma qualidade, não uma quantidade.", "Gols são contados, então a variável é discreta.", "Certa"]
+        }
+    },
+    {
+        id: 17, level: "Médio",
+        text: "A tabela mostra o esporte preferido dos alunos de uma turma. Qual é a frequência relativa do vôlei?<table border='1' cellpadding='6' style='width:100%; border-collapse:collapse; text-align:center; font-size:0.85rem; font-weight:600; margin-top:12px;'><tr><th>Esporte</th><th>Frequência absoluta</th></tr><tr><td>Futebol</td><td>12</td></tr><tr><td>Vôlei</td><td>8</td></tr><tr><td>Basquete</td><td>4</td></tr><tr><td>Natação</td><td>1</td></tr></table>",
+        options: ["32%", "8%", "48%", "25%"],
+        correct: 0,
+        explanation: {
+            correct: "O total é 12 + 8 + 4 + 1 = 25. Então, 8 ÷ 25 = 0,32, que é igual a 32%.",
+            options: ["Certa", "8 é a frequência absoluta do vôlei.", "48% é a frequência relativa do futebol.", "25 é o total de alunos, não a porcentagem."]
+        }
+    },
+    {
+        id: 18, level: "Médio",
+        text: "Em uma turma de 40 alunos, 30% usam óculos. Quantos alunos usam óculos?",
+        options: ["30", "10", "12", "28"],
+        correct: 2,
+        explanation: {
+            correct: "30 ÷ 100 × 40 = 12. Portanto, 12 alunos usam óculos.",
+            options: ["30 é a porcentagem, não a quantidade de alunos.", "10 seria 25% de 40.", "Certa", "28 é a quantidade de alunos que não usam óculos."]
+        }
+    },
+    {
+        id: 19, level: "Médio",
+        text: "Uma pesquisa teve quatro respostas possíveis, com frequências absolutas 7, 9, 3 e 1. Qual é a frequência relativa da resposta mais escolhida?",
+        options: ["45%", "9%", "35%", "90%"],
+        correct: 0,
+        explanation: {
+            correct: "O total é 20, e a resposta mais escolhida teve 9 votos. Então, 9 ÷ 20 = 0,45 = 45%.",
+            options: ["Certa", "9 é a frequência absoluta, não a porcentagem.", "35% é a frequência relativa da resposta com 7 votos.", "90% aparece ao dividir por 10, mas o total é 20."]
+        }
+    },
+    {
+        id: 20, level: "Médio",
+        text: "Em uma pesquisa sobre cores, as frequências relativas foram: azul 40%, verde 25%, amarelo 15% e vermelho com o valor que falta. Qual é a frequência relativa do vermelho?",
+        options: ["15%", "25%", "80%", "20%"],
+        correct: 3,
+        explanation: {
+            correct: "40 + 25 + 15 = 80. Para chegar a 100%, faltam 20%.",
+            options: ["15% é a frequência do amarelo.", "25% é a frequência do verde.", "80% é a soma das outras cores, não o que falta.", "Certa"]
+        }
+    },
+
+    // ---------- DIFÍCEIS ----------
+    {
+        id: 21, level: "Difícil",
+        text: "Um canal de esportes perguntou em seu site qual é o tipo de programa preferido dos brasileiros. Esporte venceu com 90% dos votos. Por que essa conclusão é pouco confiável?",
+        options: ["Porque quem visita o site já costuma gostar de esporte", "Porque porcentagens não podem ser usadas em pesquisas", "Porque deveriam ter usado a frequência absoluta", "Porque toda pesquisa feita pela internet é falsa"],
+        correct: 0,
+        explanation: {
+            correct: "A amostra não representa os brasileiros, pois reúne principalmente pessoas que gostam de esporte.",
+            options: ["Certa", "Porcentagens são muito usadas em pesquisas.", "Trocar a forma de mostrar o resultado não corrige a amostra.", "Pesquisas on-line podem ser boas se a amostra for bem escolhida."]
+        }
+    },
+    {
+        id: 22, level: "Difícil",
+        text: "Sobre os jogadores de um time, foram anotados: número da camisa, altura, quantidade de gols e cidade natal. Quantas dessas variáveis são quantitativas?",
+        options: ["1", "2", "3", "4"],
+        correct: 1,
+        explanation: {
+            correct: "Só altura e gols representam quantidades. O número da camisa apenas identifica o jogador.",
+            options: ["Altura e gols são quantitativas, então são duas.", "Certa", "O número da camisa não é quantidade, pois só identifica.", "A cidade natal e o número da camisa são qualitativos."]
+        }
+    },
+    {
+        id: 23, level: "Difícil",
+        text: "No 7º A, 12 de 30 alunos tiraram nota acima de 7. No 7º B, 10 de 20 alunos conseguiram o mesmo. Qual turma teve o melhor resultado proporcional?",
+        options: ["7º A, porque 12 é maior que 10", "7º A, porque a turma tem mais alunos", "7º B, porque 50% é mais que 40%", "Empate, pois a diferença é de só 2 alunos"],
+        correct: 2,
+        explanation: {
+            correct: "7º A: 12 ÷ 30 = 40%. 7º B: 10 ÷ 20 = 50%. Para comparar turmas diferentes, use a frequência relativa.",
+            options: ["12 e 10 são frequências absolutas, que não consideram o tamanho da turma.", "Ter mais alunos não significa ter proporção maior.", "Certa", "Em turmas de tamanhos diferentes, compare as porcentagens: 40% e 50%."]
+        }
+    },
+    {
+        id: 24, level: "Difícil",
+        text: "Em uma pesquisa, 15 pessoas escolheram o sabor morango, o que representa 25% dos entrevistados. Quantas pessoas foram entrevistadas?",
+        options: ["40", "30", "375", "60"],
+        correct: 3,
+        explanation: {
+            correct: "25% é um quarto do total. Se um quarto são 15 pessoas, o total é 15 × 4 = 60.",
+            options: ["Aqui, 15 e 25 foram somados.", "Esse valor seria o total se 15 fossem 50%.", "Aqui, 15 foi multiplicado por 25.", "Certa"]
+        }
+    },
+    {
+        id: 25, level: "Difícil",
+        text: "Em uma pesquisa com 50 alunos sobre o melhor turno para estudar, 15 escolheram a tarde, 10 escolheram a noite e os demais escolheram a manhã. Qual é a frequência relativa da manhã?",
+        options: ["50%", "25%", "30%", "20%"],
+        correct: 0,
+        explanation: {
+            correct: "Manhã: 50 − 15 − 10 = 25 alunos. Então, 25 ÷ 50 = 0,5 = 50%.",
+            options: ["Certa", "25 é a frequência absoluta da manhã, não a porcentagem.", "30% é a frequência relativa da tarde.", "20% é a frequência relativa da noite."]
+        }
+    },
+    {
+        id: 26, level: "Difícil",
+        text: "Uma escola tem 500 alunos e entrevistou 12% deles. Na amostra, 25% disseram que vão de ônibus para a escola. Quantos alunos da amostra vão de ônibus?",
+        options: ["60", "125", "45", "15"],
+        correct: 3,
+        explanation: {
+            correct: "A amostra tem 12% de 500 = 60 alunos. Depois, 25% de 60 = 15 alunos.",
+            options: ["60 é o tamanho da amostra, mas a conta ainda não acabou.", "125 é 25% de 500, ou seja, da população inteira.", "45 é a quantidade da amostra que não vai de ônibus.", "Certa"]
+        }
+    },
+    {
+        id: 27, level: "Difícil",
+        text: "Ana calculou as frequências relativas de uma pesquisa e encontrou 35%, 30%, 20% e 25%. Sobre esses valores, é correto afirmar que:",
+        options: ["Estão certos, pois cada um é menor que 100%", "Estão errados, pois a soma é 110%, e não 100%", "Estão errados, pois deveriam ser todos iguais", "Estão certos, pois a soma pode passar de 100%"],
+        correct: 1,
+        explanation: {
+            correct: "35 + 30 + 20 + 25 = 110. Como a soma deve ser 100%, há erro em algum cálculo.",
+            options: ["Não basta cada valor ser menor que 100%: a soma precisa dar 100%.", "Certa", "As respostas podem ter frequências diferentes.", "A soma das partes não pode ser maior que o total."]
+        }
+    },
+    {
+        id: 28, level: "Difícil",
+        text: "Qual alternativa relaciona corretamente a variável e sua classificação?",
+        options: ["CEP da casa: quantitativa discreta", "Massa corporal: quantitativa discreta", "Escolaridade: qualitativa ordinal", "Time favorito: qualitativa ordinal"],
+        correct: 2,
+        explanation: {
+            correct: "Escolaridade é descrita em palavras e tem ordem: fundamental, médio e superior.",
+            options: ["O CEP só identifica um endereço, então é qualitativo.", "A massa é medida, então é quantitativa contínua.", "Certa", "Times não têm ordem natural, então a variável é nominal."]
+        }
+    },
+    {
+        id: 29, level: "Difícil",
+        text: "Dez alunos responderam quantos irmãos têm: 0, 1, 1, 2, 0, 1, 3, 1, 2, 1. Qual é a frequência relativa dos alunos com pelo menos 2 irmãos?",
+        options: ["20%", "30%", "50%", "10%"],
+        correct: 1,
+        explanation: {
+            correct: "Pelo menos 2 significa 2 ou mais. São 3 alunos em 10, ou seja, 3 ÷ 10 = 30%.",
+            options: ["20% considera apenas quem tem exatamente 2 irmãos.", "Certa", "50% é a frequência de quem tem exatamente 1 irmão.", "10% considera apenas quem tem exatamente 3 irmãos."]
+        }
+    },
+    {
+        id: 30, level: "Difícil",
+        text: "Em uma pesquisa com 200 pessoas, 45% preferem praia, 35% preferem serra e o restante prefere interior. Quantas pessoas a mais preferem praia em relação ao interior?",
+        options: ["25", "90", "40", "50"],
+        correct: 3,
+        explanation: {
+            correct: "Interior: 100 − 45 − 35 = 20%. Praia: 90 pessoas. Interior: 40 pessoas. Diferença: 50 pessoas.",
+            options: ["25 é a diferença em porcentagem (45 − 20), não em pessoas.", "90 é o total de pessoas que preferem praia.", "40 é o total de pessoas que preferem interior.", "Certa"]
+        }
+    }
+];
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise a teoria com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova da escola com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+</script>
+</body>
+</html>
