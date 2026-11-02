@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indústria no Brasil 7º Ano - Promover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root {
+    --bg-color: #FFFBEB;
+    --text-color: #1C1917;
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-light: #FEF3C7;
+    --theme-medium: #FBBF24;
+    --theme-dark: #78350F;
+    --theme-contrast: #0F766E;
+    --theme-accent: #B45309;
+    --theme-text-active: #FFFFFF;
+    /* NÃO ALTERAR AS CORES ABAIXO */
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+td, th { padding: 6px 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <h1>Geografia – 7º&nbsp;Ano</h1>
+        <p class="subtitle">Capítulo 10: a indústria no Brasil</p>
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (30)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" style="display: flex;">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- TEMA 1 -->
+        <div class="content-group">
+            <span class="section-badge">1. Fases da indústria no Brasil</span>
+            <div class="theory-box">
+                <h3>🕰️ A linha do tempo</h3>
+                <p>A indústria brasileira não surgiu de uma vez. Ela se desenvolveu em fases, cada uma com suas características.</p>
+                <div class="visual-area" style="font-size: 0.85rem; gap: 8px; flex-direction: column;">
+                    <span>1500 a 1808 ➜ produção artesanal e poucos engenhos</span>
+                    <span>1808 a 1930 ➜ abertura dos portos e indústrias têxteis</span>
+                    <span>1930 a 1950 ➜ grande aumento das indústrias</span>
+                    <span>A partir de 1955 ➜ infraestrutura e carros</span>
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>🧵 1500 a 1808: produção artesanal</h3>
+                <p>No período colonial, os produtos eram feitos à mão, em pequena escala. Havia <strong>poucos engenhos</strong>, usados principalmente para produzir açúcar.</p>
+                <p>Portugal controlava o comércio da colônia e dificultava a criação de fábricas por aqui.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🚢 1808 a 1930: portos abertos e fábricas têxteis</h3>
+                <p>Em 1808, a <strong>abertura dos portos</strong> permitiu ao Brasil negociar diretamente com outros países.</p>
+                <p>Depois, surgiram <strong>indústrias têxteis</strong>, que produzem tecidos, e ganhou força a <strong>substituição das importações</strong>.</p>
+                <div class="highlight-box">
+                    <strong>Substituição das importações:</strong> é produzir no país o que antes era comprado de fora. Na Primeira Guerra Mundial (1914–1918), ficou difícil comprar produtos europeus, e a produção brasileira foi estimulada.
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>🏭 1930 a 1950: a “revolução industrial” brasileira</h3>
+                <p>Nessa fase, a <strong>quantidade de indústrias aumentou bastante</strong>, e a indústria ganhou importância na economia.</p>
+                <p>O governo de Getúlio Vargas investiu nas <strong>indústrias de base</strong>, que produzem materiais para outras indústrias, como o aço.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🚗 A partir de 1955: infraestrutura e carros</h3>
+                <p>O governo de Juscelino Kubitschek (JK) investiu em <strong>infraestrutura</strong>, como estradas e energia, e atraiu a <strong>indústria automobilística</strong>.</p>
+                <p><strong>Milagre econômico (1968 a 1973):</strong> a economia cresceu muito rápido, mas com muitos empréstimos. Assim, a <strong>dívida externa</strong> aumentou.</p>
+                <p><strong>Década perdida (anos 1980):</strong> o Brasil enfrentou crise, inflação alta, dívida elevada e crescimento fraco.</p>
+                <div class="highlight-box warning">
+                    <strong>Não confunda:</strong> milagre econômico é a fase de crescimento rápido. Década perdida é a fase de crise que veio depois.
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMA 2 -->
+        <div class="content-group">
+            <span class="section-badge">2. A indústria perde espaço</span>
+            <div class="theory-box">
+                <h3>📉 Desindustrialização</h3>
+                <p>Acontece quando a indústria <strong>perde importância na economia</strong> do país, com participação menor na riqueza e nos empregos.</p>
+                <div class="highlight-box warning">
+                    <strong>Pegadinha:</strong> desindustrialização não significa que todas as fábricas fecharam. Elas podem continuar funcionando, mas com menos peso na economia.
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>🌱 Reprimarização da economia</h3>
+                <p>Acontece quando a economia <strong>volta a depender de produtos primários</strong>, que são retirados da natureza ou vêm da agropecuária e têm pouca transformação.</p>
+                <div class="visual-area" style="font-size: 0.9rem; gap: 10px;">
+                    <span>Primários: soja, minério de ferro, carne</span>
+                    <span>Industrializados: máquinas, carros, celulares</span>
+                </div>
+                <p>Se um país exporta cada vez mais soja e minério e cada vez menos máquinas, a economia está se reprimarizando.</p>
+            </div>
+        </div>
+
+        <!-- TEMA 3 -->
+        <div class="content-group">
+            <span class="section-badge">3. Fatores locacionais</span>
+            <div class="theory-box">
+                <h3>📍 Onde instalar uma indústria?</h3>
+                <p><strong>Fatores locacionais</strong> são fatores que podem <strong>contribuir ou atrapalhar</strong> a instalação de indústrias em um lugar.</p>
+                <table border="1" cellpadding="6" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                    <tr style="background: var(--theme-light);"><th>Fator</th><th>O que significa</th></tr>
+                    <tr><td><strong>Trabalhadores</strong></td><td>Pessoas com a formação que a fábrica precisa.</td></tr>
+                    <tr><td><strong>Matéria-prima</strong></td><td>Material que a indústria transforma, como o algodão.</td></tr>
+                    <tr><td><strong>Transporte</strong></td><td>Estradas, ferrovias e portos para levar as cargas.</td></tr>
+                    <tr><td><strong>Mercado consumidor</strong></td><td>Pessoas e empresas que compram os produtos.</td></tr>
+                    <tr><td><strong>Produtos e serviços</strong></td><td>Empresas que oferecem peças, manutenção e outros apoios.</td></tr>
+                    <tr><td><strong>Energia</strong></td><td>Eletricidade e combustíveis para as máquinas.</td></tr>
+                    <tr><td><strong>Incentivos fiscais</strong></td><td>Redução de impostos oferecida pelo governo.</td></tr>
+                </table>
+                <div class="highlight-box">
+                    <strong>No Ceará:</strong> muitas fábricas de calçados se instalaram no estado atraídas por incentivos fiscais e por mão de obra mais barata.
+                </div>
+                <div class="highlight-box warning">
+                    <strong>Não confunda:</strong> a matéria-prima <strong>entra</strong> na fábrica. O mercado consumidor <strong>compra</strong> o que sai dela.
+                </div>
+                <p>Um único fator não garante a instalação. Uma região com matéria-prima barata, mas sem estradas nem energia, pode não atrair indústrias.</p>
+            </div>
+        </div>
+
+        <!-- TEMA 4 -->
+        <div class="content-group">
+            <span class="section-badge">4. Direitos trabalhistas</span>
+            <div class="theory-box">
+                <h3>📜 A CLT</h3>
+                <p>Com o crescimento das indústrias, aumentou o número de operários. Em <strong>1943</strong>, foi criada a <strong>CLT (Consolidação das Leis do Trabalho)</strong>, que reuniu as leis trabalhistas do Brasil.</p>
+                <p><strong>Férias:</strong> dias de descanso remunerado.</p>
+                <p><strong>13º salário:</strong> um salário extra pago no fim do ano.</p>
+                <p><strong>FGTS:</strong> dinheiro que a empresa deposita todo mês em uma conta do trabalhador.</p>
+                <div class="highlight-box">
+                    <strong>Curiosidade:</strong> a CLT é de 1943, mas o 13º salário foi criado em 1962, e o FGTS, em 1966. Hoje, esses direitos fazem parte da vida de quem trabalha com carteira assinada.
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMA 5 -->
+        <div class="content-group">
+            <span class="section-badge">5. Problemas ambientais</span>
+            <div class="theory-box">
+                <h3>🏭 Poluição atmosférica</h3>
+                <p>É a contaminação do ar por gases e fuligem liberados por chaminés e veículos. Ela pode causar problemas respiratórios.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🌡️ Mudanças climáticas</h3>
+                <p>A queima de carvão, petróleo e gás natural libera gases que retêm calor na atmosfera. Isso intensifica o efeito estufa, eleva a temperatura média do planeta e altera o clima.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🌧️ Chuva ácida</h3>
+                <p>Gases da queima de combustíveis reagem com a água da atmosfera, formam ácidos e caem com a chuva. Ela pode prejudicar plantas, rios e construções.</p>
+                <div class="highlight-box warning">
+                    <strong>Atenção:</strong> os gases podem ser levados para longe. Por isso, a chuva ácida pode cair distante das fábricas que causaram a poluição.
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (30 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">30 questões rigorosas. Acerte <strong>80% (24/30)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 30</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+const questions = [
+    // ---------- FÁCEIS ----------
+    {
+        id: 1, level: "Fácil",
+        text: "Como era a produção no Brasil entre 1500 e 1808?",
+        options: ["Feita em grandes siderúrgicas", "Artesanal, com poucos engenhos", "Baseada em fábricas de carros", "Concentrada em fábricas têxteis"],
+        correct: 1,
+        explanation: {
+            correct: "A produção era artesanal, e os poucos engenhos faziam principalmente açúcar.",
+            options: ["As siderúrgicas ganharam força só depois de 1930.", "Certa", "A indústria automobilística ganhou força a partir de 1955.", "As fábricas têxteis surgiram depois de 1808."]
+        }
+    },
+    {
+        id: 2, level: "Fácil",
+        text: "Que acontecimento de 1808 favoreceu o comércio e a produção no Brasil?",
+        options: ["A criação da CLT", "O milagre econômico", "A abertura dos portos", "O avanço da indústria de carros"],
+        correct: 2,
+        explanation: {
+            correct: "A abertura dos portos permitiu ao Brasil negociar diretamente com outros países.",
+            options: ["A CLT foi criada em 1943.", "O milagre econômico ocorreu entre 1968 e 1973.", "Certa", "A indústria automobilística ganhou força a partir de 1955."]
+        }
+    },
+    {
+        id: 3, level: "Fácil",
+        text: "Qual tipo de indústria se destacou no Brasil entre 1808 e 1930?",
+        options: ["Têxtil", "Automobilística", "Eletrônica", "Aeronáutica"],
+        correct: 0,
+        explanation: {
+            correct: "As indústrias têxteis, que produzem tecidos, ganharam destaque nessa fase.",
+            options: ["Certa", "A automobilística ganhou força a partir de 1955.", "A eletrônica depende de tecnologias bem mais recentes.", "A aeronáutica brasileira só se desenvolveu bem depois."]
+        }
+    },
+    {
+        id: 4, level: "Fácil",
+        text: "O que são fatores locacionais?",
+        options: ["Leis que garantem os direitos dos trabalhadores do país", "Gases que poluem o ar das cidades com muitas fábricas", "Fases da história da indústria no Brasil", "O que ajuda ou atrapalha a instalação de indústrias"],
+        correct: 3,
+        explanation: {
+            correct: "Eles influenciam a escolha do lugar, pois podem contribuir para a instalação da indústria ou atrapalhá-la.",
+            options: ["Essas leis são os direitos trabalhistas, como os reunidos na CLT.", "Esses gases causam a poluição atmosférica.", "As fases mostram quando a indústria se desenvolveu, não onde.", "Certa"]
+        }
+    },
+    {
+        id: 5, level: "Fácil",
+        text: "Em que ano foi criada a CLT, que reuniu as leis trabalhistas do Brasil?",
+        options: ["1808", "1930", "1943", "1955"],
+        correct: 2,
+        explanation: {
+            correct: "A CLT é de 1943, durante o governo de Getúlio Vargas.",
+            options: ["1808 é o ano da abertura dos portos.", "1930 marca o início de uma nova fase da indústria.", "Certa", "1955 marca o início da fase ligada à indústria automobilística."]
+        }
+    },
+    {
+        id: 6, level: "Fácil",
+        text: "Qual destes problemas ambientais está ligado à atividade industrial?",
+        options: ["Terremotos", "Chuva ácida", "Erupções vulcânicas", "Tsunamis"],
+        correct: 1,
+        explanation: {
+            correct: "Gases da queima de combustíveis em indústrias e veículos podem formar a chuva ácida.",
+            options: ["Terremotos vêm do movimento das placas tectônicas.", "Certa", "Erupções acontecem pela saída de magma do interior da Terra.", "Tsunamis costumam ser causados por terremotos no mar."]
+        }
+    },
+    {
+        id: 7, level: "Fácil",
+        text: "O que é substituição das importações?",
+        options: ["Produzir no país o que antes era comprado de fora", "Comprar mais produtos de outros países", "Vender para o exterior tudo o que o país consegue produzir", "Proibir a entrada de estrangeiros no país"],
+        correct: 0,
+        explanation: {
+            correct: "Em vez de importar, o país passa a fabricar esses produtos nas próprias indústrias.",
+            options: ["Certa", "Isso é importar mais, o contrário da substituição.", "Vender ao exterior é exportar, e o conceito trata do que vem de fora.", "O conceito trata de mercadorias, não da entrada de pessoas."]
+        }
+    },
+    {
+        id: 8, level: "Fácil",
+        text: "A queima de carvão e petróleo libera gases que retêm calor na atmosfera. Isso contribui para:",
+        options: ["O aumento dos terremotos", "A diminuição das marés", "A formação de vulcões", "As mudanças climáticas"],
+        correct: 3,
+        explanation: {
+            correct: "Esses gases intensificam o efeito estufa, elevam a temperatura média do planeta e alteram o clima.",
+            options: ["Terremotos vêm do movimento das placas tectônicas.", "As marés dependem principalmente da atração da Lua e do Sol.", "Vulcões se formam por processos do interior da Terra.", "Certa"]
+        }
+    },
+    {
+        id: 9, level: "Fácil",
+        text: "Quais destes são direitos do trabalhador com carteira assinada?",
+        options: ["Férias, 13º salário e FGTS", "Férias, incentivos fiscais e FGTS", "Casa própria, férias e 13º salário", "Carro da empresa, FGTS e férias"],
+        correct: 0,
+        explanation: {
+            correct: "Férias, 13º salário e FGTS são direitos de quem trabalha com carteira assinada.",
+            options: ["Certa", "Incentivos fiscais são benefícios para empresas, não para trabalhadores.", "Ter casa própria não é um direito garantido pela carteira assinada.", "Carro da empresa não é um direito garantido a todo trabalhador."]
+        }
+    },
+    {
+        id: 10, level: "Fácil",
+        text: "Como se chama a contaminação do ar por gases e fuligem de chaminés e veículos?",
+        options: ["Reprimarização", "Desindustrialização", "Poluição atmosférica", "Substituição das importações"],
+        correct: 2,
+        explanation: {
+            correct: "A poluição atmosférica é a contaminação do ar por gases e partículas, como a fuligem.",
+            options: ["Reprimarização é a volta da dependência de produtos primários.", "Desindustrialização é a perda de importância da indústria.", "Certa", "Substituição das importações é produzir aqui o que vinha de fora."]
+        }
+    },
+
+    // ---------- MÉDIAS ----------
+    {
+        id: 11, level: "Médio",
+        text: "Por que o período de 1930 a 1950 é chamado de “revolução industrial” brasileira?",
+        options: ["Porque os portos foram abertos pela primeira vez", "Porque as fábricas deixaram de usar trabalhadores", "Porque o país parou de produzir alimentos", "Porque a quantidade de indústrias aumentou bastante"],
+        correct: 3,
+        explanation: {
+            correct: "Nessa fase, o número de indústrias cresceu muito, e a indústria ganhou importância na economia.",
+            options: ["A abertura dos portos aconteceu em 1808.", "As fábricas continuaram precisando de trabalhadores.", "O Brasil continuou produzindo alimentos.", "Certa"]
+        }
+    },
+    {
+        id: 12, level: "Médio",
+        text: "O que marcou o milagre econômico?",
+        options: ["Crescimento rápido da economia e dívida externa maior", "Inflação muito alta e crescimento muito baixo da economia", "Fechamento de quase todas as indústrias do país", "Fim da produção de carros no Brasil"],
+        correct: 0,
+        explanation: {
+            correct: "Entre 1968 e 1973, a economia cresceu rápido, mas com muitos empréstimos, e a dívida externa aumentou.",
+            options: ["Certa", "Esse cenário lembra a década perdida, nos anos 1980.", "As indústrias cresceram nesse período.", "A produção de carros continuou no país."]
+        }
+    },
+    {
+        id: 13, level: "Médio",
+        text: "Como ficou conhecida a fase de crise econômica do Brasil nos anos 1980?",
+        options: ["Milagre econômico", "Abertura dos portos", "Década perdida", "Revolução industrial"],
+        correct: 2,
+        explanation: {
+            correct: "Nos anos 1980, o Brasil enfrentou inflação alta, dívida elevada e crescimento fraco.",
+            options: ["O milagre econômico foi uma fase de crescimento rápido.", "A abertura dos portos ocorreu em 1808.", "Certa", "A “revolução industrial” brasileira ocorreu entre 1930 e 1950."]
+        }
+    },
+    {
+        id: 14, level: "Médio",
+        text: "Qual alternativa mostra os acontecimentos na ordem em que ocorreram?",
+        options: ["CLT, abertura dos portos, milagre econômico, década perdida", "Abertura dos portos, CLT, milagre econômico, década perdida", "Abertura dos portos, milagre econômico, CLT, década perdida", "Abertura dos portos, CLT, década perdida, milagre econômico"],
+        correct: 1,
+        explanation: {
+            correct: "Abertura dos portos (1808), CLT (1943), milagre econômico (1968–1973) e década perdida (anos 1980).",
+            options: ["A abertura dos portos (1808) veio antes da CLT (1943).", "Certa", "A CLT (1943) veio antes do milagre econômico.", "O milagre econômico veio antes da década perdida."]
+        }
+    },
+    {
+        id: 15, level: "Médio",
+        text: "O que é desindustrialização?",
+        options: ["A indústria perde importância na economia do país", "Todas as fábricas do país fecham de uma só vez", "O número de indústrias cresce rapidamente", "As fábricas mudam de cidade dentro do país"],
+        correct: 0,
+        explanation: {
+            correct: "A indústria passa a ter uma participação menor na riqueza e nos empregos do país.",
+            options: ["Certa", "As fábricas não precisam fechar: basta a indústria perder espaço na economia.", "Isso seria industrialização, o contrário do conceito.", "Mudar de cidade não significa que a indústria perdeu importância no país."]
+        }
+    },
+    {
+        id: 16, level: "Médio",
+        text: "O que significa reprimarização da economia?",
+        options: ["A economia passa a depender de alta tecnologia", "O governo volta a fechar os portos do país", "A indústria vira a principal fonte de exportações", "A economia volta a depender de produtos primários"],
+        correct: 3,
+        explanation: {
+            correct: "Produtos primários, como soja e minério de ferro, voltam a ter grande peso na economia e nas exportações.",
+            options: ["Produtos de alta tecnologia são industrializados, não primários.", "O conceito trata do tipo de produto, não do fechamento dos portos.", "Nesse processo, os produtos industrializados perdem espaço.", "Certa"]
+        }
+    },
+    {
+        id: 17, level: "Médio",
+        text: "Uma fábrica de sucos se instalou perto de plantações para gastar menos trazendo as frutas. Qual fator locacional pesou nessa escolha?",
+        options: ["Mercado consumidor", "Matéria-prima", "Energia", "Incentivos fiscais"],
+        correct: 1,
+        explanation: {
+            correct: "As frutas são a matéria-prima do suco. Ficar perto delas reduz o custo.",
+            options: ["O mercado consumidor é quem compra o suco, não quem fornece as frutas.", "Certa", "A energia move as máquinas, mas não foi citada na decisão.", "O texto não fala em redução de impostos."]
+        }
+    },
+    {
+        id: 18, level: "Médio",
+        text: "Uma prefeitura reduziu impostos para atrair uma fábrica de calçados. Esse é um exemplo de:",
+        options: ["Matéria-prima", "Mercado consumidor", "Incentivo fiscal", "Substituição das importações"],
+        correct: 2,
+        explanation: {
+            correct: "Incentivo fiscal é a redução de impostos usada para atrair empresas.",
+            options: ["Matéria-prima é o material transformado pela indústria.", "Mercado consumidor é quem compra os produtos.", "Certa", "Substituir importações é produzir aqui o que vinha de fora."]
+        }
+    },
+    {
+        id: 19, level: "Médio",
+        text: "Uma empresa escolheu uma metrópole porque lá há milhões de pessoas que podem comprar seus produtos. Qual fator pesou nessa decisão?",
+        options: ["Trabalhadores", "Transporte", "Energia", "Mercado consumidor"],
+        correct: 3,
+        explanation: {
+            correct: "As pessoas que compram os produtos formam o mercado consumidor.",
+            options: ["Trabalhadores produzem, mas o texto fala de quem compra.", "Transporte leva mercadorias, mas o texto fala de compradores.", "A energia não foi citada na decisão.", "Certa"]
+        }
+    },
+    {
+        id: 20, level: "Médio",
+        text: "Como a chuva ácida se forma?",
+        options: ["Gases da queima de combustíveis reagem com a água da atmosfera", "O lixo das fábricas é jogado diretamente nos rios da região", "Os raios solares atravessam um buraco na camada de ozônio", "Os agrotóxicos usados nas plantações evaporam do solo"],
+        correct: 0,
+        explanation: {
+            correct: "Gases como os óxidos de enxofre e de nitrogênio reagem com o vapor de água e formam ácidos.",
+            options: ["Certa", "Lixo nos rios causa poluição da água, não chuva ácida.", "A camada de ozônio filtra raios do Sol e não forma chuva ácida.", "Agrotóxicos contaminam solo e água, mas não são a causa da chuva ácida."]
+        }
+    },
+
+    // ---------- DIFÍCEIS ----------
+    {
+        id: 21, level: "Difícil",
+        text: "Durante a Primeira Guerra Mundial (1914–1918), ficou difícil comprar produtos da Europa. O que isso estimulou no Brasil?",
+        options: ["O grande avanço da indústria automobilística no país", "A volta de toda a produção para o modo artesanal", "A fabricação aqui de produtos antes importados", "O fim definitivo do comércio com todos os países"],
+        correct: 2,
+        explanation: {
+            correct: "Com menos produtos vindos de fora, a produção nacional foi estimulada. Isso é substituição das importações.",
+            options: ["A indústria automobilística ganhou força a partir de 1955.", "As fábricas continuaram existindo e produzindo.", "Certa", "O comércio ficou mais difícil com alguns países, mas não acabou."]
+        }
+    },
+    {
+        id: 22, level: "Difícil",
+        text: "Um país passa a exportar cada vez mais soja e minério de ferro e cada vez menos máquinas. Esse processo é chamado de:",
+        options: ["Substituição das importações", "Reprimarização da economia", "Revolução industrial", "Milagre econômico"],
+        correct: 1,
+        explanation: {
+            correct: "Soja e minério são produtos primários, então a economia volta a depender deles.",
+            options: ["Esse conceito trata de produzir aqui o que vinha de fora.", "Certa", "Na revolução industrial, a indústria cresce, e não perde espaço.", "O milagre econômico foi um período de crescimento entre 1968 e 1973."]
+        }
+    },
+    {
+        id: 23, level: "Difícil",
+        text: "Uma empresa de tecnologia precisa de engenheiros e programadores. Por que ela tende a escolher cidades com universidades?",
+        options: ["Porque as universidades fornecem a matéria-prima", "Porque as universidades reduzem os impostos", "Porque as universidades produzem a energia", "Porque nelas há trabalhadores com formação adequada"],
+        correct: 3,
+        explanation: {
+            correct: "O fator locacional é trabalhadores: a empresa precisa de pessoas com formação específica.",
+            options: ["Matéria-prima é o material que a indústria transforma.", "Quem reduz impostos é o governo.", "A energia vem de usinas e distribuidoras.", "Certa"]
+        }
+    },
+    {
+        id: 24, level: "Difícil",
+        text: "Uma região tem matéria-prima barata, mas faltam estradas, portos e energia. O que tende a acontecer?",
+        options: ["A instalação de indústrias tende a ser prejudicada", "As indústrias vão se instalar lá com certeza", "A falta de estradas reduz o custo do transporte", "A matéria-prima barata resolve todos os problemas"],
+        correct: 0,
+        explanation: {
+            correct: "Um fator favorável não basta: a falta de transporte e energia atrapalha a instalação.",
+            options: ["Certa", "Nenhum fator garante a instalação sozinho.", "Sem estradas, transportar fica mais difícil e mais caro.", "A indústria precisa de vários fatores, não apenas de matéria-prima."]
+        }
+    },
+    {
+        id: 25, level: "Difícil",
+        text: "Uma montadora escolheu uma cidade com muitos fornecedores de peças e empresas de manutenção. Qual fator locacional foi decisivo?",
+        options: ["Mercado consumidor", "Incentivos fiscais", "Produtos e serviços", "Matéria-prima"],
+        correct: 2,
+        explanation: {
+            correct: "A fábrica depende de empresas que oferecem peças e manutenção, ou seja, produtos e serviços.",
+            options: ["Mercado consumidor é quem compra os carros.", "O texto não fala em redução de impostos.", "Certa", "Peças prontas e manutenção são apoio à produção, não material bruto."]
+        }
+    },
+    {
+        id: 26, level: "Difícil",
+        text: "Qual é a relação entre o milagre econômico e a década perdida?",
+        options: ["O milagre econômico veio depois da década perdida", "A dívida do período de crescimento pesou na crise seguinte", "A década perdida acabou com a dívida externa do Brasil", "Os dois períodos tiveram crescimento recorde"],
+        correct: 1,
+        explanation: {
+            correct: "Os empréstimos do milagre aumentaram a dívida externa, que pesou muito na crise dos anos 1980.",
+            options: ["O milagre (1968–1973) veio antes da década perdida (anos 1980).", "Certa", "A dívida continuou sendo um grande problema nos anos 1980.", "A década perdida teve crescimento fraco."]
+        }
+    },
+    {
+        id: 27, level: "Difícil",
+        text: "Por que abrir estradas e ampliar a produção de energia ajudou a indústria automobilística?",
+        options: ["Porque diminuiu a necessidade de contratar trabalhadores", "Porque eliminou o uso de matéria-prima nas fábricas", "Porque acabou com a importação de qualquer produto", "Porque fábricas usam energia, e carros usam estradas"],
+        correct: 3,
+        explanation: {
+            correct: "Essa infraestrutura permitiu o funcionamento das fábricas e a circulação dos veículos.",
+            options: ["As fábricas continuaram precisando de muitos trabalhadores.", "A produção de carros continuou usando aço e outros materiais.", "O Brasil continuou importando produtos.", "Certa"]
+        }
+    },
+    {
+        id: 28, level: "Difícil",
+        text: "A indústria de um país segue funcionando, mas sua participação na riqueza e nos empregos diminuiu. É correto afirmar que:",
+        options: ["Não há mudança, pois as fábricas seguem abertas", "Há desindustrialização, mesmo sem todas as fábricas fecharem", "Há industrialização, pois as fábricas seguem produzindo", "Há substituição das importações, pois a produção continua"],
+        correct: 1,
+        explanation: {
+            correct: "Desindustrialização é a perda de importância da indústria, e não o fechamento de todas as fábricas.",
+            options: ["A mudança existe, pois a indústria perdeu espaço na economia.", "Certa", "Na industrialização, o peso da indústria aumenta.", "Essa substituição é produzir aqui o que vinha de fora."]
+        }
+    },
+    {
+        id: 29, level: "Difícil",
+        text: "Uma floresta distante de fábricas foi atingida pela chuva ácida. Como isso é possível?",
+        options: ["O vento pode levar os gases poluentes para longe", "As árvores produzem ácido quando ficam sem chuva", "A chuva ácida só acontece longe das fábricas", "Os rios levam a fumaça das fábricas até o céu"],
+        correct: 0,
+        explanation: {
+            correct: "Os poluentes podem ser levados pelo ar e causar chuva ácida longe de onde foram lançados.",
+            options: ["Certa", "A chuva ácida vem de gases poluentes, não das árvores.", "Ela pode acontecer perto ou longe das fontes de poluição.", "Rios transportam água, e os gases são levados pelo ar."]
+        }
+    },
+    {
+        id: 30, level: "Difícil",
+        text: "Por que o crescimento das indústrias aumentou a importância das leis trabalhistas?",
+        options: ["Porque as empresas exigiam salários menores por lei", "Porque os engenhos coloniais pediram essas leis", "Porque havia mais operários precisando de direitos", "Porque a CLT era exigida para abrir os portos"],
+        correct: 2,
+        explanation: {
+            correct: "Com mais operários nas fábricas, cresceu a necessidade de regras sobre o trabalho e os direitos.",
+            options: ["As leis trabalhistas protegem o trabalhador, e não buscam reduzir salários.", "Os engenhos são do período colonial, muito antes da CLT.", "Certa", "Os portos foram abertos em 1808, e a CLT é de 1943."]
+        }
+    }
+];
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise a teoria com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova da escola com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+</script>
+</body>
+</html>
