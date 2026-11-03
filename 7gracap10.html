@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ZONA 1 INICIO: TITULO DA ABA -->
+<title>Gramática Cap. 10 7º Ano - Promover</title>
+<!-- ZONA 1 FIM -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- BLOCO TRAVADO: CSS DO MOTOR. COPIE IGUAL. -->
+<style id="css-motor">
+:root {
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-text-active: #FFFFFF;
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+td, th { padding: 6px 8px; }
+#bancoQuestoes { display: none; }
+.visual-area.texto { font-size: 0.95rem; flex-direction: column; gap: 8px; }
+.tabela { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+.tabela th { background: var(--theme-light); }
+.tabela th, .tabela td { border: 1px solid var(--border-color); }
+.lista { padding-left: 20px; }
+.desenho { width: 100%; max-width: 420px; height: auto; display: block; margin: 10px auto; }
+.d-cor1 { fill: var(--theme-dark); }
+.d-cor2 { fill: var(--theme-contrast); }
+.d-cor3 { fill: var(--theme-medium); }
+.d-fundo { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-linha { fill: none; stroke: var(--text-color); stroke-width: 2; }
+.d-texto { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; }
+</style>
+<!-- ZONA 2 INICIO: CORES E CSS EXTRA -->
+<style id="css-tema">
+:root {
+    --bg-color: #F5F3FF;
+    --text-color: #1E1B2E;
+    --theme-light: #EDE9FE;
+    --theme-medium: #A78BFA;
+    --theme-dark: #4C1D95;
+    --theme-contrast: #B45309;
+    --theme-accent: #7C3AED;
+}
+</style>
+<!-- ZONA 2 FIM -->
+</head>
+<body>
+<div id="avisoMotor" style="display:block; max-width:600px; width:100%; margin:0 auto 16px; padding:14px; background:#FFE4E6; color:#881337; border:3px solid #BE123C; border-radius:12px; font-family:sans-serif; font-size:15px; font-weight:600; line-height:1.5;">⚠️ Este arquivo está incompleto ou com erro no código. Não envie aos alunos. Peça ao Gemini para gerar o arquivo completo de novo.</div>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <!-- ZONA 3 INICIO: CABECALHO -->
+        <h1>Gramática – 7º&nbsp;Ano</h1>
+        <p class="subtitle">Cap. 10: Falando sobre a vida – Autobiografia e Coordenação</p>
+        <!-- ZONA 3 FIM -->
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (30)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" style="display: flex;">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- ZONA 4 INICIO: TEORIA -->
+        <div class="content-group">
+            <span class="section-badge">1. O Gênero Autobiografia</span>
+            <div class="theory-box">
+                <h3>📖 O que é uma Autobiografia?</h3>
+                <p>A <strong>autobiografia</strong> (auto = próprio + bio = vida + grafia = escrita) é o relato que uma pessoa faz sobre a sua própria trajetória de vida. Diferente da biografia tradicional (em que alguém escreve sobre outra pessoa em 3ª pessoa), na autobiografia o autor é também o narrador e o protagonista da história.</p>
+                <ul class="lista">
+                    <li><strong>Foco em 1ª pessoa:</strong> Utilizam-se verbos e pronomes em 1ª pessoa do singular (<em>eu</em>, <em>me</em>, <em>meu</em>, <em>nasci</em>, <em>estudei</em>) ou do plural (<em>nós</em>, <em>nossos</em>).</li>
+                    <li><strong>Subjetividade e Memória:</strong> O texto expressa lembranças, sentimentos, reflexões e pontos de vista particulares de quem escreve.</li>
+                    <li><strong>Tempo Pretérito:</strong> Predomínio dos tempos do passado (pretérito perfeito e pretérito imperfeito), situando os fatos ocorridos na infância, juventude ou momentos marcantes.</li>
+                    <li><strong>Marcadores temporais:</strong> Expressões que orientam o leitor na linha do tempo, como <em>"naquele tempo"</em>, <em>"aos dez anos de idade"</em>, <em>"anos mais tarde"</em>, <em>"atualmente"</em>.</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>Dica de ouro:</strong> Biografia narra a vida do <strong>outro</strong> (3ª pessoa: ele/ela). Autobiografia narra a <strong>própria vida</strong> (1ª pessoa: eu).
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">2. Frase, Oração e Período</span>
+            <div class="theory-box">
+                <h3>🧱 A Estrutura Básica do Enunciado</h3>
+                <p>Para analisar como organizamos as ideias em um texto de memórias ou na fala cotidiana, precisamos distinguir três conceitos fundamentais:</p>
+                <ul class="lista">
+                    <li><strong>Frase:</strong> Qualquer enunciado que possui sentido completo. Pode ser <strong>nominal</strong> (não tem verbo, ex.: <em>"Que memória linda!"</em>) ou <strong>verbal</strong> (possui verbo, ex.: <em>"Eu lembrei daquele dia."</em>).</li>
+                    <li><strong>Oração:</strong> É todo enunciado linguístico que se organiza ao redor de <strong>um verbo</strong> ou de <strong>uma locução verbal</strong>. Cada verbo equivale a uma oração.</li>
+                    <li><strong>Período:</strong> É a frase estruturada em uma ou mais orações, encerrada por ponto final, ponto de interrogação, ponto de exclamação ou reticências.</li>
+                </ul>
+                <div class="visual-area texto">
+                    <span><strong>Período Simples:</strong> possui apenas <strong>1 oração</strong> (chamada de oração absoluta).</span>
+                    <span>Ex.: <em>"O escritor relembrou sua infância querida."</em> (1 verbo = 1 oração)</span>
+                    <span><strong>Período Composto:</strong> possui <strong>2 ou mais orações</strong>.</span>
+                    <span>Ex.: <em>"Abri o baú antigo <strong>e</strong> encontrei cartas amareladas."</em> (2 verbos = 2 orações)</span>
+                </div>
+                <div class="highlight-box warning">
+                    <strong>Cuidado com as Locuções Verbais:</strong> Quando dois ou mais verbos aparecem juntos desempenhando o papel de um único verbo (verbo auxiliar + verbo principal), eles contam como <strong>apenas uma oração</strong>! Exemplo: <em>"Eu <strong>estava lembrando</strong> daquele passeio."</em> (Conta como apenas 1 oração).
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">3. Período Composto por Coordenação</span>
+            <div class="theory-box">
+                <h3>🔗 Orações Sintaticamente Independentes</h3>
+                <p>No <strong>período composto por coordenação</strong>, as orações que o formam são <strong>independentes sintaticamente</strong>. Isso significa que nenhuma oração funciona como sujeito, objeto ou complemento da outra; cada uma possui sua estrutura completa e elas são apenas colocadas lado a lado para somar, opor ou relacionar ideias.</p>
+                <svg class="desenho" viewBox="0 0 320 90" role="img" aria-label="Estrutura de coordenação: oração 1 independente ligada à oração 2 independente">
+                    <rect class="d-fundo" x="15" y="25" width="115" height="42" rx="8"/>
+                    <rect class="d-fundo" x="190" y="25" width="115" height="42" rx="8"/>
+                    <line class="d-linha" x1="130" y1="46" x2="190" y2="46"/>
+                    <polygon class="d-cor1" points="190,46 178,40 178,52"/>
+                    <text class="d-texto" x="72" y="51" text-anchor="middle">Oração 1</text>
+                    <text class="d-texto" x="247" y="51" text-anchor="middle">Oração 2</text>
+                    <text class="d-texto" x="160" y="40" text-anchor="middle">Nexo</text>
+                </svg>
+                <p>Quanto à presença ou ausência de conectivo (conjunção), as orações coordenadas dividem-se em:</p>
+                <ul class="lista">
+                    <li><strong>Oração Coordenada Assindética:</strong> <strong>Não</strong> é introduzida por conjunção. As orações vêm separadas apenas por sinais de pontuação (vírgula, ponto e vírgula ou dois-pontos).<br>Exemplo: <em>"Acordei cedo, arrumei as malas, parti para a capital."</em></li>
+                    <li><strong>Oração Coordenada Sindética:</strong> <strong>É</strong> introduzida por uma conjunção coordenativa (chamada de síndeto).<br>Exemplo: <em>"Estudei muito <strong>e</strong> passei na prova."</em> / <em>"Corri bastante, <strong>mas</strong> cheguei a tempo."</em></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">4. Classificação das Coordenadas Sindéticas</span>
+            <div class="theory-box">
+                <h3>⚖️ Os 5 Tipos de Orações Sindéticas</h3>
+                <p>Conforme o sentido estabelecido pela conjunção coordenativa, a oração coordenada sindética recebe uma classificação específica:</p>
+                <table class="tabela">
+                    <tr><th>Classificação</th><th>Sentido / Ideia</th><th>Principais Conjunções</th><th>Exemplo Ilustrativo</th></tr>
+                    <tr><td><strong>Aditiva</strong></td><td>Soma, acréscimo de pensamentos</td><td>e, nem (e não), não só... mas também</td><td>Li o diário <strong>e</strong> anotei datas.</td></tr>
+                    <tr><td><strong>Adversativa</strong></td><td>Oposição, contraste, quebra de expectativa</td><td>mas, porém, contudo, todavia, no entanto</td><td>Queria viajar, <strong>mas</strong> fiquei em casa.</td></tr>
+                    <tr><td><strong>Alternativa</strong></td><td>Opção, alternância, escolha</td><td>ou, ou... ou, ora... ora, quer... quer</td><td><strong>Ou</strong> conte a verdade, <strong>ou</strong> cale-se.</td></tr>
+                    <tr><td><strong>Conclusiva</strong></td><td>Dedução, conclusão lógica, desfecho</td><td>logo, portanto, por isso, por conseguinte, pois (posposto)</td><td>Estudou muito; <strong>logo</strong>, foi aprovado.</td></tr>
+                    <tr><td><strong>Explicativa</strong></td><td>Justificativa, motivo, razão de um pedido</td><td>porque, que, pois (anteposto ao verbo), porquanto</td><td>Venha depressa, <strong>pois</strong> vai chover.</td></tr>
+                </table>
+                <div class="highlight-box warning">
+                    <strong>Cuidado com a posição da conjunção "POIS":</strong><br>
+                    • <strong>Antes do verbo (anteposto):</strong> tem valor de <strong>explicação</strong>. Ex.: <em>"Não saia agora, <strong>pois</strong> está chovendo."</em><br>
+                    • <strong>Depois do verbo (posposto, entre vírgulas):</strong> tem valor de <strong>conclusão</strong>. Ex.: <em>"Ele se dedicou com afinco; merece, <strong>pois</strong>, todos os elogios."</em>
+                </div>
+            </div>
+        </div>
+        <!-- ZONA 4 FIM -->
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (30 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">30 questões rigorosas. Acerte <strong>80% (24/30)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 30</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+
+    <!-- ZONA 5 INICIO: 30 QUESTOES -->
+    <section id="bancoQuestoes" hidden>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">O gênero textual autobiografia diferencia-se da biografia tradicional principalmente porque:</div>
+            <div class="alternativa certa">
+                <div class="opcao">é narrado em primeira pessoa pelo próprio autor.</div>
+                <div class="porque">O autor relata suas próprias vivências em primeira pessoa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">relata fatos imaginários criados pelo escritor.</div>
+                <div class="porque">A autobiografia narra fatos reais da vida do autor.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">precisa ser escrito em versos com rimas ricas.</div>
+                <div class="porque">A autobiografia é um texto em prosa, não poema com rima.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">foca exclusivamente na vida de personagens fictícios.</div>
+                <div class="porque">O texto trata de uma pessoa real, que é o próprio autor.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Identifique a alternativa que apresenta apenas uma FRASE NOMINAL (sem verbo):</div>
+            <div class="alternativa">
+                <div class="opcao">O menino recordou sua infância na fazenda.</div>
+                <div class="porque">"Recordou" é verbo, portanto trata-se de frase verbal.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Eu escrevi muitas memórias sobre minha mãe.</div>
+                <div class="porque">"Escrevi" é verbo; a oração possui estrutura verbal.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Que dia lindo e inesquecível na escola!</div>
+                <div class="porque">Tem sentido completo e não possui nenhum verbo na frase.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Nós morávamos perto de uma praia calma.</div>
+                <div class="porque">"Morávamos" é verbo, logo não é uma frase nominal.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Quantas orações existem no período: "Abri o caderno de memórias e li uma história emocionante"?</div>
+            <div class="alternativa">
+                <div class="opcao">Apenas uma oração no período.</div>
+                <div class="porque">Há dois verbos no período, formando duas orações distintas.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Duas orações bem definidas.</div>
+                <div class="porque">Há dois verbos: "abri" e "li", logo temos duas orações.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Três orações coordenadas.</div>
+                <div class="porque">Existem apenas dois verbos, e não três, nessa frase.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Quatro orações interligadas.</div>
+                <div class="porque">A quantidade de orações é contada pelos verbos presentes.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Um período é classificado como SIMPLES quando apresenta:</div>
+            <div class="alternativa">
+                <div class="opcao">duas ou mais orações coordenadas entre si.</div>
+                <div class="porque">Período com mais de uma oração é chamado de composto.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">nenhuma forma verbal em toda a sua estrutura.</div>
+                <div class="porque">Frase sem verbo é frase nominal, não período simples.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">conectivos que ligam várias ações distintas.</div>
+                <div class="porque">A presença de várias ações caracteriza período composto.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">apenas uma oração com um verbo ou locução.</div>
+                <div class="porque">O período simples é formado por uma só oração absoluta.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Na frase "Cheguei cedo, preparei o almoço, arrumei o quarto", temos orações coordenadas:</div>
+            <div class="alternativa certa">
+                <div class="opcao">assindéticas, pois não usam conjunção.</div>
+                <div class="porque">As orações são separadas por vírgula e sem conectivo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">sindéticas aditivas com o conectivo "e".</div>
+                <div class="porque">Não há a conjunção "e" ligando as orações nesse exemplo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">sindéticas explicativas com o termo "pois".</div>
+                <div class="porque">Não foi usada a conjunção "pois" ou similar no período.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">sindéticas adversativas com o termo "mas".</div>
+                <div class="porque">Não há conjunção de oposição nem sentido contrário.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual das conjunções abaixo introduz tipicamente uma ideia de OPOSIÇÃO ou contraste?</div>
+            <div class="alternativa">
+                <div class="opcao">E</div>
+                <div class="porque">A conjunção "e" normalmente expressa ideia de adição.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Portanto</div>
+                <div class="porque">"Portanto" é uma conjunção que expressa conclusão.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Porém</div>
+                <div class="porque">"Porém" é conjunção adversativa e expressa oposição.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Ou</div>
+                <div class="porque">"Ou" expressa alternância ou escolha entre opções.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em "Estudei muito para a prova, <u>portanto</u> tirei uma excelente nota", a oração destacada é:</div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética aditiva.</div>
+                <div class="porque">A oração expressa dedução/conclusão, e não soma de fatos.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">coordenada sindética conclusiva.</div>
+                <div class="porque">A conjunção "portanto" indica o resultado ou conclusão.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada assindética temporal.</div>
+                <div class="porque">Apresenta conectivo, logo não pode ser assindética.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética alternativa.</div>
+                <div class="porque">Não há ideia de opção, escolha ou alternância no fato.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">No período "Você vai viajar nas férias <u>ou</u> ficará descansando em casa?", o conectivo "ou" expressa:</div>
+            <div class="alternativa">
+                <div class="opcao">conclusão lógica de um raciocínio.</div>
+                <div class="porque">O conectivo "ou" não expressa desfecho nem dedução.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">soma de duas ações simultâneas.</div>
+                <div class="porque">O conectivo expressa opção ou escolha, e não acréscimo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">oposição a um pensamento anterior.</div>
+                <div class="porque">Ideia de oposição é introduzida por "mas" ou "porém".</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">alternância ou escolha entre opções.</div>
+                <div class="porque">"Ou" é conjunção alternativa e apresenta opções mútuas.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em uma autobiografia, qual tempo verbal costuma predominar para relatar os fatos vividos?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Pretérito (passado), pois relata memórias.</div>
+                <div class="porque">A autobiografia narra fatos passados da vida do autor.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Futuro do presente, pois prevê o destino.</div>
+                <div class="porque">Relatos de memória tratam do passado, não do porvir.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Modo imperativo, pois dá ordens diretas.</div>
+                <div class="porque">O imperativo é usado para conselhos, pedidos ou ordens.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Modo subjuntivo, pois indica incerteza.</div>
+                <div class="porque">A narrativa de fatos reais usa o indicativo no passado.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Na frase "Não demore, <u>pois</u> a palestra começará pontualmente", a oração em destaque expressa:</div>
+            <div class="alternativa">
+                <div class="opcao">adição de duas ideias equivalentes.</div>
+                <div class="porque">Não há acréscimo, mas sim a justificativa do pedido.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">contraste com o fato mencionado antes.</div>
+                <div class="porque">O conectivo "pois" aqui não tem sentido de oposição.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">explicação ou justificativa da ordem.</div>
+                <div class="porque">"Pois" introduz a razão pela qual não se deve demorar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">alternância entre dois eventos futuros.</div>
+                <div class="porque">Não expressa opção nem alternância entre os fatos.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Considere o período: "O autor <u>estava lembrando</u> de sua terra natal". Quantas orações há nesse período?</div>
+            <div class="alternativa">
+                <div class="opcao">Duas orações, pois há dois verbos escritos.</div>
+                <div class="porque">"Estava lembrando" é uma locução verbal com valor de um só.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Apenas uma oração, pois é locução verbal.</div>
+                <div class="porque">Dois verbos juntos com um só sentido formam uma oração.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Três orações, pois o sujeito é composto.</div>
+                <div class="porque">A contagem de orações depende dos verbos, não do sujeito.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Nenhuma oração, pois se trata de frase nominal.</div>
+                <div class="porque">Há verbos expressos, portanto não é frase nominal.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em "Não só escrevi toda a minha história, <u>mas também</u> desenhei os cenários", a oração destacada expressa:</div>
+            <div class="alternativa">
+                <div class="opcao">oposição severa ao fato de escrever a história.</div>
+                <div class="porque">"Mas também" soma fatos, não expressa contraste aqui.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">explicação detalhada do ato de escrever o livro.</div>
+                <div class="porque">A locução não justifica o ato, apenas adiciona ação.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">conclusão final do processo de escrita e desenho.</div>
+                <div class="porque">Conclusão exigiria conectivos como "portanto" ou "logo".</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">adição e acréscimo de uma nova ação realizada.</div>
+                <div class="porque">A expressão "não só... mas também" funciona como aditiva.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Por que as orações em "Acordei cedo, tomei café, parti para o colégio" são chamadas de COORDENADAS?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Porque são sintaticamente independentes entre si.</div>
+                <div class="porque">Cada oração tem sentido próprio e não depende da outra.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque uma oração funciona como sujeito da outra.</div>
+                <div class="porque">Isso ocorre nas orações subordinadas, não coordenadas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque todas são introduzidas por conjunção aditiva.</div>
+                <div class="porque">Esse período não tem conjunções; elas são assindéticas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque formam um período simples de sentido único.</div>
+                <div class="porque">Há três verbos, formando assim um período composto.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em "O dia estava frio, <u>porém</u> os alunos brincavam animados no pátio", o conectivo "porém" pode ser substituído por:</div>
+            <div class="alternativa">
+                <div class="opcao">portanto.</div>
+                <div class="porque">"Portanto" expressa conclusão, alterando o sentido.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">porque.</div>
+                <div class="porque">"Porque" introduz explicação ou causa, não oposição.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">contudo.</div>
+                <div class="porque">"Contudo" é conjunção adversativa, sinônima de "porém".</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">porquanto.</div>
+                <div class="porque">"Porquanto" significa porque/visto que (causa/explicação).</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Leia: "Na minha infância, eu não tinha brinquedos caros; criava minhas brincadeiras." As duas orações relacionam-se por:</div>
+            <div class="alternativa">
+                <div class="opcao">coordenação sindética com conjunção explicativa.</div>
+                <div class="porque">Não foi usada nenhuma conjunção entre as duas orações.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">coordenação assindética ligada por pontuação.</div>
+                <div class="porque">As orações são independentes e separadas por pontuação.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">subordinação substantiva com valor de objeto.</div>
+                <div class="porque">Ambas são orações independentes em coordenação.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">subordinação adverbial com sentido de tempo.</div>
+                <div class="porque">Não há relação de subordinação adverbial nesse período.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Assinale a frase que exemplifica um PERÍODO COMPOSTO POR COORDENAÇÃO formado por três orações:</div>
+            <div class="alternativa">
+                <div class="opcao">O escritor relembrou sua infância com muita alegria.</div>
+                <div class="porque">Há apenas o verbo "relembrou", sendo período simples.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Quando cheguei em casa, percebi que havia perdido tudo.</div>
+                <div class="porque">Trata-se de período composto por subordinação.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Eu desejava muito que todos lessem minhas memórias.</div>
+                <div class="porque">A oração "que todos lessem" é subordinada substantiva.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Abriu a mala antiga, separou as cartas e guardou as fotos.</div>
+                <div class="porque">Três verbos independentes: abriu, separou e guardou.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em "Não deixe de ler biografias, <u>que</u> elas ensinam lições valiosas", a palavra "que" introduz uma oração:</div>
+            <div class="alternativa certa">
+                <div class="opcao">coordenada sindética explicativa.</div>
+                <div class="porque">"Que" equivale a "pois/porque", justificando a oração.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética conclusiva.</div>
+                <div class="porque">Não traz dedução ou conclusão, e sim uma justificativa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética adversativa.</div>
+                <div class="porque">O termo não introduz contraste nem oposição de ideias.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada assindética de modo.</div>
+                <div class="porque">A presença da conjunção "que" torna a oração sindética.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Na autobiografia, o autor expressa sentimentos pessoais sobre fatos vividos. Isso confere ao texto um caráter:</div>
+            <div class="alternativa">
+                <div class="opcao">estritamente impessoal e sem envolvimento emocional.</div>
+                <div class="porque">A autobiografia é marcada pelas impressões do próprio autor.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">totalmente fictício e sem relação com a realidade.</div>
+                <div class="porque">A autobiografia narra fatos vividos no mundo real.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">subjetivo, marcado por memórias e pontos de vista.</div>
+                <div class="porque">O autor expõe suas vivências e sentimentos pessoais.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">científico e baseado exclusivamente em estatísticas.</div>
+                <div class="porque">Relatos de vida priorizam memórias e trajetória humana.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em "Estudou muito durante o ano inteiro; <u>logo</u>, foi aprovado com louvor", a oração destacada é:</div>
+            <div class="alternativa">
+                <div class="opcao">explicativa, pois justifica a rotina de estudos.</div>
+                <div class="porque">"Logo" indica a consequência lógica, e não o motivo.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">conclusiva, pois deduz o desfecho do estudo.</div>
+                <div class="porque">"Logo" expressa dedução e resultado direto do estudo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">adversativa, pois contraria a rotina do aluno.</div>
+                <div class="porque">Ser aprovado não se opõe a estudar; confirma o esforço.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">alternativa, pois oferece uma opção de resultado.</div>
+                <div class="porque">Não há alternância ou escolha entre duas opções aqui.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Assinale o período em que a conjunção "E" tem valor ADVERSATIVO (equivalente a "mas"):</div>
+            <div class="alternativa">
+                <div class="opcao">Chegou em casa e abraçou carinhosamente a família.</div>
+                <div class="porque">"E" expressa mera adição cronológica de ações na oração.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O autor escreveu a autobiografia e lançou o livro.</div>
+                <div class="porque">Há soma de acontecimentos da vida profissional do autor.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Li relatos do passado e compreendi melhor a história.</div>
+                <div class="porque">Indica soma de ações que se complementam no pensamento.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Pediu ajuda aos amigos, e ninguém apareceu no local.</div>
+                <div class="porque">O "e" introduz um contraste inesperado (= mas ninguém).</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Analise o período: "Não desista dos seus sonhos, <u>que</u> a vitória chegará". Se trocarmos "que" por outro conectivo de mesmo valor, teremos:</div>
+            <div class="alternativa">
+                <div class="opcao">portanto a vitória chegará.</div>
+                <div class="porque">"Portanto" indica conclusão, alterando o sentido causal.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">todavia a vitória chegará.</div>
+                <div class="porque">"Todavia" expressa oposição, contrariando o sentido.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">pois a vitória chegará.</div>
+                <div class="porque">"Pois" e "que" exercem papel explicativo após o verbo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">contudo a vitória chegará.</div>
+                <div class="porque">"Contudo" é conjunção adversativa, não explicativa.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Diferencie os períodos:<br>I. "Gosto de ler memórias e aprendo com elas."<br>II. "Gosto de ler memórias, mas tenho pouco tempo."<br>Eles classificam-se como períodos por coordenação sindética:</div>
+            <div class="alternativa certa">
+                <div class="opcao">aditiva em I e adversativa em II.</div>
+                <div class="porque">Em I, "e" soma fatos; em II, "mas" opõe a falta de tempo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">conclusiva em I e explicativa em II.</div>
+                <div class="porque">Nenhuma das orações expressa conclusão ou justificativa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">alternativa em I e aditiva em II.</div>
+                <div class="porque">Em I não há escolha ("ou") e em II há oposição ("mas").</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">adversativa em I e conclusiva em II.</div>
+                <div class="porque">A ordem foi invertida e as classificações estão erradas.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Em "O candidato não compareceu ao debate <u>nem justificou sua ausência</u>", a oração destacada classifica-se como:</div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética explicativa.</div>
+                <div class="porque">Não dá uma explicação, mas sim acrescenta outra negação.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">coordenada sindética aditiva.</div>
+                <div class="porque">"Nem" equivale a "e não", somando duas ações negativas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética adversativa.</div>
+                <div class="porque">Não há ideia de contraste entre os dois fatos ocorridos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética alternativa.</div>
+                <div class="porque">"Nem" não traz escolha, apenas soma ausência e silêncio.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">No período: "<u>Ora</u> ria com as memórias de infância, <u>ora</u> chorava de saudade", as orações expressam:</div>
+            <div class="alternativa">
+                <div class="opcao">conclusão lógica dos sentimentos.</div>
+                <div class="porque">A relação expressa alternância de estados, não dedução.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">causa e efeito entre rir e chorar.</div>
+                <div class="porque">As orações mostram alternância entre rir e chorar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">explicação detalhada da emoção.</div>
+                <div class="porque">Não há explicação, mas variação alternada de emoções.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">alternância entre duas ações emotivas.</div>
+                <div class="porque">"Ora... ora" é par correlativo coordenativo alternativo.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual período apresenta uma oração coordenada sindética CONCLUSIVA com o conectivo deslocado entre vírgulas?</div>
+            <div class="alternativa">
+                <div class="opcao">O rapaz estudou muito, porém não passou na prova final.</div>
+                <div class="porque">"Porém" introduz oração coordenada sindética adversativa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Ele não só trabalhou bastante, como também viajou muito.</div>
+                <div class="porque">"Não só... como também" expressa acréscimo (aditiva).</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">O autor esforçou-se muito; obteve, portanto, o sucesso.</div>
+                <div class="porque">"Portanto" deslocado entre vírgulas mantém valor conclusivo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Ou você conta a verdade agora, ou sofrerá as punições.</div>
+                <div class="porque">"Ou... ou" expressa alternância, não valor conclusivo.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Sobre o período "<u>Penso</u>, <u>logo</u> <u>existo</u>", assinale a análise sintática correta:</div>
+            <div class="alternativa certa">
+                <div class="opcao">Composto por coordenação: uma assindética e uma conclusiva.</div>
+                <div class="porque">"Penso" é assindética; "logo existo" é sindética conclusiva.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Simples com locução verbal indicando tempo presente.</div>
+                <div class="porque">Há dois verbos autônomos, formando um período composto.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Composto por coordenação formado por duas orações aditivas.</div>
+                <div class="porque">"Logo" expressa conclusão/dedução, não soma de ideias.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Composto por subordinação com relação de causa e efeito.</div>
+                <div class="porque">As duas orações são coordenadas independentes entre si.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Em um relato autobiográfico, ao escrever "Encontrei cartas antigas, <u>por conseguinte</u> entendi meu passado", o conectivo tem o sentido de:</div>
+            <div class="alternativa">
+                <div class="opcao">entretanto.</div>
+                <div class="porque">"Entretanto" é adversativo e expressa oposição de fatos.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">por isso.</div>
+                <div class="porque">"Por conseguinte" e "por isso" são conectivos conclusivos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">conquanto.</div>
+                <div class="porque">"Conquanto" é conjunção subordinativa concessiva.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">visto que.</div>
+                <div class="porque">"Visto que" introduz ideia de causa, não de conclusão.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Considere o período: "A memória falha com o passar dos anos, <u>não obstante</u> guardamos os momentos felizes". A oração sublinhada é:</div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética explicativa.</div>
+                <div class="porque">Não dá uma explicação sobre o enfraquecimento da memória.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética aditiva.</div>
+                <div class="porque">Não apenas adiciona, mas contrapõe a falha à lembrança.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">coordenada sindética adversativa.</div>
+                <div class="porque">"Não obstante" expressa oposição ao esquecimento natural.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">coordenada sindética conclusiva.</div>
+                <div class="porque">Não é um resultado da falha, mas um contraste positivo.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Identifique a alternativa em que a conjunção "POIS" tem valor CONCLUSIVO (e não explicativo):</div>
+            <div class="alternativa">
+                <div class="opcao">Venha logo para a aula, pois o professor já chegou.</div>
+                <div class="porque">O "pois" antes do verbo introduz explicação ou motivo.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">O atleta treinou sem parar; será, pois, campeão.</div>
+                <div class="porque">O "pois" colocado depois do verbo tem valor conclusivo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Não se atrase para o teste, pois as vagas acabam.</div>
+                <div class="porque">"Pois" no início da oração justifica a recomendação dita.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Ficamos em casa quietos, pois chovia torrencialmente.</div>
+                <div class="porque">O "pois" introduz a causa/motivo de terem ficado em casa.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Assinale a alternativa em que o período é composto contendo UMA oração assindética e UMA oração sindética alternativa:</div>
+            <div class="alternativa">
+                <div class="opcao">Ou fale a verdade agora, ou cale-se para todo o sempre.</div>
+                <div class="porque">Ambas as orações são sindéticas, pois usam o conectivo "ou".</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Viajou pelo mundo inteiro e conheceu muitas culturas.</div>
+                <div class="porque">A segunda oração é sindética aditiva, não alternativa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Não tema os novos desafios, pois errar faz parte da vida.</div>
+                <div class="porque">A segunda oração é sindética explicativa, não alternativa.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Decida o seu futuro agora, ou perderá esta oportunidade.</div>
+                <div class="porque">A 1ª oração não tem conectivo (assindética) e a 2ª tem "ou".</div>
+            </div>
+        </div>
+    </section>
+    <!-- ZONA 5 FIM -->
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<!-- BLOCO TRAVADO: SELOS E MOTOR. COPIE IGUAL. -->
+<script id="selo">
+const SELO_MOTOR = "db5bcc72";
+const SELO_CSS = "1b813fa0";
+</script>
+<script id="motor">
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+// --- LEITURA DAS QUESTOES (vem do HTML) ---
+function htmlDe(pai, seletor) {
+    const el = pai ? pai.querySelector(seletor) : null;
+    return el ? el.innerHTML.trim() : '';
+}
+
+const questions = Array.from(document.querySelectorAll('#bancoQuestoes .questao')).map((bloco, i) => {
+    const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+    const certa = Math.max(alternativas.findIndex(a => a.classList.contains('certa')), 0);
+    return {
+        id: i + 1,
+        level: bloco.dataset.nivel,
+        text: htmlDe(bloco, ':scope > .enunciado'),
+        options: alternativas.map(a => htmlDe(a, ':scope > .opcao')),
+        correct: certa,
+        explanation: {
+            correct: htmlDe(alternativas[certa], ':scope > .porque'),
+            options: alternativas.map((a, j) => j === certa ? 'Certa' : htmlDe(a, ':scope > .porque'))
+        }
+    };
+});
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise a teoria com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+
+// --- VERIFICADOR AUTOMATICO DA PAGINA ---
+function seloDe(texto) {
+    const limpo = texto.replace(/[^\x21-\x7E]/g, '');
+    let h = 2166136261;
+    for (let i = 0; i < limpo.length; i++) {
+        h ^= limpo.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(16);
+}
+
+function textoDe(html) {
+    const modelo = document.createElement('template');
+    modelo.innerHTML = html;
+    return modelo.content.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function verificarPagina() {
+    const erros = [];
+    const letras = ['A', 'B', 'C', 'D'];
+    const conteudo = [
+        document.title,
+        document.querySelector('.logo-header').innerHTML,
+        document.getElementById('viewExplanation').innerHTML,
+        document.getElementById('bancoQuestoes').innerHTML
+    ].join(' ');
+
+    const seloMotor = document.getElementById('motor');
+    const seloCss = document.getElementById('css-motor');
+    if (typeof SELO_MOTOR === 'undefined' || !seloMotor || seloDe(seloMotor.textContent) !== SELO_MOTOR) erros.push('O motor JavaScript foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (typeof SELO_CSS === 'undefined' || !seloCss || seloDe(seloCss.textContent) !== SELO_CSS) erros.push('O CSS do motor foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (conteudo.includes('[[') || conteudo.includes(']]')) erros.push('Ficou algum campo [[...]] sem preencher.');
+    if (conteudo.includes('**')) erros.push('Há Markdown (**) dentro do HTML. Use <strong>.');
+    if (document.querySelector('#viewExplanation script, #bancoQuestoes script, #viewExplanation iframe, #bancoQuestoes iframe')) erros.push('Há script ou iframe dentro das zonas de conteúdo.');
+    if (document.querySelector('#viewExplanation img, #bancoQuestoes img')) erros.push('Há imagem externa. Desenhe com SVG.');
+
+    document.querySelectorAll('#viewExplanation svg, #bancoQuestoes svg').forEach((svg, i) => {
+        if (!svg.getAttribute('viewBox') || !svg.getAttribute('aria-label')) erros.push('O desenho SVG ' + (i + 1) + ' precisa de viewBox e aria-label.');
+    });
+
+    const grupos = document.querySelectorAll('#viewExplanation .content-group');
+    if (grupos.length < 2) erros.push('A teoria precisa de pelo menos 2 temas.');
+    grupos.forEach((g, i) => {
+        if (!g.querySelector('.section-badge') || !g.querySelector('.theory-box')) erros.push('O tema ' + (i + 1) + ' da teoria está sem .section-badge ou .theory-box.');
+    });
+
+    const blocos = Array.from(document.querySelectorAll('#bancoQuestoes .questao'));
+    if (blocos.length !== 30) erros.push('São ' + blocos.length + ' questões, mas precisam ser exatamente 30.');
+
+    const enunciados = new Set();
+    const contagem = [0, 0, 0, 0];
+    let longas = 0;
+    let sequencia = 0;
+    let ultima = -1;
+
+    blocos.forEach((bloco, i) => {
+        const q = 'Questão ' + (i + 1) + ': ';
+        const esperado = i < 10 ? 'Fácil' : i < 20 ? 'Médio' : 'Difícil';
+        if (bloco.dataset.nivel !== esperado) erros.push(q + 'o nível deveria ser ' + esperado + '.');
+
+        const enunciadoEl = bloco.querySelector(':scope > .enunciado');
+        const enunciado = enunciadoEl ? textoDe(enunciadoEl.innerHTML) : '';
+        if (!enunciado) erros.push(q + 'falta o enunciado.');
+        if (enunciado && enunciados.has(enunciado)) erros.push(q + 'enunciado repetido.');
+        enunciados.add(enunciado);
+
+        const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+        if (alternativas.length !== 4) erros.push(q + 'precisa de exatamente 4 alternativas.');
+        const certas = alternativas.filter(a => a.classList.contains('certa'));
+        if (certas.length !== 1) erros.push(q + 'precisa de exatamente 1 alternativa certa.');
+
+        const textos = alternativas.map(a => {
+            const el = a.querySelector(':scope > .opcao');
+            return el ? textoDe(el.innerHTML) : '';
+        });
+        if (textos.some(t => !t)) erros.push(q + 'há alternativa sem texto.');
+        if (new Set(textos).size !== textos.length) erros.push(q + 'há alternativas repetidas.');
+
+        alternativas.forEach((a, j) => {
+            const el = a.querySelector(':scope > .porque');
+            const porque = el ? textoDe(el.innerHTML) : '';
+            const letra = letras[j] || '?';
+            if (!porque) erros.push(q + 'a alternativa ' + letra + ' está sem explicação.');
+            if (porque.length > 110) erros.push(q + 'a explicação da alternativa ' + letra + ' passou de 110 caracteres.');
+        });
+
+        const indice = alternativas.findIndex(a => a.classList.contains('certa'));
+        if (indice >= 0 && indice < 4) {
+            contagem[indice]++;
+            sequencia = indice === ultima ? sequencia + 1 : 1;
+            ultima = indice;
+            if (sequencia === 4) erros.push(q + 'são 4 respostas seguidas com a mesma letra.');
+            const tamanhos = textos.map(t => t.length);
+            const outros = tamanhos.filter((_, j) => j !== indice);
+            if (tamanhos[indice] > 20 && tamanhos[indice] - Math.max(...outros) >= 6) longas++;
+        }
+    });
+
+    contagem.forEach((total, i) => {
+        if (blocos.length === 30 && (total < 5 || total > 10)) erros.push('A letra ' + letras[i] + ' é a certa em ' + total + ' questões. Use de 6 a 9.');
+    });
+    if (longas > 3) erros.push('A alternativa certa é claramente a mais longa em ' + longas + ' questões. Equilibre os tamanhos.');
+
+    const aviso = document.getElementById('avisoMotor');
+    if (erros.length === 0) {
+        aviso.remove();
+        window.PAGINA_OK = true;
+        return;
+    }
+    const lista = erros.slice(0, 25).map(e => '<li>' + e.replace(/</g, '&lt;') + '</li>').join('');
+    aviso.innerHTML = '<strong>⚠️ A página precisa de correção. Não envie aos alunos.</strong><br>Copie esta lista, cole no Gemini e peça para corrigir só estes itens:<ol style="margin:8px 0 0 20px;">' + lista + '</ol>';
+}
+
+verificarPagina();
+</script>
+</body>
+</html>
