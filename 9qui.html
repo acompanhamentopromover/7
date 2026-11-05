@@ -1,0 +1,841 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>9qui</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- BLOCO TRAVADO: CSS DO MOTOR. COPIE IGUAL. -->
+<style id="css-motor">
+:root {
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-text-active: #FFFFFF;
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+td, th { padding: 6px 8px; }
+#bancoQuestoes { display: none; }
+.visual-area.texto { font-size: 0.95rem; flex-direction: column; gap: 8px; }
+.tabela { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+.tabela th { background: var(--theme-light); }
+.tabela th, .tabela td { border: 1px solid var(--border-color); }
+.lista { padding-left: 20px; }
+.desenho { width: 100%; max-width: 420px; height: auto; display: block; margin: 10px auto; }
+.d-cor1 { fill: var(--theme-dark); }
+.d-cor2 { fill: var(--theme-contrast); }
+.d-cor3 { fill: var(--theme-medium); }
+.d-fundo { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-linha { fill: none; stroke: var(--text-color); stroke-width: 2; }
+.d-texto { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; }
+</style>
+<!-- ZONA 2 INICIO: CORES E CSS EXTRA -->
+<style id="css-tema">
+:root {
+    --bg-color: #EEF2FF;
+    --text-color: #1E1B4B;
+    --theme-light: #E0E7FF;
+    --theme-medium: #818CF8;
+    --theme-dark: #3730A3;
+    --theme-contrast: #0E7490;
+    --theme-accent: #4F46E5;
+}
+.d-peq { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; }
+.d-suave { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-tracejado { fill: none; stroke: var(--theme-accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.d-fina { fill: none; stroke: var(--text-color); stroke-width: 1.2; }
+.quiz-footer { padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px)); }
+.tabela.compacta th, .tabela.compacta td { padding: 5px 2px; font-size: 0.72rem; }
+</style>
+<!-- ZONA 2 FIM -->
+
+<div id="avisoMotor" style="display:block; max-width:600px; width:100%; margin:0 auto 16px; padding:14px; background:#FFE4E6; color:#881337; border:3px solid #BE123C; border-radius:12px; font-family:sans-serif; font-size:15px; font-weight:600; line-height:1.5;">⚠️ Este arquivo está incompleto ou com erro no código. Não envie aos alunos. Peça ao Gemini para gerar o arquivo completo de novo.</div>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <!-- ZONA 3 INICIO: CABECALHO -->
+        <h1>Química – 9º&nbsp;Ano</h1>
+        <p class="subtitle">Ciclo e fixação do nitrogênio</p>
+        <!-- ZONA 3 FIM -->
+    </header>
+
+    <div class="toggle-container" hidden>
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (15)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" hidden>
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- ZONA 4 INICIO: TEORIA -->
+        <!-- ZONA 4 FIM -->
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (15 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">15 questões rigorosas. Acerte <strong>80% (12/15)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 15</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+
+    <!-- ZONA 5 INICIO: 30 QUESTOES -->
+    <section id="bancoQuestoes" hidden>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">O gás nitrogênio (N<sub>2</sub>) forma qual porcentagem do ar?</div>
+            <div class="alternativa">
+                <div class="opcao">50%</div>
+                <div class="porque">O nitrogênio forma bem mais da metade do ar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">21%</div>
+                <div class="porque">21% é a porcentagem aproximada do gás oxigênio.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">78%</div>
+                <div class="porque">O nitrogênio é o gás mais abundante do ar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">100%</div>
+                <div class="porque">O ar é uma mistura de vários gases.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Como os animais obtêm o nitrogênio de que precisam?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Comendo plantas ou outros animais</div>
+                <div class="porque">Os animais obtêm nitrogênio pela alimentação.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Respirando o nitrogênio do ar</div>
+                <div class="porque">Os animais não conseguem usar o gás nitrogênio do ar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Absorvendo nitrato pelas raízes</div>
+                <div class="porque">Quem absorve nitrato pelas raízes são as plantas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Formando nódulos no estômago</div>
+                <div class="porque">Nódulos se formam nas raízes de leguminosas.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em quais substâncias essenciais à vida o nitrogênio está presente?</div>
+            <div class="alternativa">
+                <div class="opcao">Ferro e cálcio</div>
+                <div class="porque">Ferro e cálcio são outros elementos químicos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Água e sal de cozinha</div>
+                <div class="porque">Essas substâncias não contêm nitrogênio.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Gás oxigênio e gás carbônico</div>
+                <div class="porque">Esses gases não contêm nitrogênio.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Proteínas e ácidos nucleicos</div>
+                <div class="porque">O nitrogênio entra nas proteínas e nos ácidos nucleicos.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual etapa do ciclo devolve o nitrogênio à atmosfera?</div>
+            <div class="alternativa">
+                <div class="opcao">Fixação</div>
+                <div class="porque">A fixação retira o nitrogênio do ar.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Desnitrificação</div>
+                <div class="porque">Bactérias desnitrificantes transformam nitrato em N<sub>2</sub>, que volta ao ar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Amonização</div>
+                <div class="porque">A amonização libera amônia de restos e excretas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Nitrificação</div>
+                <div class="porque">A nitrificação forma nitrito e nitrato.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Como se chama a relação entre rizóbios e leguminosas, em que as duas espécies ganham?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Mutualismo</div>
+                <div class="porque">A planta recebe nitrogênio, e a bactéria, abrigo e alimento.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Predação</div>
+                <div class="porque">Na predação, um ser vivo captura e come o outro.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Parasitismo</div>
+                <div class="porque">No parasitismo, um ganha e o outro é prejudicado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Competição</div>
+                <div class="porque">Na competição, os seres disputam o mesmo recurso.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Por que a maioria dos seres vivos não consegue usar o N<sub>2</sub> diretamente?</div>
+            <div class="alternativa">
+                <div class="opcao">Porque o nitrogênio só existe dentro do solo</div>
+                <div class="porque">O nitrogênio está no ar, no solo, na água e nos seres vivos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque o gás nitrogênio é muito raro na atmosfera da Terra</div>
+                <div class="porque">O nitrogênio forma 78% do ar.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Porque a ligação entre os dois átomos é muito forte</div>
+                <div class="porque">Só certas bactérias conseguem tornar esse nitrogênio disponível.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque esse gás é tóxico para os seres vivos</div>
+                <div class="porque">O problema é a dificuldade de quebrar a ligação.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Na amonização, quem libera amônia a partir de restos e excretas?</div>
+            <div class="alternativa">
+                <div class="opcao">Raios das tempestades</div>
+                <div class="porque">Os raios atuam na atmosfera, não nos restos e excretas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Bactérias desnitrificantes</div>
+                <div class="porque">As desnitrificantes transformam nitrato em N<sub>2</sub>.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Bactérias do gênero Nitrobacter</div>
+                <div class="porque">Nitrobacter transforma nitrito em nitrato.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Bactérias decompositoras</div>
+                <div class="porque">As decompositoras liberam amônia de restos e excretas.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual é a sequência correta da nitrificação?</div>
+            <div class="alternativa">
+                <div class="opcao">Nitrato → nitrito → amônio</div>
+                <div class="porque">Essa sequência está invertida.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Amônio → nitrito → nitrato</div>
+                <div class="porque">Nitrosomonas forma nitrito, e Nitrobacter forma nitrato.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Nitrito → amônio → nitrato</div>
+                <div class="porque">O amônio vem antes do nitrito.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Amônio → nitrato → nitrito</div>
+                <div class="porque">O nitrito vem antes do nitrato.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual tipo de fixação forma óxidos de nitrogênio com a energia das descargas elétricas?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Fixação abiótica, por raios</div>
+                <div class="porque">A energia do raio quebra as ligações de N<sub>2</sub> e O<sub>2</sub>, e formam-se óxidos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Fixação biológica, por bactérias</div>
+                <div class="porque">A fixação biológica é feita por seres vivos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Fixação industrial, por fábricas</div>
+                <div class="porque">A fixação industrial usa o processo de Haber-Bosch.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Fixação por rizóbios nas raízes</div>
+                <div class="porque">Os rizóbios fazem fixação biológica.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em quais condições ocorre o processo de Haber-Bosch?</div>
+            <div class="alternativa">
+                <div class="opcao">100 °C, 250 atm e catalisador de cobre</div>
+                <div class="porque">A temperatura é 450 °C, e o catalisador é de ferro.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">25 °C, 1 atm e catalisador de ferro</div>
+                <div class="porque">Temperatura e pressão precisam ser bem maiores.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">450 °C, 1 atm e sem catalisador</div>
+                <div class="porque">O processo usa alta pressão e catalisador de ferro.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">450 °C, 250 atm e catalisador de ferro</div>
+                <div class="porque">Essas são as condições usadas para produzir amônia.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Na equação N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub>, quantos átomos de hidrogênio há em cada lado?</div>
+            <div class="alternativa">
+                <div class="opcao">5</div>
+                <div class="porque">5 aparece ao somar coeficiente e índice, mas o certo é multiplicar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">3</div>
+                <div class="porque">3 é o coeficiente, mas cada molécula tem 2 átomos de hidrogênio.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">6</div>
+                <div class="porque">Reagentes: 3 × 2 = 6. Produtos: 2 × 3 = 6.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">2</div>
+                <div class="porque">2 é o número de átomos de nitrogênio em cada lado.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Pela proporção 1 : 3 : 2 da síntese da amônia, 4 moléculas de N<sub>2</sub> reagem com quantas de H<sub>2</sub> e formam quantas de NH<sub>3</sub>?</div>
+            <div class="alternativa">
+                <div class="opcao">8 de H<sub>2</sub> e 12 de NH<sub>3</sub></div>
+                <div class="porque">Os números foram trocados.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">12 de H<sub>2</sub> e 8 de NH<sub>3</sub></div>
+                <div class="porque">4 × 3 = 12 e 4 × 2 = 8.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">3 de H<sub>2</sub> e 2 de NH<sub>3</sub></div>
+                <div class="porque">Esses números valem para 1 molécula de nitrogênio.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">4 de H<sub>2</sub> e 4 de NH<sub>3</sub></div>
+                <div class="porque">A proporção não é de 1 para 1.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Por que incluir leguminosas na rotação com o milho reduz o uso de fertilizantes artificiais?</div>
+            <div class="alternativa">
+                <div class="opcao">Porque a rotação elimina as bactérias do solo</div>
+                <div class="porque">As bactérias fixadoras são essenciais nesse processo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque as leguminosas retiram o nitrogênio do solo</div>
+                <div class="porque">Elas ajudam a repor o nitrogênio.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque o milho passa a produzir seus próprios nódulos</div>
+                <div class="porque">Os nódulos ficam nas raízes das leguminosas.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Porque seus rizóbios fixam nitrogênio e enriquecem o solo</div>
+                <div class="porque">Assim, as leguminosas compensam o empobrecimento causado pelo milho.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Na eutrofização, por que os peixes morrem?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Porque decompositores consomem o O<sub>2</sub> da água</div>
+                <div class="porque">Sem oxigênio, o ambiente fica anóxico e os peixes morrem.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque a água fica salgada demais</div>
+                <div class="porque">O problema é a falta de oxigênio.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque a água recebe excesso de luz solar</div>
+                <div class="porque">A proliferação de algas sombreia a água.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque os peixes comem todas as algas</div>
+                <div class="porque">As algas proliferam, e não desaparecem.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Como os óxidos de nitrogênio dos combustíveis fósseis se relacionam com a chuva ácida?</div>
+            <div class="alternativa">
+                <div class="opcao">Reagem com a água da atmosfera e aumentam o pH</div>
+                <div class="porque">pH maior indicaria uma chuva menos ácida.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Reagem com a água da atmosfera e baixam o pH</div>
+                <div class="porque">Quanto menor o pH, mais ácida fica a chuva.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Retiram todo o nitrogênio do ar da região</div>
+                <div class="porque">O nitrogênio continua sendo o principal gás do ar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Transformam toda a chuva em amônia pura</div>
+                <div class="porque">A chuva ácida contém ácidos, e não amônia pura.</div>
+            </div>
+        </div>
+    </section>
+    <!-- ZONA 5 FIM -->
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<!-- BLOCO TRAVADO: SELOS E MOTOR. COPIE IGUAL. -->
+<script id="selo">
+const SELO_MOTOR = "b41e4528";
+const SELO_CSS = "1b813fa0";
+</script>
+<script id="motor">
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+// --- LEITURA DAS QUESTOES (vem do HTML) ---
+function htmlDe(pai, seletor) {
+    const el = pai ? pai.querySelector(seletor) : null;
+    return el ? el.innerHTML.trim() : '';
+}
+
+const questions = Array.from(document.querySelectorAll('#bancoQuestoes .questao')).map((bloco, i) => {
+    const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+    const certa = Math.max(alternativas.findIndex(a => a.classList.contains('certa')), 0);
+    return {
+        id: i + 1,
+        level: bloco.dataset.nivel,
+        text: htmlDe(bloco, ':scope > .enunciado'),
+        options: alternativas.map(a => htmlDe(a, ':scope > .opcao')),
+        correct: certa,
+        explanation: {
+            correct: htmlDe(alternativas[certa], ':scope > .porque'),
+            options: alternativas.map((a, j) => j === certa ? 'Certa' : htmlDe(a, ':scope > .porque'))
+        }
+    };
+});
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise o conteúdo com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode('practice');
+
+// --- VERIFICADOR AUTOMATICO DA PAGINA ---
+function seloDe(texto) {
+    const limpo = texto.replace(/[^\x21-\x7E]/g, '');
+    let h = 2166136261;
+    for (let i = 0; i < limpo.length; i++) {
+        h ^= limpo.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(16);
+}
+
+function textoDe(html) {
+    const modelo = document.createElement('template');
+    modelo.innerHTML = html;
+    return modelo.content.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function verificarPagina() {
+    const erros = [];
+    const letras = ['A', 'B', 'C', 'D'];
+    const conteudo = [
+        document.title,
+        document.querySelector('.logo-header').innerHTML,
+        document.getElementById('viewExplanation').innerHTML,
+        document.getElementById('bancoQuestoes').innerHTML
+    ].join(' ');
+
+    const seloMotor = document.getElementById('motor');
+    const seloCss = document.getElementById('css-motor');
+    if (typeof SELO_MOTOR === 'undefined' || !seloMotor || seloDe(seloMotor.textContent) !== SELO_MOTOR) erros.push('O motor JavaScript foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (typeof SELO_CSS === 'undefined' || !seloCss || seloDe(seloCss.textContent) !== SELO_CSS) erros.push('O CSS do motor foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (conteudo.includes('[[') || conteudo.includes(']]')) erros.push('Ficou algum campo [[...]] sem preencher.');
+    if (conteudo.includes('**')) erros.push('Há Markdown (**) dentro do HTML. Use <strong>.');
+    if (document.querySelector('#viewExplanation script, #bancoQuestoes script, #viewExplanation iframe, #bancoQuestoes iframe')) erros.push('Há script ou iframe dentro das zonas de conteúdo.');
+    if (document.querySelector('#viewExplanation img, #bancoQuestoes img')) erros.push('Há imagem externa. Desenhe com SVG.');
+
+    document.querySelectorAll('#viewExplanation svg, #bancoQuestoes svg').forEach((svg, i) => {
+        if (!svg.getAttribute('viewBox') || !svg.getAttribute('aria-label')) erros.push('O desenho SVG ' + (i + 1) + ' precisa de viewBox e aria-label.');
+    });
+
+    const blocos = Array.from(document.querySelectorAll('#bancoQuestoes .questao'));
+    if (blocos.length !== 15) erros.push('São ' + blocos.length + ' questões, mas precisam ser exatamente 15.');
+
+    const enunciados = new Set();
+    const contagem = [0, 0, 0, 0];
+    let longas = 0;
+    let sequencia = 0;
+    let ultima = -1;
+
+    blocos.forEach((bloco, i) => {
+        const q = 'Questão ' + (i + 1) + ': ';
+        const esperado = i < 5 ? 'Fácil' : i < 10 ? 'Médio' : 'Difícil';
+        if (bloco.dataset.nivel !== esperado) erros.push(q + 'o nível deveria ser ' + esperado + '.');
+
+        const enunciadoEl = bloco.querySelector(':scope > .enunciado');
+        const enunciado = enunciadoEl ? textoDe(enunciadoEl.innerHTML) : '';
+        if (!enunciado) erros.push(q + 'falta o enunciado.');
+        if (enunciado && enunciados.has(enunciado)) erros.push(q + 'enunciado repetido.');
+        enunciados.add(enunciado);
+
+        const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+        if (alternativas.length !== 4) erros.push(q + 'precisa de exatamente 4 alternativas.');
+        const certas = alternativas.filter(a => a.classList.contains('certa'));
+        if (certas.length !== 1) erros.push(q + 'precisa de exatamente 1 alternativa certa.');
+
+        const textos = alternativas.map(a => {
+            const el = a.querySelector(':scope > .opcao');
+            return el ? textoDe(el.innerHTML) : '';
+        });
+        if (textos.some(t => !t)) erros.push(q + 'há alternativa sem texto.');
+        if (new Set(textos).size !== textos.length) erros.push(q + 'há alternativas repetidas.');
+
+        alternativas.forEach((a, j) => {
+            const el = a.querySelector(':scope > .porque');
+            const porque = el ? textoDe(el.innerHTML) : '';
+            const letra = letras[j] || '?';
+            if (!porque) erros.push(q + 'a alternativa ' + letra + ' está sem explicação.');
+            if (porque.length > 110) erros.push(q + 'a explicação da alternativa ' + letra + ' passou de 110 caracteres.');
+        });
+
+        const indice = alternativas.findIndex(a => a.classList.contains('certa'));
+        if (indice >= 0 && indice < 4) {
+            contagem[indice]++;
+            sequencia = indice === ultima ? sequencia + 1 : 1;
+            ultima = indice;
+            if (sequencia === 4) erros.push(q + 'são 4 respostas seguidas com a mesma letra.');
+            const tamanhos = textos.map(t => t.length);
+            const outros = tamanhos.filter((_, j) => j !== indice);
+            if (tamanhos[indice] > 20 && tamanhos[indice] - Math.max(...outros) >= 6) longas++;
+        }
+    });
+
+    contagem.forEach((total, i) => {
+        if (blocos.length === 15 && (total < 2 || total > 5)) erros.push('A letra ' + letras[i] + ' é a certa em ' + total + ' questões. Use de 3 a 4.');
+    });
+    if (longas > 2) erros.push('A alternativa certa é claramente a mais longa em ' + longas + ' questões. Equilibre os tamanhos.');
+
+    const aviso = document.getElementById('avisoMotor');
+    if (erros.length === 0) {
+        aviso.remove();
+        window.PAGINA_OK = true;
+        return;
+    }
+    const lista = erros.slice(0, 25).map(e => '<li>' + e.replace(/</g, '&lt;') + '</li>').join('');
+    aviso.innerHTML = '<strong>⚠️ A página precisa de correção. Não envie aos alunos.</strong><br>Copie esta lista, cole no Gemini e peça para corrigir só estes itens:<ol style="margin:8px 0 0 20px;">' + lista + '</ol>';
+}
+
+verificarPagina();
+</script>
+
+</body></html>
