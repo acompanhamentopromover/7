@@ -1,0 +1,1059 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>9mat</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- BLOCO TRAVADO: CSS DO MOTOR. COPIE IGUAL. -->
+<style id="css-motor">
+:root {
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-text-active: #FFFFFF;
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+td, th { padding: 6px 8px; }
+#bancoQuestoes { display: none; }
+.visual-area.texto { font-size: 0.95rem; flex-direction: column; gap: 8px; }
+.tabela { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+.tabela th { background: var(--theme-light); }
+.tabela th, .tabela td { border: 1px solid var(--border-color); }
+.lista { padding-left: 20px; }
+.desenho { width: 100%; max-width: 420px; height: auto; display: block; margin: 10px auto; }
+.d-cor1 { fill: var(--theme-dark); }
+.d-cor2 { fill: var(--theme-contrast); }
+.d-cor3 { fill: var(--theme-medium); }
+.d-fundo { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-linha { fill: none; stroke: var(--text-color); stroke-width: 2; }
+.d-texto { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; }
+</style>
+<!-- ZONA 2 INICIO: CORES E CSS EXTRA -->
+<style id="css-tema">
+:root {
+    --bg-color: #EFF6FF;
+    --text-color: #0F172A;
+    --theme-light: #DBEAFE;
+    --theme-medium: #60A5FA;
+    --theme-dark: #1E3A8A;
+    --theme-contrast: #B45309;
+    --theme-accent: #2563EB;
+}
+.d-peq { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; }
+.d-suave { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-tracejado { fill: none; stroke: var(--theme-accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.d-fina { fill: none; stroke: var(--text-color); stroke-width: 1.2; }
+.quiz-footer { padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px)); }
+.tabela.compacta th, .tabela.compacta td { padding: 5px 2px; font-size: 0.72rem; }
+.d-grade { stroke: var(--theme-light); stroke-width: 1; }
+.d-curva { fill: none; stroke: var(--theme-dark); stroke-width: 3; }
+.d-num { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; paint-order: stroke; stroke: #FFFFFF; stroke-width: 4px; stroke-linejoin: round; }
+.d-rot { fill: var(--theme-contrast); font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 700; }
+</style>
+<!-- ZONA 2 FIM -->
+
+<div id="avisoMotor" style="display:block; max-width:600px; width:100%; margin:0 auto 16px; padding:14px; background:#FFE4E6; color:#881337; border:3px solid #BE123C; border-radius:12px; font-family:sans-serif; font-size:15px; font-weight:600; line-height:1.5;">⚠️ Este arquivo está incompleto ou com erro no código. Não envie aos alunos. Peça ao Gemini para gerar o arquivo completo de novo.</div>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <!-- ZONA 3 INICIO: CABECALHO -->
+        <h1>Matemática – 9º&nbsp;Ano</h1>
+        <p class="subtitle">Função quadrática e leitura da parábola</p>
+        <!-- ZONA 3 FIM -->
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (15)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" style="display: flex;">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- ZONA 4 INICIO: TEORIA -->
+        <div class="content-group">
+            <span class="section-badge">1. Função quadrática</span>
+            <div class="theory-box">
+                <h3>📈 O que é?</h3>
+                <p>A <strong>função quadrática</strong> tem a forma:</p>
+                <div class="visual-area texto"><span>f(x) = ax² + bx + c, com a diferente de 0</span></div>
+                <p>Os números a, b e c são os <strong>coeficientes</strong>. O gráfico dessa função é uma curva chamada <strong>parábola</strong>.</p>
+                <p><strong>Exemplo:</strong> em f(x) = x² − 5x + 6, temos a = 1, b = −5 e c = 6.</p>
+            </div>
+            <div class="theory-box">
+                <h3>🔎 Como identificar a, b e c</h3>
+                <p><strong>a:</strong> é o número que acompanha x².</p>
+                <p><strong>b:</strong> é o número que acompanha x.</p>
+                <p><strong>c:</strong> é o número sozinho.</p>
+                <table class="tabela compacta">
+                    <tr><th>Função</th><th>a</th><th>b</th><th>c</th></tr>
+                    <tr><td>f(x) = 2x² − 3x + 1</td><td>2</td><td>−3</td><td>1</td></tr>
+                    <tr><td>f(x) = x² − 4</td><td>1</td><td>0</td><td>−4</td></tr>
+                    <tr><td>f(x) = −x² + 5x</td><td>−1</td><td>5</td><td>0</td></tr>
+                    <tr><td>f(x) = 3 − 2x + x²</td><td>1</td><td>−2</td><td>3</td></tr>
+                </table>
+                <div class="highlight-box warning">
+                    <strong>Cuidado:</strong> o sinal faz parte do número. Quando não aparece número, ele vale 1. Quando o termo não existe, ele vale 0. A ordem dos termos pode mudar.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">2. Coeficientes no gráfico</span>
+            <div class="theory-box">
+                <h3>🔼 Coeficiente a: a concavidade</h3>
+                <svg class="desenho" viewBox="0 0 340 146" role="img" aria-label="Duas parábolas: com a positivo, concavidade para cima; com a negativo, concavidade para baixo"><line class="d-linha" x1="6.0" y1="78" x2="164.0" y2="78"/><polyline class="d-curva" points="35.0,9.8 36.2,15.0 37.5,20.0 38.8,24.9 40.0,29.6 41.2,34.2 42.5,38.7 43.8,43.1 45.0,47.3 46.2,51.4 47.5,55.4 48.8,59.2 50.0,63.0 51.2,66.5 52.5,70.0 53.8,73.3 55.0,76.5 56.2,79.6 57.5,82.5 58.8,85.3 60.0,88.0 61.2,90.5 62.5,92.9 63.8,95.2 65.0,97.3 66.2,99.4 67.5,101.2 68.8,103.0 70.0,104.6 71.2,106.1 72.5,107.5 73.8,108.7 75.0,109.8 76.2,110.8 77.5,111.7 78.8,112.4 80.0,113.0 81.2,113.4 82.5,113.7 83.8,113.9 85.0,114.0 86.2,113.9 87.5,113.7 88.8,113.4 90.0,113.0 91.2,112.4 92.5,111.7 93.8,110.8 95.0,109.8 96.2,108.7 97.5,107.5 98.8,106.1 100.0,104.6 101.2,103.0 102.5,101.2 103.8,99.4 105.0,97.3 106.2,95.2 107.5,92.9 108.8,90.5 110.0,88.0 111.2,85.3 112.5,82.5 113.8,79.6 115.0,76.5 116.2,73.3 117.5,70.0 118.8,66.5 120.0,63.0 121.2,59.2 122.5,55.4 123.8,51.4 125.0,47.3 126.2,43.1 127.5,38.7 128.8,34.2 130.0,29.6 131.2,24.9 132.5,20.0 133.8,15.0 135.0,9.8"/><text class="d-peq" x="85.0" y="138" text-anchor="middle">a &gt; 0: para cima</text><line class="d-linha" x1="176.0" y1="78" x2="334.0" y2="78"/><polyline class="d-curva" points="212.5,117.3 213.8,112.9 215.0,108.7 216.2,104.6 217.5,100.6 218.8,96.8 220.0,93.0 221.2,89.5 222.5,86.0 223.8,82.7 225.0,79.5 226.2,76.4 227.5,73.5 228.8,70.7 230.0,68.0 231.2,65.5 232.5,63.1 233.8,60.8 235.0,58.7 236.2,56.6 237.5,54.8 238.8,53.0 240.0,51.4 241.2,49.9 242.5,48.5 243.8,47.3 245.0,46.2 246.2,45.2 247.5,44.3 248.8,43.6 250.0,43.0 251.2,42.6 252.5,42.3 253.8,42.1 255.0,42.0 256.2,42.1 257.5,42.3 258.8,42.6 260.0,43.0 261.2,43.6 262.5,44.3 263.8,45.2 265.0,46.2 266.2,47.3 267.5,48.5 268.8,49.9 270.0,51.4 271.2,53.0 272.5,54.8 273.8,56.6 275.0,58.7 276.2,60.8 277.5,63.1 278.8,65.5 280.0,68.0 281.2,70.7 282.5,73.5 283.8,76.4 285.0,79.5 286.2,82.7 287.5,86.0 288.8,89.5 290.0,93.0 291.2,96.8 292.5,100.6 293.8,104.6 295.0,108.7 296.2,112.9 297.5,117.3"/><text class="d-peq" x="255.0" y="138" text-anchor="middle">a &lt; 0: para baixo</text></svg>
+                <p><strong>a &gt; 0:</strong> concavidade <strong>para cima</strong>.</p>
+                <p><strong>a &lt; 0:</strong> concavidade <strong>para baixo</strong>.</p>
+            </div>
+            <div class="theory-box">
+                <h3>↔️ Coeficiente b: a posição do vértice</h3>
+                <p><strong>b = 0:</strong> o vértice fica sobre o eixo y.</p>
+                <p><strong>a e b com o mesmo sinal:</strong> o vértice fica à esquerda do eixo y.</p>
+                <p><strong>a e b com sinais opostos:</strong> o vértice fica à direita do eixo y.</p>
+            </div>
+            <div class="theory-box">
+                <h3>📍 Coeficiente c: o corte no eixo y</h3>
+                <p>A parábola corta o eixo y no ponto <strong>(0, c)</strong>.</p>
+                <p><strong>Exemplo:</strong> f(x) = x² − 5x + 6 corta o eixo y em (0, 6).</p>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">3. Raízes e discriminante</span>
+            <div class="theory-box">
+                <h3>🎯 Raízes ou zeros</h3>
+                <p>As <strong>raízes</strong> são os valores de x em que f(x) = 0. No gráfico, são os pontos em que a parábola corta o <strong>eixo x</strong>.</p>
+                <div class="visual-area texto">
+                    <span>Δ = b² − 4 · a · c</span>
+                    <span>x = (−b ± √Δ) ÷ (2 · a)</span>
+                </div>
+                <svg class="desenho" viewBox="0 0 340 146" role="img" aria-label="Três parábolas em relação ao eixo x: duas raízes, uma raiz e nenhuma raiz real"><line class="d-linha" x1="6.0" y1="78" x2="107.3" y2="78"/><polyline class="d-curva" points="10.8,8.7 11.6,12.2 12.3,15.7 13.1,19.1 13.9,22.5 14.7,25.8 15.4,29.0 16.2,32.2 17.0,35.3 17.8,38.4 18.6,41.4 19.3,44.3 20.1,47.2 20.9,50.0 21.7,52.8 22.4,55.4 23.2,58.1 24.0,60.6 24.8,63.2 25.6,65.6 26.3,68.0 27.1,70.3 27.9,72.6 28.7,74.8 29.4,76.9 30.2,79.0 31.0,81.1 31.8,83.0 32.6,84.9 33.3,86.8 34.1,88.6 34.9,90.3 35.7,92.0 36.4,93.6 37.2,95.1 38.0,96.6 38.8,98.0 39.6,99.4 40.3,100.7 41.1,101.9 41.9,103.1 42.7,104.2 43.4,105.3 44.2,106.3 45.0,107.2 45.8,108.1 46.6,108.9 47.3,109.6 48.1,110.3 48.9,111.0 49.7,111.5 50.4,112.1 51.2,112.5 52.0,112.9 52.8,113.2 53.6,113.5 54.3,113.7 55.1,113.9 55.9,114.0 56.7,114.0 57.4,114.0 58.2,113.9 59.0,113.7 59.8,113.5 60.6,113.2 61.3,112.9 62.1,112.5 62.9,112.1 63.7,111.5 64.4,111.0 65.2,110.3 66.0,109.6 66.8,108.9 67.6,108.1 68.3,107.2 69.1,106.3 69.9,105.3 70.7,104.2 71.4,103.1 72.2,101.9 73.0,100.7 73.8,99.4 74.6,98.0 75.3,96.6 76.1,95.1 76.9,93.6 77.7,92.0 78.4,90.3 79.2,88.6 80.0,86.8 80.8,84.9 81.6,83.0 82.3,81.1 83.1,79.0 83.9,76.9 84.7,74.8 85.4,72.6 86.2,70.3 87.0,68.0 87.8,65.6 88.6,63.2 89.3,60.6 90.1,58.1 90.9,55.4 91.7,52.8 92.4,50.0 93.2,47.2 94.0,44.3 94.8,41.4 95.6,38.4 96.3,35.3 97.1,32.2 97.9,29.0 98.7,25.8 99.4,22.5 100.2,19.1 101.0,15.7 101.8,12.2 102.6,8.7"/><text class="d-peq" x="56.7" y="138" text-anchor="middle">Δ &gt; 0: duas</text><line class="d-linha" x1="119.3" y1="78" x2="220.7" y2="78"/><polyline class="d-curva" points="132.7,8.3 133.4,11.2 134.2,14.0 135.0,16.8 135.8,19.4 136.6,22.1 137.3,24.6 138.1,27.2 138.9,29.6 139.7,32.0 140.4,34.3 141.2,36.6 142.0,38.8 142.8,40.9 143.6,43.0 144.3,45.1 145.1,47.0 145.9,48.9 146.7,50.8 147.4,52.6 148.2,54.3 149.0,56.0 149.8,57.6 150.6,59.1 151.3,60.6 152.1,62.0 152.9,63.4 153.7,64.7 154.4,65.9 155.2,67.1 156.0,68.2 156.8,69.3 157.6,70.3 158.3,71.2 159.1,72.1 159.9,72.9 160.7,73.6 161.4,74.3 162.2,75.0 163.0,75.5 163.8,76.1 164.6,76.5 165.3,76.9 166.1,77.2 166.9,77.5 167.7,77.7 168.4,77.9 169.2,78.0 170.0,78.0 170.8,78.0 171.6,77.9 172.3,77.7 173.1,77.5 173.9,77.2 174.7,76.9 175.4,76.5 176.2,76.1 177.0,75.5 177.8,75.0 178.6,74.3 179.3,73.6 180.1,72.9 180.9,72.1 181.7,71.2 182.4,70.3 183.2,69.3 184.0,68.2 184.8,67.1 185.6,65.9 186.3,64.7 187.1,63.4 187.9,62.0 188.7,60.6 189.4,59.1 190.2,57.6 191.0,56.0 191.8,54.3 192.6,52.6 193.3,50.8 194.1,48.9 194.9,47.0 195.7,45.1 196.4,43.0 197.2,40.9 198.0,38.8 198.8,36.6 199.6,34.3 200.3,32.0 201.1,29.6 201.9,27.2 202.7,24.6 203.4,22.1 204.2,19.4 205.0,16.8 205.8,14.0 206.6,11.2 207.3,8.3"/><text class="d-peq" x="170.0" y="138" text-anchor="middle">Δ = 0: uma</text><line class="d-linha" x1="232.7" y1="78" x2="334.0" y2="78"/><polyline class="d-curva" points="253.8,10.3 254.6,12.6 255.3,14.8 256.1,16.9 256.9,19.0 257.7,21.1 258.4,23.0 259.2,24.9 260.0,26.8 260.8,28.6 261.6,30.3 262.3,31.9 263.1,33.6 263.9,35.1 264.7,36.6 265.4,38.0 266.2,39.4 267.0,40.7 267.8,41.9 268.6,43.1 269.3,44.2 270.1,45.3 270.9,46.3 271.7,47.2 272.4,48.1 273.2,48.9 274.0,49.6 274.8,50.3 275.6,51.0 276.3,51.5 277.1,52.1 277.9,52.5 278.7,52.9 279.4,53.2 280.2,53.5 281.0,53.7 281.8,53.9 282.6,54.0 283.3,54.0 284.1,54.0 284.9,53.9 285.7,53.7 286.4,53.5 287.2,53.2 288.0,52.9 288.8,52.5 289.6,52.1 290.3,51.5 291.1,51.0 291.9,50.3 292.7,49.6 293.4,48.9 294.2,48.1 295.0,47.2 295.8,46.3 296.6,45.3 297.3,44.2 298.1,43.1 298.9,41.9 299.7,40.7 300.4,39.4 301.2,38.0 302.0,36.6 302.8,35.1 303.6,33.6 304.3,32.0 305.1,30.3 305.9,28.6 306.7,26.8 307.4,24.9 308.2,23.0 309.0,21.1 309.8,19.0 310.6,16.9 311.3,14.8 312.1,12.6 312.9,10.3"/><text class="d-peq" x="283.3" y="138" text-anchor="middle">Δ &lt; 0: nenhuma</text></svg>
+                <p><strong>Δ &gt; 0:</strong> duas raízes reais diferentes. A parábola corta o eixo x em dois pontos.</p>
+                <p><strong>Δ = 0:</strong> uma raiz real. A parábola apenas toca o eixo x.</p>
+                <p><strong>Δ &lt; 0:</strong> nenhuma raiz real. A parábola não encosta no eixo x.</p>
+            </div>
+            <div class="theory-box">
+                <h3>➕➖ Estudo do sinal da parábola</h3>
+                <p>Estudar o sinal é descobrir para quais valores de x a função é positiva, negativa ou igual a zero.</p>
+                <p><strong>Olhe o gráfico:</strong> parte <strong>acima</strong> do eixo x é positiva, e parte <strong>abaixo</strong> é negativa. Nas raízes, a função vale zero.</p>
+                <p><strong>Exemplo:</strong> em f(x) = x² − 1, as raízes são −1 e 1, e a concavidade é para cima.</p>
+                <div class="visual-area texto">
+                    <span>x &lt; −1 ou x &gt; 1 ➜ positiva</span>
+                    <span>x = −1 ou x = 1 ➜ zero</span>
+                    <span>−1 &lt; x &lt; 1 ➜ negativa</span>
+                </div>
+                <div class="highlight-box">
+                    <strong>Dica:</strong> quando Δ &lt; 0, a função tem o mesmo sinal de a para todo valor de x.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">4. Vértice, mínimo e máximo</span>
+            <div class="theory-box">
+                <h3>⛰️ Coordenadas do vértice</h3>
+                <p>O <strong>vértice</strong> é o ponto em que a parábola muda de sentido.</p>
+                <p>Ele é formado pelo par (x do vértice, y do vértice).</p>
+                <div class="visual-area texto">
+                    <span>x do vértice = −b ÷ (2 · a)</span>
+                    <span>y do vértice = −Δ ÷ (4 · a)</span>
+                </div>
+                <p>Também dá para achar o y do vértice colocando o x do vértice no lugar de x na função.</p>
+                <p><strong>Exemplo:</strong> em f(x) = x² − 4x + 3, temos a = 1, b = −4 e c = 3.</p>
+                <div class="visual-area texto">
+                    <span>x do vértice = 4 ÷ (2 · 1) = 2</span>
+                    <span>Δ = 16 − 12 = 4</span>
+                    <span>y do vértice = −4 ÷ (4 · 1) = −1</span>
+                    <span>Conferindo: f(2) = 4 − 8 + 3 = −1</span>
+                </div>
+                <p>O vértice é <strong>(2, −1)</strong>.</p>
+                <p><strong>a &gt; 0:</strong> concavidade para cima, então o vértice é o ponto de <strong>mínimo</strong>.</p>
+                <p><strong>a &lt; 0:</strong> concavidade para baixo, então o vértice é o ponto de <strong>máximo</strong>.</p>
+                <div class="highlight-box warning">
+                    <strong>Cuidado:</strong> concavidade para cima tem mínimo. Concavidade para baixo tem máximo.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">5. Qual fórmula usar?</span>
+            <div class="theory-box">
+                <h3>🧭 Guia rápido</h3>
+                <table class="tabela">
+                    <tr><th>O que quero saber</th><th>O que usar</th></tr>
+                    <tr><td>Quantas raízes existem</td><td>Δ = b² − 4 · a · c</td></tr>
+                    <tr><td>Quais são as raízes</td><td>x = (−b ± √Δ) ÷ (2 · a)</td></tr>
+                    <tr><td>Corte no eixo y</td><td>O valor de c</td></tr>
+                    <tr><td>x do vértice</td><td>−b ÷ (2 · a)</td></tr>
+                    <tr><td>y do vértice</td><td>−Δ ÷ (4 · a) ou f do x do vértice</td></tr>
+                    <tr><td>Valor máximo ou mínimo</td><td>y do vértice</td></tr>
+                    <tr><td>Em que x isso acontece</td><td>x do vértice</td></tr>
+                    <tr><td>Função, se a = 1</td><td>x² − soma · x + produto</td></tr>
+                    <tr><td>Função, com qualquer a</td><td>a · (x − raiz 1) · (x − raiz 2)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">6. Equação e função do 1º grau</span>
+            <div class="theory-box">
+                <h3>✏️ Equação do 1º grau</h3>
+                <p>A equação do 1º grau tem o x sem expoente 2. Para resolver, isole o x.</p>
+                <div class="visual-area texto">
+                    <span>2x − 6 = 0</span>
+                    <span>2x = 6</span>
+                    <span>x = 6 ÷ 2</span>
+                    <span>x = 3</span>
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>📐 Função do 1º grau</h3>
+                <div class="visual-area texto"><span>f(x) = ax + b, com a diferente de 0</span></div>
+                <p>O gráfico é uma <strong>reta</strong>.</p>
+                <p><strong>a:</strong> é o número que acompanha x. Ele mostra a inclinação da reta.</p>
+                <p><strong>b:</strong> é o número sozinho. A reta corta o eixo y em (0, b).</p>
+                <p><strong>Raiz:</strong> é o x que deixa f(x) = 0. Ela vale −b ÷ a.</p>
+                <p><strong>a &gt; 0:</strong> a função é <strong>crescente</strong>.</p>
+                <p><strong>a &lt; 0:</strong> a função é <strong>decrescente</strong>.</p>
+                <div class="highlight-box warning">
+                    <strong>Não confunda:</strong> na função do 1º grau, o corte no eixo y é o <strong>b</strong>. Na função quadrática, é o <strong>c</strong>.
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>➕➖ Sinal da função do 1º grau</h3>
+                <p><strong>Exemplo:</strong> f(x) = 2x − 6 tem raiz 3 e é crescente, pois a = 2.</p>
+                <div class="visual-area texto">
+                    <span>x &lt; 3 ➜ negativa</span>
+                    <span>x = 3 ➜ zero</span>
+                    <span>x &gt; 3 ➜ positiva</span>
+                </div>
+                <p>Quando a função é decrescente, ela é positiva antes da raiz e negativa depois.</p>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">7. Montando a função pelo gráfico</span>
+            <div class="theory-box">
+                <h3>📏 Função do 1º grau</h3>
+                <svg class="desenho" viewBox="0 0 250 312" role="img" aria-label="Reta que passa pelos pontos (0, −1) e (2, 3)"><line class="d-grade" x1="30" y1="296" x2="30" y2="16"/><line class="d-grade" x1="58" y1="296" x2="58" y2="16"/><line class="d-grade" x1="86" y1="296" x2="86" y2="16"/><line class="d-grade" x1="114" y1="296" x2="114" y2="16"/><line class="d-grade" x1="142" y1="296" x2="142" y2="16"/><line class="d-grade" x1="170" y1="296" x2="170" y2="16"/><line class="d-grade" x1="198" y1="296" x2="198" y2="16"/><line class="d-grade" x1="226" y1="296" x2="226" y2="16"/><line class="d-grade" x1="30" y1="296" x2="226" y2="296"/><line class="d-grade" x1="30" y1="268" x2="226" y2="268"/><line class="d-grade" x1="30" y1="240" x2="226" y2="240"/><line class="d-grade" x1="30" y1="212" x2="226" y2="212"/><line class="d-grade" x1="30" y1="184" x2="226" y2="184"/><line class="d-grade" x1="30" y1="156" x2="226" y2="156"/><line class="d-grade" x1="30" y1="128" x2="226" y2="128"/><line class="d-grade" x1="30" y1="100" x2="226" y2="100"/><line class="d-grade" x1="30" y1="72" x2="226" y2="72"/><line class="d-grade" x1="30" y1="44" x2="226" y2="44"/><line class="d-grade" x1="30" y1="16" x2="226" y2="16"/><line class="d-linha" x1="30" y1="184" x2="240" y2="184"/><line class="d-linha" x1="114" y1="296" x2="114" y2="6"/><text class="d-peq" x="242" y="188">x</text><text class="d-peq" x="120" y="14">y</text><polyline class="d-curva" points="72.0,296.0 73.4,293.2 74.8,290.4 76.2,287.6 77.6,284.8 79.0,282.0 80.4,279.2 81.8,276.4 83.2,273.6 84.6,270.8 86.0,268.0 87.4,265.2 88.8,262.4 90.2,259.6 91.6,256.8 93.0,254.0 94.4,251.2 95.8,248.4 97.2,245.6 98.6,242.8 100.0,240.0 101.4,237.2 102.8,234.4 104.2,231.6 105.6,228.8 107.0,226.0 108.4,223.2 109.8,220.4 111.2,217.6 112.6,214.8 114.0,212.0 115.4,209.2 116.8,206.4 118.2,203.6 119.6,200.8 121.0,198.0 122.4,195.2 123.8,192.4 125.2,189.6 126.6,186.8 128.0,184.0 129.4,181.2 130.8,178.4 132.2,175.6 133.6,172.8 135.0,170.0 136.4,167.2 137.8,164.4 139.2,161.6 140.6,158.8 142.0,156.0 143.4,153.2 144.8,150.4 146.2,147.6 147.6,144.8 149.0,142.0 150.4,139.2 151.8,136.4 153.2,133.6 154.6,130.8 156.0,128.0 157.4,125.2 158.8,122.4 160.2,119.6 161.6,116.8 163.0,114.0 164.4,111.2 165.8,108.4 167.2,105.6 168.6,102.8 170.0,100.0 171.4,97.2 172.8,94.4 174.2,91.6 175.6,88.8 177.0,86.0 178.4,83.2 179.8,80.4 181.2,77.6 182.6,74.8 184.0,72.0 185.4,69.2 186.8,66.4 188.2,63.6 189.6,60.8 191.0,58.0 192.4,55.2 193.8,52.4 195.2,49.6 196.6,46.8 198.0,44.0 199.4,41.2 200.8,38.4 202.2,35.6 203.6,32.8 205.0,30.0 206.4,27.2 207.8,24.4 209.2,21.6 210.6,18.8 212.0,16.0"/><text class="d-num" x="30" y="199" text-anchor="middle">−3</text><text class="d-num" x="58" y="199" text-anchor="middle">−2</text><text class="d-num" x="86" y="199" text-anchor="middle">−1</text><text class="d-num" x="142" y="199" text-anchor="middle">1</text><text class="d-num" x="170" y="199" text-anchor="middle">2</text><text class="d-num" x="198" y="199" text-anchor="middle">3</text><text class="d-num" x="226" y="199" text-anchor="middle">4</text><text class="d-num" x="108" y="300" text-anchor="end">−4</text><text class="d-num" x="108" y="272" text-anchor="end">−3</text><text class="d-num" x="108" y="244" text-anchor="end">−2</text><text class="d-num" x="108" y="216" text-anchor="end">−1</text><text class="d-num" x="108" y="160" text-anchor="end">1</text><text class="d-num" x="108" y="132" text-anchor="end">2</text><text class="d-num" x="108" y="104" text-anchor="end">3</text><text class="d-num" x="108" y="76" text-anchor="end">4</text><text class="d-num" x="108" y="48" text-anchor="end">5</text><text class="d-num" x="108" y="20" text-anchor="end">6</text><circle class="d-cor2" cx="114" cy="212" r="5"/><text class="d-rot" x="124" y="228">(0, −1)</text><circle class="d-cor2" cx="170" cy="100" r="5"/><text class="d-rot" x="180" y="116">(2, 3)</text></svg>
+                <p><strong>1.</strong> Veja onde a reta corta o eixo y. Esse valor é o <strong>b</strong>.</p>
+                <p><strong>2.</strong> Escolha dois pontos da reta.</p>
+                <p><strong>3.</strong> Calcule a = variação de y ÷ variação de x.</p>
+                <p><strong>4.</strong> Escreva f(x) = ax + b.</p>
+                <p><strong>Exemplo:</strong> a reta passa por (0, −1) e (2, 3). Então, b = −1.</p>
+                <div class="visual-area texto">
+                    <span>a = (3 − (−1)) ÷ (2 − 0)</span>
+                    <span>a = 4 ÷ 2 = 2</span>
+                    <span>f(x) = 2x − 1</span>
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>✍️ Função quadrática</h3>
+                <p><strong>1.</strong> Encontre as raízes no eixo x.</p>
+                <p><strong>2.</strong> Encontre o corte no eixo y. Esse valor é o <strong>c</strong>.</p>
+                <p><strong>3.</strong> Se a = 1, use:</p>
+                <div class="visual-area texto"><span>f(x) = x² − soma · x + produto</span></div>
+                <p><strong>4.</strong> Para qualquer valor de a, use:</p>
+                <div class="visual-area texto"><span>f(x) = a · (x − raiz 1) · (x − raiz 2)</span></div>
+                <p>Para achar a, coloque na fórmula outro ponto do gráfico, como o corte no eixo y.</p>
+                <p><strong>Exemplo:</strong> raízes −1 e 2, passando por (0, −4).</p>
+                <div class="visual-area texto">
+                    <span>a · (0 + 1) · (0 − 2) = −4</span>
+                    <span>−2 · a = −4</span>
+                    <span>a = 2</span>
+                    <span>f(x) = 2 · (x + 1) · (x − 2)</span>
+                    <span>f(x) = 2x² − 2x − 4</span>
+                </div>
+            </div>
+            <div class="theory-box">
+                <h3>🧪 Exemplo completo do caderno</h3>
+                <svg class="desenho" viewBox="0 0 222 284" role="img" aria-label="Parábola de g de x igual a x ao quadrado menos 1, com raízes −1 e 1 e vértice em (0, −1)"><line class="d-grade" x1="30" y1="268" x2="30" y2="16"/><line class="d-grade" x1="58" y1="268" x2="58" y2="16"/><line class="d-grade" x1="86" y1="268" x2="86" y2="16"/><line class="d-grade" x1="114" y1="268" x2="114" y2="16"/><line class="d-grade" x1="142" y1="268" x2="142" y2="16"/><line class="d-grade" x1="170" y1="268" x2="170" y2="16"/><line class="d-grade" x1="198" y1="268" x2="198" y2="16"/><line class="d-grade" x1="30" y1="268" x2="198" y2="268"/><line class="d-grade" x1="30" y1="240" x2="198" y2="240"/><line class="d-grade" x1="30" y1="212" x2="198" y2="212"/><line class="d-grade" x1="30" y1="184" x2="198" y2="184"/><line class="d-grade" x1="30" y1="156" x2="198" y2="156"/><line class="d-grade" x1="30" y1="128" x2="198" y2="128"/><line class="d-grade" x1="30" y1="100" x2="198" y2="100"/><line class="d-grade" x1="30" y1="72" x2="198" y2="72"/><line class="d-grade" x1="30" y1="44" x2="198" y2="44"/><line class="d-grade" x1="30" y1="16" x2="198" y2="16"/><line class="d-linha" x1="30" y1="184" x2="212" y2="184"/><line class="d-linha" x1="114" y1="268" x2="114" y2="6"/><text class="d-peq" x="214" y="188">x</text><text class="d-peq" x="120" y="14">y</text><polyline class="d-curva" points="41.2,22.7 42.6,29.9 44.0,37.0 45.4,43.9 46.8,50.7 48.2,57.4 49.6,63.9 51.0,70.2 52.4,76.5 53.8,82.6 55.2,88.5 56.6,94.3 58.0,100.0 59.4,105.5 60.8,110.9 62.2,116.2 63.6,121.3 65.0,126.2 66.4,131.1 67.8,135.8 69.2,140.3 70.6,144.7 72.0,149.0 73.4,153.1 74.8,157.1 76.2,161.0 77.6,164.7 79.0,168.2 80.4,171.7 81.8,175.0 83.2,178.1 84.6,181.1 86.0,184.0 87.4,186.7 88.8,189.3 90.2,191.8 91.6,194.1 93.0,196.2 94.4,198.3 95.8,200.2 97.2,201.9 98.6,203.5 100.0,205.0 101.4,206.3 102.8,207.5 104.2,208.6 105.6,209.5 107.0,210.2 108.4,210.9 109.8,211.4 111.2,211.7 112.6,211.9 114.0,212.0 115.4,211.9 116.8,211.7 118.2,211.4 119.6,210.9 121.0,210.2 122.4,209.5 123.8,208.6 125.2,207.5 126.6,206.3 128.0,205.0 129.4,203.5 130.8,201.9 132.2,200.2 133.6,198.3 135.0,196.2 136.4,194.1 137.8,191.8 139.2,189.3 140.6,186.7 142.0,184.0 143.4,181.1 144.8,178.1 146.2,175.0 147.6,171.7 149.0,168.2 150.4,164.7 151.8,161.0 153.2,157.1 154.6,153.1 156.0,149.0 157.4,144.7 158.8,140.3 160.2,135.8 161.6,131.1 163.0,126.2 164.4,121.3 165.8,116.2 167.2,110.9 168.6,105.5 170.0,100.0 171.4,94.3 172.8,88.5 174.2,82.6 175.6,76.5 177.0,70.2 178.4,63.9 179.8,57.4 181.2,50.7 182.6,43.9 184.0,37.0 185.4,29.9 186.8,22.7"/><text class="d-num" x="30" y="199" text-anchor="middle">−3</text><text class="d-num" x="58" y="199" text-anchor="middle">−2</text><text class="d-num" x="86" y="199" text-anchor="middle">−1</text><text class="d-num" x="142" y="199" text-anchor="middle">1</text><text class="d-num" x="170" y="199" text-anchor="middle">2</text><text class="d-num" x="198" y="199" text-anchor="middle">3</text><text class="d-num" x="108" y="272" text-anchor="end">−3</text><text class="d-num" x="108" y="244" text-anchor="end">−2</text><text class="d-num" x="108" y="216" text-anchor="end">−1</text><text class="d-num" x="108" y="160" text-anchor="end">1</text><text class="d-num" x="108" y="132" text-anchor="end">2</text><text class="d-num" x="108" y="104" text-anchor="end">3</text><text class="d-num" x="108" y="76" text-anchor="end">4</text><text class="d-num" x="108" y="48" text-anchor="end">5</text><text class="d-num" x="108" y="20" text-anchor="end">6</text><circle class="d-cor2" cx="86" cy="184" r="5"/><circle class="d-cor2" cx="142" cy="184" r="5"/><circle class="d-cor2" cx="114" cy="212" r="5"/><text class="d-rot" x="126" y="230">vértice (0, −1)</text></svg>
+                <p><strong>Sinal de a:</strong> positivo, pois a concavidade é para cima.</p>
+                <p><strong>Valor de b:</strong> b = 0, pois o vértice está sobre o eixo y.</p>
+                <p><strong>Valor de c:</strong> c = −1, pois a parábola corta o eixo y em −1.</p>
+                <p><strong>Raízes:</strong> −1 e 1.</p>
+                <p><strong>Soma:</strong> −1 + 1 = 0. <strong>Produto:</strong> (−1) · 1 = −1.</p>
+                <p><strong>Lei de formação:</strong> g(x) = x² − 1.</p>
+                <p><strong>Vértice:</strong> (0, −1), ponto de <strong>mínimo</strong>.</p>
+            </div>
+        </div>
+
+        <!-- ZONA 4 FIM -->
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (15 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">15 questões rigorosas. Acerte <strong>80% (12/15)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 15</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+
+    <!-- ZONA 5 INICIO: 30 QUESTOES -->
+    <section id="bancoQuestoes" hidden>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em f(x) = 3 − 2x + x², quais são os valores de a, b e c?</div>
+            <div class="alternativa certa">
+                <div class="opcao">a = 1, b = −2 e c = 3</div>
+                <div class="porque">a acompanha x², b acompanha x, e c é o número sozinho.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">a = 3, b = −2 e c = 1</div>
+                <div class="porque">A ordem dos termos mudou: 3 é o número sozinho.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">a = 1, b = 2 e c = 3</div>
+                <div class="porque">O sinal faz parte do número: b = −2.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">a = 0, b = −2 e c = 3</div>
+                <div class="porque">x² sem número aparente tem a = 1.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual é o sinal do coeficiente a na parábola do gráfico?<svg class="desenho" viewBox="0 0 278 312" role="img" aria-label="Parábola de uma função com a concavidade virada para cima"><line class="d-grade" x1="30" y1="296" x2="30" y2="16"/><line class="d-grade" x1="58" y1="296" x2="58" y2="16"/><line class="d-grade" x1="86" y1="296" x2="86" y2="16"/><line class="d-grade" x1="114" y1="296" x2="114" y2="16"/><line class="d-grade" x1="142" y1="296" x2="142" y2="16"/><line class="d-grade" x1="170" y1="296" x2="170" y2="16"/><line class="d-grade" x1="198" y1="296" x2="198" y2="16"/><line class="d-grade" x1="226" y1="296" x2="226" y2="16"/><line class="d-grade" x1="254" y1="296" x2="254" y2="16"/><line class="d-grade" x1="30" y1="296" x2="254" y2="296"/><line class="d-grade" x1="30" y1="268" x2="254" y2="268"/><line class="d-grade" x1="30" y1="240" x2="254" y2="240"/><line class="d-grade" x1="30" y1="212" x2="254" y2="212"/><line class="d-grade" x1="30" y1="184" x2="254" y2="184"/><line class="d-grade" x1="30" y1="156" x2="254" y2="156"/><line class="d-grade" x1="30" y1="128" x2="254" y2="128"/><line class="d-grade" x1="30" y1="100" x2="254" y2="100"/><line class="d-grade" x1="30" y1="72" x2="254" y2="72"/><line class="d-grade" x1="30" y1="44" x2="254" y2="44"/><line class="d-grade" x1="30" y1="16" x2="254" y2="16"/><line class="d-linha" x1="30" y1="156" x2="268" y2="156"/><line class="d-linha" x1="142" y1="296" x2="142" y2="6"/><text class="d-peq" x="270" y="160">x</text><text class="d-peq" x="148" y="14">y</text><polyline class="d-curva" points="58.0,16.0 59.4,24.3 60.8,32.5 62.2,40.6 63.6,48.5 65.0,56.2 66.4,63.9 67.8,71.4 69.2,78.7 70.6,85.9 72.0,93.0 73.4,99.9 74.8,106.7 76.2,113.4 77.6,119.9 79.0,126.2 80.4,132.5 81.8,138.6 83.2,144.5 84.6,150.3 86.0,156.0 87.4,161.5 88.8,166.9 90.2,172.2 91.6,177.3 93.0,182.2 94.4,187.1 95.8,191.8 97.2,196.3 98.6,200.7 100.0,205.0 101.4,209.1 102.8,213.1 104.2,217.0 105.6,220.7 107.0,224.2 108.4,227.7 109.8,231.0 111.2,234.1 112.6,237.1 114.0,240.0 115.4,242.7 116.8,245.3 118.2,247.8 119.6,250.1 121.0,252.2 122.4,254.3 123.8,256.2 125.2,257.9 126.6,259.5 128.0,261.0 129.4,262.3 130.8,263.5 132.2,264.6 133.6,265.5 135.0,266.2 136.4,266.9 137.8,267.4 139.2,267.7 140.6,267.9 142.0,268.0 143.4,267.9 144.8,267.7 146.2,267.4 147.6,266.9 149.0,266.2 150.4,265.5 151.8,264.6 153.2,263.5 154.6,262.3 156.0,261.0 157.4,259.5 158.8,257.9 160.2,256.2 161.6,254.3 163.0,252.2 164.4,250.1 165.8,247.8 167.2,245.3 168.6,242.7 170.0,240.0 171.4,237.1 172.8,234.1 174.2,231.0 175.6,227.7 177.0,224.2 178.4,220.7 179.8,217.0 181.2,213.1 182.6,209.1 184.0,205.0 185.4,200.7 186.8,196.3 188.2,191.8 189.6,187.1 191.0,182.2 192.4,177.3 193.8,172.2 195.2,166.9 196.6,161.5 198.0,156.0 199.4,150.3 200.8,144.5 202.2,138.6 203.6,132.5 205.0,126.2 206.4,119.9 207.8,113.4 209.2,106.7 210.6,99.9 212.0,93.0 213.4,85.9 214.8,78.7 216.2,71.4 217.6,63.9 219.0,56.2 220.4,48.5 221.8,40.6 223.2,32.5 224.6,24.3 226.0,16.0"/><text class="d-num" x="30" y="171" text-anchor="middle">−4</text><text class="d-num" x="58" y="171" text-anchor="middle">−3</text><text class="d-num" x="86" y="171" text-anchor="middle">−2</text><text class="d-num" x="114" y="171" text-anchor="middle">−1</text><text class="d-num" x="170" y="171" text-anchor="middle">1</text><text class="d-num" x="198" y="171" text-anchor="middle">2</text><text class="d-num" x="226" y="171" text-anchor="middle">3</text><text class="d-num" x="254" y="171" text-anchor="middle">4</text><text class="d-num" x="136" y="300" text-anchor="end">−5</text><text class="d-num" x="136" y="272" text-anchor="end">−4</text><text class="d-num" x="136" y="244" text-anchor="end">−3</text><text class="d-num" x="136" y="216" text-anchor="end">−2</text><text class="d-num" x="136" y="188" text-anchor="end">−1</text><text class="d-num" x="136" y="132" text-anchor="end">1</text><text class="d-num" x="136" y="104" text-anchor="end">2</text><text class="d-num" x="136" y="76" text-anchor="end">3</text><text class="d-num" x="136" y="48" text-anchor="end">4</text><text class="d-num" x="136" y="20" text-anchor="end">5</text></svg></div>
+            <div class="alternativa">
+                <div class="opcao">Igual a zero</div>
+                <div class="porque">Com a = 0, a função não seria quadrática.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Negativo</div>
+                <div class="porque">a &lt; 0 teria concavidade para baixo.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Positivo</div>
+                <div class="porque">A concavidade é para cima, então a &gt; 0.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Depende do valor de c</div>
+                <div class="porque">O sinal de a depende da concavidade.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual é a raiz da função do 1º grau f(x) = 2x − 6?</div>
+            <div class="alternativa">
+                <div class="opcao">x = 4</div>
+                <div class="porque">Devemos dividir 6 por 2, e não subtrair.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">x = −3</div>
+                <div class="porque">6 ÷ 2 = 3, com sinal positivo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">x = 12</div>
+                <div class="porque">Devemos dividir 6 por 2, e não multiplicar.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">x = 3</div>
+                <div class="porque">2x − 6 = 0, então 2x = 6 e x = 3.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Quais são as raízes da função do gráfico?<svg class="desenho" viewBox="0 0 278 340" role="img" aria-label="Parábola de concavidade para cima que corta o eixo x em dois pontos"><line class="d-grade" x1="30" y1="324" x2="30" y2="16"/><line class="d-grade" x1="58" y1="324" x2="58" y2="16"/><line class="d-grade" x1="86" y1="324" x2="86" y2="16"/><line class="d-grade" x1="114" y1="324" x2="114" y2="16"/><line class="d-grade" x1="142" y1="324" x2="142" y2="16"/><line class="d-grade" x1="170" y1="324" x2="170" y2="16"/><line class="d-grade" x1="198" y1="324" x2="198" y2="16"/><line class="d-grade" x1="226" y1="324" x2="226" y2="16"/><line class="d-grade" x1="254" y1="324" x2="254" y2="16"/><line class="d-grade" x1="30" y1="324" x2="254" y2="324"/><line class="d-grade" x1="30" y1="296" x2="254" y2="296"/><line class="d-grade" x1="30" y1="268" x2="254" y2="268"/><line class="d-grade" x1="30" y1="240" x2="254" y2="240"/><line class="d-grade" x1="30" y1="212" x2="254" y2="212"/><line class="d-grade" x1="30" y1="184" x2="254" y2="184"/><line class="d-grade" x1="30" y1="156" x2="254" y2="156"/><line class="d-grade" x1="30" y1="128" x2="254" y2="128"/><line class="d-grade" x1="30" y1="100" x2="254" y2="100"/><line class="d-grade" x1="30" y1="72" x2="254" y2="72"/><line class="d-grade" x1="30" y1="44" x2="254" y2="44"/><line class="d-grade" x1="30" y1="16" x2="254" y2="16"/><line class="d-linha" x1="30" y1="184" x2="268" y2="184"/><line class="d-linha" x1="114" y1="324" x2="114" y2="6"/><text class="d-peq" x="270" y="188">x</text><text class="d-peq" x="120" y="14">y</text><polyline class="d-curva" points="53.8,18.2 55.2,26.9 56.6,35.5 58.0,44.0 59.4,52.3 60.8,60.5 62.2,68.6 63.6,76.5 65.0,84.2 66.4,91.9 67.8,99.4 69.2,106.7 70.6,113.9 72.0,121.0 73.4,127.9 74.8,134.7 76.2,141.4 77.6,147.9 79.0,154.2 80.4,160.5 81.8,166.6 83.2,172.5 84.6,178.3 86.0,184.0 87.4,189.5 88.8,194.9 90.2,200.2 91.6,205.3 93.0,210.2 94.4,215.1 95.8,219.8 97.2,224.3 98.6,228.7 100.0,233.0 101.4,237.1 102.8,241.1 104.2,245.0 105.6,248.7 107.0,252.2 108.4,255.7 109.8,259.0 111.2,262.1 112.6,265.1 114.0,268.0 115.4,270.7 116.8,273.3 118.2,275.8 119.6,278.1 121.0,280.2 122.4,282.3 123.8,284.2 125.2,285.9 126.6,287.5 128.0,289.0 129.4,290.3 130.8,291.5 132.2,292.6 133.6,293.5 135.0,294.2 136.4,294.9 137.8,295.4 139.2,295.7 140.6,295.9 142.0,296.0 143.4,295.9 144.8,295.7 146.2,295.4 147.6,294.9 149.0,294.2 150.4,293.5 151.8,292.6 153.2,291.5 154.6,290.3 156.0,289.0 157.4,287.5 158.8,285.9 160.2,284.2 161.6,282.3 163.0,280.2 164.4,278.1 165.8,275.8 167.2,273.3 168.6,270.7 170.0,268.0 171.4,265.1 172.8,262.1 174.2,259.0 175.6,255.7 177.0,252.2 178.4,248.7 179.8,245.0 181.2,241.1 182.6,237.1 184.0,233.0 185.4,228.7 186.8,224.3 188.2,219.8 189.6,215.1 191.0,210.2 192.4,205.3 193.8,200.2 195.2,194.9 196.6,189.5 198.0,184.0 199.4,178.3 200.8,172.5 202.2,166.6 203.6,160.5 205.0,154.2 206.4,147.9 207.8,141.4 209.2,134.7 210.6,127.9 212.0,121.0 213.4,113.9 214.8,106.7 216.2,99.4 217.6,91.9 219.0,84.2 220.4,76.5 221.8,68.6 223.2,60.5 224.6,52.3 226.0,44.0 227.4,35.5 228.8,26.9 230.2,18.2"/><text class="d-num" x="30" y="199" text-anchor="middle">−3</text><text class="d-num" x="58" y="199" text-anchor="middle">−2</text><text class="d-num" x="86" y="199" text-anchor="middle">−1</text><text class="d-num" x="142" y="199" text-anchor="middle">1</text><text class="d-num" x="170" y="199" text-anchor="middle">2</text><text class="d-num" x="198" y="199" text-anchor="middle">3</text><text class="d-num" x="226" y="199" text-anchor="middle">4</text><text class="d-num" x="254" y="199" text-anchor="middle">5</text><text class="d-num" x="108" y="328" text-anchor="end">−5</text><text class="d-num" x="108" y="300" text-anchor="end">−4</text><text class="d-num" x="108" y="272" text-anchor="end">−3</text><text class="d-num" x="108" y="244" text-anchor="end">−2</text><text class="d-num" x="108" y="216" text-anchor="end">−1</text><text class="d-num" x="108" y="160" text-anchor="end">1</text><text class="d-num" x="108" y="132" text-anchor="end">2</text><text class="d-num" x="108" y="104" text-anchor="end">3</text><text class="d-num" x="108" y="76" text-anchor="end">4</text><text class="d-num" x="108" y="48" text-anchor="end">5</text><text class="d-num" x="108" y="20" text-anchor="end">6</text></svg></div>
+            <div class="alternativa">
+                <div class="opcao">−3 e 1</div>
+                <div class="porque">Esses valores não são os cortes no eixo x.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">−1 e 3</div>
+                <div class="porque">A parábola corta o eixo x em −1 e 3.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">−3 e 3</div>
+                <div class="porque">−3 é o corte no eixo y, e não uma raiz.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">1 e −4</div>
+                <div class="porque">Esses são os valores do vértice.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">A parábola de uma função não encosta no eixo x. O que podemos afirmar sobre Δ?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Δ &lt; 0</div>
+                <div class="porque">Sem encostar no eixo x, não há raízes reais.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Δ = 0</div>
+                <div class="porque">Com Δ = 0, a parábola toca o eixo x.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Δ &gt; 0</div>
+                <div class="porque">Com Δ &gt; 0, a parábola corta o eixo x duas vezes.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Δ = 1</div>
+                <div class="porque">Com Δ = 1, a parábola corta o eixo x duas vezes.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual é o vértice da parábola de f(x) = x² − 4x + 3?</div>
+            <div class="alternativa">
+                <div class="opcao">(4, 3)</div>
+                <div class="porque">Faltou dividir por 2 · a.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">(−2, 15)</div>
+                <div class="porque">x do vértice é −b ÷ (2 · a), com b = −4.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">(2, 3)</div>
+                <div class="porque">3 é o valor de c, e não o valor de f(2).</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">(2, −1)</div>
+                <div class="porque">x = 4 ÷ 2 = 2, e f(2) = 4 − 8 + 3 = −1.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">A função f(x) = −x² + 6x − 5 tem ponto de máximo ou de mínimo?</div>
+            <div class="alternativa">
+                <div class="opcao">Mínimo, pois a concavidade é para cima</div>
+                <div class="porque">a é negativo, então a concavidade é para baixo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Mínimo, pois a concavidade é para baixo</div>
+                <div class="porque">Concavidade para baixo tem ponto de máximo.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Máximo, pois a concavidade é para baixo</div>
+                <div class="porque">a = −1 é negativo, então a concavidade é para baixo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Máximo, pois a concavidade é para cima</div>
+                <div class="porque">Concavidade para cima tem ponto de mínimo.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em f(x) = x² − 6x + 9, qual é o valor de Δ e o que ele indica?</div>
+            <div class="alternativa">
+                <div class="opcao">Δ = 36, com duas raízes reais</div>
+                <div class="porque">Faltou subtrair 4 · a · c.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Δ = 0, com uma raiz real</div>
+                <div class="porque">Δ = (−6)² − 4 · 1 · 9 = 36 − 36 = 0.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Δ = 72, com duas raízes reais</div>
+                <div class="porque">4 · a · c deve ser subtraído, e não somado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Δ = −36, sem raízes reais</div>
+                <div class="porque">(−6)² = 36, e 36 − 36 = 0.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Para quais valores de x a função f(x) = 3x − 12 é positiva?</div>
+            <div class="alternativa">
+                <div class="opcao">x &gt; −4</div>
+                <div class="porque">12 ÷ 3 = 4, com sinal positivo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">x &lt; 4</div>
+                <div class="porque">Antes da raiz, essa função é negativa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">x &gt; 12</div>
+                <div class="porque">A raiz é 12 ÷ 3 = 4.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">x &gt; 4</div>
+                <div class="porque">A raiz é 4, e a função é crescente, pois a = 3.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Com a = 1, qual função tem raízes 2 e 5?</div>
+            <div class="alternativa certa">
+                <div class="opcao">f(x) = x² − 7x + 10</div>
+                <div class="porque">Soma = 7 e produto = 10.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x² + 7x + 10</div>
+                <div class="porque">O termo do meio é −soma · x.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x² − 10x + 7</div>
+                <div class="porque">Soma e produto foram trocados.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x² + 7x − 10</div>
+                <div class="porque">O sinal da soma e o do produto estão errados.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual é a lei de formação da função do gráfico?<svg class="desenho" viewBox="0 0 278 340" role="img" aria-label="Parábola de concavidade para cima que corta o eixo x em −2 e 2 e o eixo y em −4"><line class="d-grade" x1="30" y1="324" x2="30" y2="16"/><line class="d-grade" x1="58" y1="324" x2="58" y2="16"/><line class="d-grade" x1="86" y1="324" x2="86" y2="16"/><line class="d-grade" x1="114" y1="324" x2="114" y2="16"/><line class="d-grade" x1="142" y1="324" x2="142" y2="16"/><line class="d-grade" x1="170" y1="324" x2="170" y2="16"/><line class="d-grade" x1="198" y1="324" x2="198" y2="16"/><line class="d-grade" x1="226" y1="324" x2="226" y2="16"/><line class="d-grade" x1="254" y1="324" x2="254" y2="16"/><line class="d-grade" x1="30" y1="324" x2="254" y2="324"/><line class="d-grade" x1="30" y1="296" x2="254" y2="296"/><line class="d-grade" x1="30" y1="268" x2="254" y2="268"/><line class="d-grade" x1="30" y1="240" x2="254" y2="240"/><line class="d-grade" x1="30" y1="212" x2="254" y2="212"/><line class="d-grade" x1="30" y1="184" x2="254" y2="184"/><line class="d-grade" x1="30" y1="156" x2="254" y2="156"/><line class="d-grade" x1="30" y1="128" x2="254" y2="128"/><line class="d-grade" x1="30" y1="100" x2="254" y2="100"/><line class="d-grade" x1="30" y1="72" x2="254" y2="72"/><line class="d-grade" x1="30" y1="44" x2="254" y2="44"/><line class="d-grade" x1="30" y1="16" x2="254" y2="16"/><line class="d-linha" x1="30" y1="184" x2="268" y2="184"/><line class="d-linha" x1="142" y1="324" x2="142" y2="6"/><text class="d-peq" x="270" y="188">x</text><text class="d-peq" x="148" y="14">y</text><polyline class="d-curva" points="53.8,18.2 55.2,26.9 56.6,35.5 58.0,44.0 59.4,52.3 60.8,60.5 62.2,68.6 63.6,76.5 65.0,84.2 66.4,91.9 67.8,99.4 69.2,106.7 70.6,113.9 72.0,121.0 73.4,127.9 74.8,134.7 76.2,141.4 77.6,147.9 79.0,154.2 80.4,160.5 81.8,166.6 83.2,172.5 84.6,178.3 86.0,184.0 87.4,189.5 88.8,194.9 90.2,200.2 91.6,205.3 93.0,210.2 94.4,215.1 95.8,219.8 97.2,224.3 98.6,228.7 100.0,233.0 101.4,237.1 102.8,241.1 104.2,245.0 105.6,248.7 107.0,252.2 108.4,255.7 109.8,259.0 111.2,262.1 112.6,265.1 114.0,268.0 115.4,270.7 116.8,273.3 118.2,275.8 119.6,278.1 121.0,280.2 122.4,282.3 123.8,284.2 125.2,285.9 126.6,287.5 128.0,289.0 129.4,290.3 130.8,291.5 132.2,292.6 133.6,293.5 135.0,294.2 136.4,294.9 137.8,295.4 139.2,295.7 140.6,295.9 142.0,296.0 143.4,295.9 144.8,295.7 146.2,295.4 147.6,294.9 149.0,294.2 150.4,293.5 151.8,292.6 153.2,291.5 154.6,290.3 156.0,289.0 157.4,287.5 158.8,285.9 160.2,284.2 161.6,282.3 163.0,280.2 164.4,278.1 165.8,275.8 167.2,273.3 168.6,270.7 170.0,268.0 171.4,265.1 172.8,262.1 174.2,259.0 175.6,255.7 177.0,252.2 178.4,248.7 179.8,245.0 181.2,241.1 182.6,237.1 184.0,233.0 185.4,228.7 186.8,224.3 188.2,219.8 189.6,215.1 191.0,210.2 192.4,205.3 193.8,200.2 195.2,194.9 196.6,189.5 198.0,184.0 199.4,178.3 200.8,172.5 202.2,166.6 203.6,160.5 205.0,154.2 206.4,147.9 207.8,141.4 209.2,134.7 210.6,127.9 212.0,121.0 213.4,113.9 214.8,106.7 216.2,99.4 217.6,91.9 219.0,84.2 220.4,76.5 221.8,68.6 223.2,60.5 224.6,52.3 226.0,44.0 227.4,35.5 228.8,26.9 230.2,18.2"/><text class="d-num" x="30" y="199" text-anchor="middle">−4</text><text class="d-num" x="58" y="199" text-anchor="middle">−3</text><text class="d-num" x="86" y="199" text-anchor="middle">−2</text><text class="d-num" x="114" y="199" text-anchor="middle">−1</text><text class="d-num" x="170" y="199" text-anchor="middle">1</text><text class="d-num" x="198" y="199" text-anchor="middle">2</text><text class="d-num" x="226" y="199" text-anchor="middle">3</text><text class="d-num" x="254" y="199" text-anchor="middle">4</text><text class="d-num" x="136" y="328" text-anchor="end">−5</text><text class="d-num" x="136" y="300" text-anchor="end">−4</text><text class="d-num" x="136" y="272" text-anchor="end">−3</text><text class="d-num" x="136" y="244" text-anchor="end">−2</text><text class="d-num" x="136" y="216" text-anchor="end">−1</text><text class="d-num" x="136" y="160" text-anchor="end">1</text><text class="d-num" x="136" y="132" text-anchor="end">2</text><text class="d-num" x="136" y="104" text-anchor="end">3</text><text class="d-num" x="136" y="76" text-anchor="end">4</text><text class="d-num" x="136" y="48" text-anchor="end">5</text><text class="d-num" x="136" y="20" text-anchor="end">6</text></svg></div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x² − 4x</div>
+                <div class="porque">Essa função teria raízes 0 e 4.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x² + 4</div>
+                <div class="porque">Essa função não teria raízes reais.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">f(x) = x² − 4</div>
+                <div class="porque">Raízes −2 e 2: soma 0 e produto −4.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = −x² − 4</div>
+                <div class="porque">Com a negativo, a concavidade seria para baixo.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Uma parábola corta o eixo x em 1 e 3 e passa por (0, 6). Qual é a lei de formação?</div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x² − 4x + 3</div>
+                <div class="porque">Essa função passa por (0, 3), e não por (0, 6).</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">f(x) = 2x² − 8x + 6</div>
+                <div class="porque">a · (0 − 1) · (0 − 3) = 6, então a = 2.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = 6x² − 24x + 18</div>
+                <div class="porque">Essa função passa por (0, 18).</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = −2x² + 8x + 6</div>
+                <div class="porque">Essa função não tem raízes 1 e 3.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">No gráfico, a &gt; 0. O que podemos afirmar sobre b?<svg class="desenho" viewBox="0 0 278 284" role="img" aria-label="Parábola de concavidade para cima com o vértice à direita do eixo y"><line class="d-grade" x1="30" y1="268" x2="30" y2="16"/><line class="d-grade" x1="58" y1="268" x2="58" y2="16"/><line class="d-grade" x1="86" y1="268" x2="86" y2="16"/><line class="d-grade" x1="114" y1="268" x2="114" y2="16"/><line class="d-grade" x1="142" y1="268" x2="142" y2="16"/><line class="d-grade" x1="170" y1="268" x2="170" y2="16"/><line class="d-grade" x1="198" y1="268" x2="198" y2="16"/><line class="d-grade" x1="226" y1="268" x2="226" y2="16"/><line class="d-grade" x1="254" y1="268" x2="254" y2="16"/><line class="d-grade" x1="30" y1="268" x2="254" y2="268"/><line class="d-grade" x1="30" y1="240" x2="254" y2="240"/><line class="d-grade" x1="30" y1="212" x2="254" y2="212"/><line class="d-grade" x1="30" y1="184" x2="254" y2="184"/><line class="d-grade" x1="30" y1="156" x2="254" y2="156"/><line class="d-grade" x1="30" y1="128" x2="254" y2="128"/><line class="d-grade" x1="30" y1="100" x2="254" y2="100"/><line class="d-grade" x1="30" y1="72" x2="254" y2="72"/><line class="d-grade" x1="30" y1="44" x2="254" y2="44"/><line class="d-grade" x1="30" y1="16" x2="254" y2="16"/><line class="d-linha" x1="30" y1="184" x2="268" y2="184"/><line class="d-linha" x1="86" y1="268" x2="86" y2="6"/><text class="d-peq" x="270" y="188">x</text><text class="d-peq" x="92" y="14">y</text><polyline class="d-curva" points="69.2,22.7 70.6,29.9 72.0,37.0 73.4,43.9 74.8,50.7 76.2,57.4 77.6,63.9 79.0,70.2 80.4,76.5 81.8,82.6 83.2,88.5 84.6,94.3 86.0,100.0 87.4,105.5 88.8,110.9 90.2,116.2 91.6,121.3 93.0,126.2 94.4,131.1 95.8,135.8 97.2,140.3 98.6,144.7 100.0,149.0 101.4,153.1 102.8,157.1 104.2,161.0 105.6,164.7 107.0,168.2 108.4,171.7 109.8,175.0 111.2,178.1 112.6,181.1 114.0,184.0 115.4,186.7 116.8,189.3 118.2,191.8 119.6,194.1 121.0,196.2 122.4,198.3 123.8,200.2 125.2,201.9 126.6,203.5 128.0,205.0 129.4,206.3 130.8,207.5 132.2,208.6 133.6,209.5 135.0,210.2 136.4,210.9 137.8,211.4 139.2,211.7 140.6,211.9 142.0,212.0 143.4,211.9 144.8,211.7 146.2,211.4 147.6,210.9 149.0,210.2 150.4,209.5 151.8,208.6 153.2,207.5 154.6,206.3 156.0,205.0 157.4,203.5 158.8,201.9 160.2,200.2 161.6,198.3 163.0,196.2 164.4,194.1 165.8,191.8 167.2,189.3 168.6,186.7 170.0,184.0 171.4,181.1 172.8,178.1 174.2,175.0 175.6,171.7 177.0,168.2 178.4,164.7 179.8,161.0 181.2,157.1 182.6,153.1 184.0,149.0 185.4,144.7 186.8,140.3 188.2,135.8 189.6,131.1 191.0,126.2 192.4,121.3 193.8,116.2 195.2,110.9 196.6,105.5 198.0,100.0 199.4,94.3 200.8,88.5 202.2,82.6 203.6,76.5 205.0,70.2 206.4,63.9 207.8,57.4 209.2,50.7 210.6,43.9 212.0,37.0 213.4,29.9 214.8,22.7"/><text class="d-num" x="30" y="199" text-anchor="middle">−2</text><text class="d-num" x="58" y="199" text-anchor="middle">−1</text><text class="d-num" x="114" y="199" text-anchor="middle">1</text><text class="d-num" x="142" y="199" text-anchor="middle">2</text><text class="d-num" x="170" y="199" text-anchor="middle">3</text><text class="d-num" x="198" y="199" text-anchor="middle">4</text><text class="d-num" x="226" y="199" text-anchor="middle">5</text><text class="d-num" x="254" y="199" text-anchor="middle">6</text><text class="d-num" x="80" y="272" text-anchor="end">−3</text><text class="d-num" x="80" y="244" text-anchor="end">−2</text><text class="d-num" x="80" y="216" text-anchor="end">−1</text><text class="d-num" x="80" y="160" text-anchor="end">1</text><text class="d-num" x="80" y="132" text-anchor="end">2</text><text class="d-num" x="80" y="104" text-anchor="end">3</text><text class="d-num" x="80" y="76" text-anchor="end">4</text><text class="d-num" x="80" y="48" text-anchor="end">5</text><text class="d-num" x="80" y="20" text-anchor="end">6</text></svg></div>
+            <div class="alternativa">
+                <div class="opcao">b = 3, pois a parábola corta o eixo y em 3</div>
+                <div class="porque">3 é o valor de c.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">b &gt; 0, pois a e b têm o mesmo sinal</div>
+                <div class="porque">Mesmo sinal colocaria o vértice à esquerda do eixo y.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">b = 0, pois a parábola tem um vértice</div>
+                <div class="porque">b = 0 exige o vértice sobre o eixo y.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">b &lt; 0, pois a e b têm sinais opostos</div>
+                <div class="porque">O vértice está à direita do eixo y.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual é a lei da função do 1º grau do gráfico?<svg class="desenho" viewBox="0 0 278 284" role="img" aria-label="Reta que passa pelos pontos destacados (0, 3) e (3, 0)"><line class="d-grade" x1="30" y1="268" x2="30" y2="16"/><line class="d-grade" x1="58" y1="268" x2="58" y2="16"/><line class="d-grade" x1="86" y1="268" x2="86" y2="16"/><line class="d-grade" x1="114" y1="268" x2="114" y2="16"/><line class="d-grade" x1="142" y1="268" x2="142" y2="16"/><line class="d-grade" x1="170" y1="268" x2="170" y2="16"/><line class="d-grade" x1="198" y1="268" x2="198" y2="16"/><line class="d-grade" x1="226" y1="268" x2="226" y2="16"/><line class="d-grade" x1="254" y1="268" x2="254" y2="16"/><line class="d-grade" x1="30" y1="268" x2="254" y2="268"/><line class="d-grade" x1="30" y1="240" x2="254" y2="240"/><line class="d-grade" x1="30" y1="212" x2="254" y2="212"/><line class="d-grade" x1="30" y1="184" x2="254" y2="184"/><line class="d-grade" x1="30" y1="156" x2="254" y2="156"/><line class="d-grade" x1="30" y1="128" x2="254" y2="128"/><line class="d-grade" x1="30" y1="100" x2="254" y2="100"/><line class="d-grade" x1="30" y1="72" x2="254" y2="72"/><line class="d-grade" x1="30" y1="44" x2="254" y2="44"/><line class="d-grade" x1="30" y1="16" x2="254" y2="16"/><line class="d-linha" x1="30" y1="184" x2="268" y2="184"/><line class="d-linha" x1="114" y1="268" x2="114" y2="6"/><text class="d-peq" x="270" y="188">x</text><text class="d-peq" x="120" y="14">y</text><polyline class="d-curva" points="30.0,16.0 31.4,17.4 32.8,18.8 34.2,20.2 35.6,21.6 37.0,23.0 38.4,24.4 39.8,25.8 41.2,27.2 42.6,28.6 44.0,30.0 45.4,31.4 46.8,32.8 48.2,34.2 49.6,35.6 51.0,37.0 52.4,38.4 53.8,39.8 55.2,41.2 56.6,42.6 58.0,44.0 59.4,45.4 60.8,46.8 62.2,48.2 63.6,49.6 65.0,51.0 66.4,52.4 67.8,53.8 69.2,55.2 70.6,56.6 72.0,58.0 73.4,59.4 74.8,60.8 76.2,62.2 77.6,63.6 79.0,65.0 80.4,66.4 81.8,67.8 83.2,69.2 84.6,70.6 86.0,72.0 87.4,73.4 88.8,74.8 90.2,76.2 91.6,77.6 93.0,79.0 94.4,80.4 95.8,81.8 97.2,83.2 98.6,84.6 100.0,86.0 101.4,87.4 102.8,88.8 104.2,90.2 105.6,91.6 107.0,93.0 108.4,94.4 109.8,95.8 111.2,97.2 112.6,98.6 114.0,100.0 115.4,101.4 116.8,102.8 118.2,104.2 119.6,105.6 121.0,107.0 122.4,108.4 123.8,109.8 125.2,111.2 126.6,112.6 128.0,114.0 129.4,115.4 130.8,116.8 132.2,118.2 133.6,119.6 135.0,121.0 136.4,122.4 137.8,123.8 139.2,125.2 140.6,126.6 142.0,128.0 143.4,129.4 144.8,130.8 146.2,132.2 147.6,133.6 149.0,135.0 150.4,136.4 151.8,137.8 153.2,139.2 154.6,140.6 156.0,142.0 157.4,143.4 158.8,144.8 160.2,146.2 161.6,147.6 163.0,149.0 164.4,150.4 165.8,151.8 167.2,153.2 168.6,154.6 170.0,156.0 171.4,157.4 172.8,158.8 174.2,160.2 175.6,161.6 177.0,163.0 178.4,164.4 179.8,165.8 181.2,167.2 182.6,168.6 184.0,170.0 185.4,171.4 186.8,172.8 188.2,174.2 189.6,175.6 191.0,177.0 192.4,178.4 193.8,179.8 195.2,181.2 196.6,182.6 198.0,184.0 199.4,185.4 200.8,186.8 202.2,188.2 203.6,189.6 205.0,191.0 206.4,192.4 207.8,193.8 209.2,195.2 210.6,196.6 212.0,198.0 213.4,199.4 214.8,200.8 216.2,202.2 217.6,203.6 219.0,205.0 220.4,206.4 221.8,207.8 223.2,209.2 224.6,210.6 226.0,212.0 227.4,213.4 228.8,214.8 230.2,216.2 231.6,217.6 233.0,219.0 234.4,220.4 235.8,221.8 237.2,223.2 238.6,224.6 240.0,226.0 241.4,227.4 242.8,228.8 244.2,230.2 245.6,231.6 247.0,233.0 248.4,234.4 249.8,235.8 251.2,237.2 252.6,238.6 254.0,240.0"/><text class="d-num" x="30" y="199" text-anchor="middle">−3</text><text class="d-num" x="58" y="199" text-anchor="middle">−2</text><text class="d-num" x="86" y="199" text-anchor="middle">−1</text><text class="d-num" x="142" y="199" text-anchor="middle">1</text><text class="d-num" x="170" y="199" text-anchor="middle">2</text><text class="d-num" x="198" y="199" text-anchor="middle">3</text><text class="d-num" x="226" y="199" text-anchor="middle">4</text><text class="d-num" x="254" y="199" text-anchor="middle">5</text><text class="d-num" x="108" y="272" text-anchor="end">−3</text><text class="d-num" x="108" y="244" text-anchor="end">−2</text><text class="d-num" x="108" y="216" text-anchor="end">−1</text><text class="d-num" x="108" y="160" text-anchor="end">1</text><text class="d-num" x="108" y="132" text-anchor="end">2</text><text class="d-num" x="108" y="104" text-anchor="end">3</text><text class="d-num" x="108" y="76" text-anchor="end">4</text><text class="d-num" x="108" y="48" text-anchor="end">5</text><text class="d-num" x="108" y="20" text-anchor="end">6</text><circle class="d-cor2" cx="114" cy="100" r="5"/><circle class="d-cor2" cx="198" cy="184" r="5"/></svg></div>
+            <div class="alternativa certa">
+                <div class="opcao">f(x) = −x + 3</div>
+                <div class="porque">b = 3 e a = (0 − 3) ÷ (3 − 0) = −1.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = x + 3</div>
+                <div class="porque">A reta desce, então a é negativo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = −3x + 3</div>
+                <div class="porque">a = −3 ÷ 3 = −1, e não −3.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">f(x) = −x − 3</div>
+                <div class="porque">A reta corta o eixo y em 3, e não em −3.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual alternativa descreve a parábola do gráfico?<svg class="desenho" viewBox="0 0 278 256" role="img" aria-label="Parábola de concavidade para baixo que corta o eixo x em dois pontos e o eixo y em 3"><line class="d-grade" x1="30" y1="240" x2="30" y2="16"/><line class="d-grade" x1="58" y1="240" x2="58" y2="16"/><line class="d-grade" x1="86" y1="240" x2="86" y2="16"/><line class="d-grade" x1="114" y1="240" x2="114" y2="16"/><line class="d-grade" x1="142" y1="240" x2="142" y2="16"/><line class="d-grade" x1="170" y1="240" x2="170" y2="16"/><line class="d-grade" x1="198" y1="240" x2="198" y2="16"/><line class="d-grade" x1="226" y1="240" x2="226" y2="16"/><line class="d-grade" x1="254" y1="240" x2="254" y2="16"/><line class="d-grade" x1="30" y1="240" x2="254" y2="240"/><line class="d-grade" x1="30" y1="212" x2="254" y2="212"/><line class="d-grade" x1="30" y1="184" x2="254" y2="184"/><line class="d-grade" x1="30" y1="156" x2="254" y2="156"/><line class="d-grade" x1="30" y1="128" x2="254" y2="128"/><line class="d-grade" x1="30" y1="100" x2="254" y2="100"/><line class="d-grade" x1="30" y1="72" x2="254" y2="72"/><line class="d-grade" x1="30" y1="44" x2="254" y2="44"/><line class="d-grade" x1="30" y1="16" x2="254" y2="16"/><line class="d-linha" x1="30" y1="156" x2="268" y2="156"/><line class="d-linha" x1="114" y1="240" x2="114" y2="6"/><text class="d-peq" x="270" y="160">x</text><text class="d-peq" x="120" y="14">y</text><polyline class="d-curva" points="69.2,233.3 70.6,226.1 72.0,219.0 73.4,212.1 74.8,205.3 76.2,198.6 77.6,192.1 79.0,185.8 80.4,179.5 81.8,173.4 83.2,167.5 84.6,161.7 86.0,156.0 87.4,150.5 88.8,145.1 90.2,139.8 91.6,134.7 93.0,129.8 94.4,124.9 95.8,120.2 97.2,115.7 98.6,111.3 100.0,107.0 101.4,102.9 102.8,98.9 104.2,95.0 105.6,91.3 107.0,87.8 108.4,84.3 109.8,81.0 111.2,77.9 112.6,74.9 114.0,72.0 115.4,69.3 116.8,66.7 118.2,64.2 119.6,61.9 121.0,59.8 122.4,57.7 123.8,55.8 125.2,54.1 126.6,52.5 128.0,51.0 129.4,49.7 130.8,48.5 132.2,47.4 133.6,46.5 135.0,45.8 136.4,45.1 137.8,44.6 139.2,44.3 140.6,44.1 142.0,44.0 143.4,44.1 144.8,44.3 146.2,44.6 147.6,45.1 149.0,45.8 150.4,46.5 151.8,47.4 153.2,48.5 154.6,49.7 156.0,51.0 157.4,52.5 158.8,54.1 160.2,55.8 161.6,57.7 163.0,59.8 164.4,61.9 165.8,64.2 167.2,66.7 168.6,69.3 170.0,72.0 171.4,74.9 172.8,77.9 174.2,81.0 175.6,84.3 177.0,87.8 178.4,91.3 179.8,95.0 181.2,98.9 182.6,102.9 184.0,107.0 185.4,111.3 186.8,115.7 188.2,120.2 189.6,124.9 191.0,129.8 192.4,134.7 193.8,139.8 195.2,145.1 196.6,150.5 198.0,156.0 199.4,161.7 200.8,167.5 202.2,173.4 203.6,179.5 205.0,185.8 206.4,192.1 207.8,198.6 209.2,205.3 210.6,212.1 212.0,219.0 213.4,226.1 214.8,233.3"/><text class="d-num" x="30" y="171" text-anchor="middle">−3</text><text class="d-num" x="58" y="171" text-anchor="middle">−2</text><text class="d-num" x="86" y="171" text-anchor="middle">−1</text><text class="d-num" x="142" y="171" text-anchor="middle">1</text><text class="d-num" x="170" y="171" text-anchor="middle">2</text><text class="d-num" x="198" y="171" text-anchor="middle">3</text><text class="d-num" x="226" y="171" text-anchor="middle">4</text><text class="d-num" x="254" y="171" text-anchor="middle">5</text><text class="d-num" x="108" y="244" text-anchor="end">−3</text><text class="d-num" x="108" y="216" text-anchor="end">−2</text><text class="d-num" x="108" y="188" text-anchor="end">−1</text><text class="d-num" x="108" y="132" text-anchor="end">1</text><text class="d-num" x="108" y="104" text-anchor="end">2</text><text class="d-num" x="108" y="76" text-anchor="end">3</text><text class="d-num" x="108" y="48" text-anchor="end">4</text><text class="d-num" x="108" y="20" text-anchor="end">5</text></svg></div>
+            <div class="alternativa">
+                <div class="opcao">a &gt; 0, c = 3 e Δ &gt; 0</div>
+                <div class="porque">A concavidade para baixo indica a &lt; 0.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">a &lt; 0, c = 3 e Δ &gt; 0</div>
+                <div class="porque">Abre para baixo, corta o eixo y em 3 e o eixo x duas vezes.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">a &lt; 0, c = −1 e Δ &gt; 0</div>
+                <div class="porque">−1 é uma raiz, e c = 3.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">a &lt; 0, c = 3 e Δ &lt; 0</div>
+                <div class="porque">A parábola corta o eixo x, então Δ &gt; 0.</div>
+            </div>
+        </div>
+    </section>
+    <!-- ZONA 5 FIM -->
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<!-- BLOCO TRAVADO: SELOS E MOTOR. COPIE IGUAL. -->
+<script id="selo">
+const SELO_MOTOR = "616cbb66";
+const SELO_CSS = "1b813fa0";
+</script>
+<script id="motor">
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+// --- LEITURA DAS QUESTOES (vem do HTML) ---
+function htmlDe(pai, seletor) {
+    const el = pai ? pai.querySelector(seletor) : null;
+    return el ? el.innerHTML.trim() : '';
+}
+
+const questions = Array.from(document.querySelectorAll('#bancoQuestoes .questao')).map((bloco, i) => {
+    const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+    const certa = Math.max(alternativas.findIndex(a => a.classList.contains('certa')), 0);
+    return {
+        id: i + 1,
+        level: bloco.dataset.nivel,
+        text: htmlDe(bloco, ':scope > .enunciado'),
+        options: alternativas.map(a => htmlDe(a, ':scope > .opcao')),
+        correct: certa,
+        explanation: {
+            correct: htmlDe(alternativas[certa], ':scope > .porque'),
+            options: alternativas.map((a, j) => j === certa ? 'Certa' : htmlDe(a, ':scope > .porque'))
+        }
+    };
+});
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise a teoria com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+
+// --- VERIFICADOR AUTOMATICO DA PAGINA ---
+function seloDe(texto) {
+    const limpo = texto.replace(/[^\x21-\x7E]/g, '');
+    let h = 2166136261;
+    for (let i = 0; i < limpo.length; i++) {
+        h ^= limpo.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(16);
+}
+
+function textoDe(html) {
+    const modelo = document.createElement('template');
+    modelo.innerHTML = html;
+    return modelo.content.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function verificarPagina() {
+    const erros = [];
+    const letras = ['A', 'B', 'C', 'D'];
+    const conteudo = [
+        document.title,
+        document.querySelector('.logo-header').innerHTML,
+        document.getElementById('viewExplanation').innerHTML,
+        document.getElementById('bancoQuestoes').innerHTML
+    ].join(' ');
+
+    const seloMotor = document.getElementById('motor');
+    const seloCss = document.getElementById('css-motor');
+    if (typeof SELO_MOTOR === 'undefined' || !seloMotor || seloDe(seloMotor.textContent) !== SELO_MOTOR) erros.push('O motor JavaScript foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (typeof SELO_CSS === 'undefined' || !seloCss || seloDe(seloCss.textContent) !== SELO_CSS) erros.push('O CSS do motor foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (conteudo.includes('[[') || conteudo.includes(']]')) erros.push('Ficou algum campo [[...]] sem preencher.');
+    if (conteudo.includes('**')) erros.push('Há Markdown (**) dentro do HTML. Use <strong>.');
+    if (document.querySelector('#viewExplanation script, #bancoQuestoes script, #viewExplanation iframe, #bancoQuestoes iframe')) erros.push('Há script ou iframe dentro das zonas de conteúdo.');
+    if (document.querySelector('#viewExplanation img, #bancoQuestoes img')) erros.push('Há imagem externa. Desenhe com SVG.');
+
+    document.querySelectorAll('#viewExplanation svg, #bancoQuestoes svg').forEach((svg, i) => {
+        if (!svg.getAttribute('viewBox') || !svg.getAttribute('aria-label')) erros.push('O desenho SVG ' + (i + 1) + ' precisa de viewBox e aria-label.');
+    });
+
+    const grupos = document.querySelectorAll('#viewExplanation .content-group');
+    if (grupos.length < 2) erros.push('A teoria precisa de pelo menos 2 temas.');
+    grupos.forEach((g, i) => {
+        if (!g.querySelector('.section-badge') || !g.querySelector('.theory-box')) erros.push('O tema ' + (i + 1) + ' da teoria está sem .section-badge ou .theory-box.');
+    });
+
+    const blocos = Array.from(document.querySelectorAll('#bancoQuestoes .questao'));
+    if (blocos.length !== 15) erros.push('São ' + blocos.length + ' questões, mas precisam ser exatamente 15.');
+
+    const enunciados = new Set();
+    const contagem = [0, 0, 0, 0];
+    let longas = 0;
+    let sequencia = 0;
+    let ultima = -1;
+
+    blocos.forEach((bloco, i) => {
+        const q = 'Questão ' + (i + 1) + ': ';
+        const esperado = i < 5 ? 'Fácil' : i < 10 ? 'Médio' : 'Difícil';
+        if (bloco.dataset.nivel !== esperado) erros.push(q + 'o nível deveria ser ' + esperado + '.');
+
+        const enunciadoEl = bloco.querySelector(':scope > .enunciado');
+        const enunciado = enunciadoEl ? textoDe(enunciadoEl.innerHTML) : '';
+        if (!enunciado) erros.push(q + 'falta o enunciado.');
+        if (enunciado && enunciados.has(enunciado)) erros.push(q + 'enunciado repetido.');
+        enunciados.add(enunciado);
+
+        const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+        if (alternativas.length !== 4) erros.push(q + 'precisa de exatamente 4 alternativas.');
+        const certas = alternativas.filter(a => a.classList.contains('certa'));
+        if (certas.length !== 1) erros.push(q + 'precisa de exatamente 1 alternativa certa.');
+
+        const textos = alternativas.map(a => {
+            const el = a.querySelector(':scope > .opcao');
+            return el ? textoDe(el.innerHTML) : '';
+        });
+        if (textos.some(t => !t)) erros.push(q + 'há alternativa sem texto.');
+        if (new Set(textos).size !== textos.length) erros.push(q + 'há alternativas repetidas.');
+
+        alternativas.forEach((a, j) => {
+            const el = a.querySelector(':scope > .porque');
+            const porque = el ? textoDe(el.innerHTML) : '';
+            const letra = letras[j] || '?';
+            if (!porque) erros.push(q + 'a alternativa ' + letra + ' está sem explicação.');
+            if (porque.length > 110) erros.push(q + 'a explicação da alternativa ' + letra + ' passou de 110 caracteres.');
+        });
+
+        const indice = alternativas.findIndex(a => a.classList.contains('certa'));
+        if (indice >= 0 && indice < 4) {
+            contagem[indice]++;
+            sequencia = indice === ultima ? sequencia + 1 : 1;
+            ultima = indice;
+            if (sequencia === 4) erros.push(q + 'são 4 respostas seguidas com a mesma letra.');
+            const tamanhos = textos.map(t => t.length);
+            const outros = tamanhos.filter((_, j) => j !== indice);
+            if (tamanhos[indice] > 20 && tamanhos[indice] - Math.max(...outros) >= 6) longas++;
+        }
+    });
+
+    contagem.forEach((total, i) => {
+        if (blocos.length === 15 && (total < 2 || total > 5)) erros.push('A letra ' + letras[i] + ' é a certa em ' + total + ' questões. Use de 3 a 4.');
+    });
+    if (longas > 2) erros.push('A alternativa certa é claramente a mais longa em ' + longas + ' questões. Equilibre os tamanhos.');
+
+    const aviso = document.getElementById('avisoMotor');
+    if (erros.length === 0) {
+        aviso.remove();
+        window.PAGINA_OK = true;
+        return;
+    }
+    const lista = erros.slice(0, 25).map(e => '<li>' + e.replace(/</g, '&lt;') + '</li>').join('');
+    aviso.innerHTML = '<strong>⚠️ A página precisa de correção. Não envie aos alunos.</strong><br>Copie esta lista, cole no Gemini e peça para corrigir só estes itens:<ol style="margin:8px 0 0 20px;">' + lista + '</ol>';
+}
+
+verificarPagina();
+</script>
+
+</body></html>
