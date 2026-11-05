@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ZONA 1 INICIO: TITULO DA ABA -->
+<title>Colonização 7º Ano - Promover</title>
+<!-- ZONA 1 FIM -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- BLOCO TRAVADO: CSS DO MOTOR. COPIE IGUAL. -->
+<style id="css-motor">
+:root {
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-text-active: #FFFFFF;
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+td, th { padding: 6px 8px; }
+#bancoQuestoes { display: none; }
+.visual-area.texto { font-size: 0.95rem; flex-direction: column; gap: 8px; }
+.tabela { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+.tabela th { background: var(--theme-light); }
+.tabela th, .tabela td { border: 1px solid var(--border-color); }
+.lista { padding-left: 20px; }
+.desenho { width: 100%; max-width: 420px; height: auto; display: block; margin: 10px auto; }
+.d-cor1 { fill: var(--theme-dark); }
+.d-cor2 { fill: var(--theme-contrast); }
+.d-cor3 { fill: var(--theme-medium); }
+.d-fundo { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-linha { fill: none; stroke: var(--text-color); stroke-width: 2; }
+.d-texto { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; }
+</style>
+<!-- ZONA 2 INICIO: CORES E CSS EXTRA -->
+<style id="css-tema">
+:root {
+    --bg-color: #EFF6FF;
+    --text-color: #0F172A;
+    --theme-light: #DBEAFE;
+    --theme-medium: #60A5FA;
+    --theme-dark: #1E3A8A;
+    --theme-contrast: #B45309;
+    --theme-accent: #2563EB;
+}
+</style>
+<!-- ZONA 2 FIM -->
+</head>
+<body>
+<div id="avisoMotor" style="display:block; max-width:600px; width:100%; margin:0 auto 16px; padding:14px; background:#FFE4E6; color:#881337; border:3px solid #BE123C; border-radius:12px; font-family:sans-serif; font-size:15px; font-weight:600; line-height:1.5;">⚠️ Este arquivo está incompleto ou com erro no código. Não envie aos alunos. Peça ao Gemini para gerar o arquivo completo de novo.</div>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <!-- ZONA 3 INICIO: CABECALHO -->
+        <h1>História – 7º&nbsp;Ano</h1>
+        <p class="subtitle">A Colonização da América Portuguesa</p>
+        <!-- ZONA 3 FIM -->
+    </header>
+
+    <div class="toggle-container">
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (30)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" style="display: flex;">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- ZONA 4 INICIO: TEORIA -->
+        <div class="content-group">
+            <span class="section-badge">1. A Chegada e o Pau-Brasil</span>
+            <div class="theory-box">
+                <h3>🌳 No início era o pau-brasil</h3>
+                <p>Em <strong>1500</strong>, os portugueses chegaram ao Brasil, mas não encontraram metais preciosos ou especiarias de imediato. O primeiro produto explorado foi o <strong>pau-brasil</strong>, uma madeira muito valiosa na Europa porque fornecia uma tinta vermelha usada para tingir tecidos.</p>
+                <div class="highlight-box"><strong>Dica:</strong> A extração era feita através do <strong>escambo</strong>. Os indígenas cortavam as árvores e, em troca do trabalho, recebiam objetos dos portugueses, como espelhos e machados.</div>
+                <p>Os portugueses construíram <strong>feitorias</strong> no litoral para guardar a madeira. Porém, quando os franceses começaram a contrabandear o pau-brasil, Portugal percebeu que precisava <strong>ocupar</strong> a terra para não perdê-la.</p>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">2. Capitanias e Governo-Geral</span>
+            <div class="theory-box">
+                <h3>🗺️ A Divisão das Terras</h3>
+                <p>Em <strong>1534</strong>, o rei D. João III dividiu o Brasil em grandes faixas de terra chamadas <strong>capitanias hereditárias</strong>. Elas foram doadas aos <strong>donatários</strong> (nobres de confiança), que podiam administrar, cobrar impostos e doar lotes menores (as <strong>sesmarias</strong>). O título era hereditário: passava de pai para filho.</p>
+                <div class="highlight-box warning"><strong>Cuidado:</strong> A maioria das capitanias <strong>fracassou</strong> por causa da enorme distância de Portugal, da falta de recursos e dos frequentes ataques indígenas. Apenas <strong>São Vicente</strong> e <strong>Pernambuco</strong> prosperaram.</div>
+                <h3>🏛️ A Centralização</h3>
+                <p>Para salvar a colonização e centralizar o poder, o rei criou o <strong>Governo-Geral</strong> em <strong>1548</strong>, com sede na cidade de <strong>Salvador</strong>. O primeiro governador-geral foi <strong>Tomé de Sousa</strong>.</p>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">3. A Economia do Açúcar</span>
+            <div class="theory-box">
+                <h3>🌱 O Sistema de Plantation</h3>
+                <p>O <strong>açúcar</strong> logo se tornou o principal produto da colônia e era exportado para a Europa. Ele foi cultivado principalmente no <strong>Nordeste</strong> (destaque para Pernambuco e Bahia) porque a região tinha um <strong>clima quente e úmido</strong> e um excelente solo fértil, conhecido como <strong>massapê</strong>.</p>
+                <p>A produção usava o sistema de <strong>plantation</strong>, que funcionava em quatro pilares:</p>
+                <ul class="lista">
+                    <li><strong>Latifúndio:</strong> Grandes propriedades de terra.</li>
+                    <li><strong>Monocultura:</strong> Foco apenas no cultivo da cana-de-açúcar.</li>
+                    <li><strong>Trabalho Escravo:</strong> Uso de mão de obra escravizada.</li>
+                    <li><strong>Exportação:</strong> Produção voltada para venda à Europa.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-group">
+            <span class="section-badge">4. Sociedade Açucareira</span>
+            <div class="theory-box">
+                <h3>👥 Quem era quem no Engenho?</h3>
+                <p>A sociedade que se formou em torno do açúcar era bastante dividida e desigual:</p>
+                <ul class="lista">
+                    <li><strong>Senhor de Engenho:</strong> O dono da terra, do engenho e dos escravizados. Ele possuía enorme poder econômico e político na colônia. Vivia na <strong>casa-grande</strong> com sua família.</li>
+                    <li><strong>Trabalhadores Livres:</strong> Havia lavradores de cana (que arrendavam terras) e artesãos.</li>
+                    <li><strong>Escravizados:</strong> Eram a base de todo o trabalho pesado. Dormiam em alojamentos precários chamados <strong>senzalas</strong>. A mão de obra foi inicialmente <strong>indígena</strong>, sendo substituída depois pela <strong>africana</strong>.</li>
+                </ul>
+            </div>
+        </div>
+        <!-- ZONA 4 FIM -->
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (30 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">30 questões rigorosas. Acerte <strong>80% (24/30)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 30</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+
+    <!-- ZONA 5 INICIO: 30 QUESTOES -->
+    <section id="bancoQuestoes" hidden>
+        <!-- Fáceis (1 a 10) -->
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em que ano os portugueses chegaram oficialmente ao Brasil sob o comando de Cabral?</div>
+            <div class="alternativa certa">
+                <div class="opcao">1500</div>
+                <div class="porque">Esse foi o ano da chegada dos portugueses ao território brasileiro.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">1534</div>
+                <div class="porque">Foi nesse ano que ocorreu a criação das capitanias hereditárias.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">1548</div>
+                <div class="porque">Esse ano marca a fundação do Governo-Geral com sede em Salvador.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">1822</div>
+                <div class="porque">1822 é o ano da Independência do Brasil, um evento muito posterior.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual foi o primeiro produto da natureza explorado pelos portugueses logo após chegarem?</div>
+            <div class="alternativa">
+                <div class="opcao">Ouro</div>
+                <div class="porque">O ouro só foi descoberto e explorado aos montes no século seguinte.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Pau-brasil</div>
+                <div class="porque">Essa árvore foi o primeiro recurso valioso explorado na colônia.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Açúcar</div>
+                <div class="porque">A produção de açúcar precisou de engenhos criados décadas depois.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Especiarias</div>
+                <div class="porque">Eles procuravam especiarias no início, mas não as encontraram.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Para que servia principalmente a madeira do pau-brasil levada à Europa?</div>
+            <div class="alternativa">
+                <div class="opcao">Construir naus e casas</div>
+                <div class="porque">Embora resistente, não era o foco do seu altíssimo valor comercial.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Fabricar temperos fortes</div>
+                <div class="porque">A árvore não servia como tempero; esse era o papel das especiarias.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Tingir tecidos de luxo</div>
+                <div class="porque">A madeira fornecia uma tinta vermelha bastante desejada pelos europeus.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Alimentar a população</div>
+                <div class="porque">O pau-brasil é uma árvore não frutífera, imprópria para a alimentação.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">O que era o chamado escambo, utilizado na extração do pau-brasil?</div>
+            <div class="alternativa">
+                <div class="opcao">O uso de moedas de ouro</div>
+                <div class="porque">Não havia dinheiro ou moedas envolvidas nessas transações antigas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O comércio de escravizados</div>
+                <div class="porque">O tráfico não fazia parte dessa relação inicial com o pau-brasil.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A cobrança de altos impostos</div>
+                <div class="porque">Os indígenas não pagavam impostos, eles apenas trocavam serviços.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">A troca de serviço por objetos</div>
+                <div class="porque">Indígenas trabalhavam no corte da árvore em troca de bens europeus.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em 1534, como o rei D. João III decidiu dividir o território do Brasil?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Em capitanias hereditárias</div>
+                <div class="porque">Foram criadas grandes faixas de terra doadas a nobres confiáveis.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Em províncias da Coroa</div>
+                <div class="porque">A separação em províncias ocorreu apenas no período do Império.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Em três governos-gerais</div>
+                <div class="porque">Apenas um único Governo-Geral foi instalado no ano de 1548.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Em estados federais</div>
+                <div class="porque">A divisão em estados é moderna; na época eram apenas colônias reais.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Quem eram os donatários que receberam as faixas de terra no Brasil?</div>
+            <div class="alternativa">
+                <div class="opcao">Indígenas locais escolhidos</div>
+                <div class="porque">Os nativos não ganharam a terra, pelo contrário, as perderam.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Nobres de confiança do rei</div>
+                <div class="porque">O rei doava a terra a pessoas importantes que podiam povoá-la.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Navegadores franceses</div>
+                <div class="porque">Os franceses invadiam o litoral, nunca foram donatários legítimos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Trabalhadores livres pobres</div>
+                <div class="porque">Eles não tinham o dinheiro nem o prestígio exigido pela Coroa.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">O que a palavra "hereditária" significa no caso das capitanias doadas?</div>
+            <div class="alternativa">
+                <div class="opcao">Que pertencia ao clero cristão</div>
+                <div class="porque">As terras eram de civis nobres e não uma propriedade oficial da Igreja.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Que deveria ser devolvida logo</div>
+                <div class="porque">A terra não voltava ao rei quando o seu responsável inicial falecia.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Que passava de pai para filho</div>
+                <div class="porque">A posse era uma herança garantida para os próximos descendentes.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Que podia ser vendida livremente</div>
+                <div class="porque">A lei metropolitana proibia totalmente a venda das faixas de terra.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Quais foram as duas únicas capitanias hereditárias que prosperaram no Brasil colonial?</div>
+            <div class="alternativa">
+                <div class="opcao">Bahia e Rio de Janeiro</div>
+                <div class="porque">O Rio de Janeiro demorou mais a enriquecer; a Bahia foi o centro real.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Maranhão e São Paulo</div>
+                <div class="porque">A região do Maranhão enfrentou longas dificuldades no começo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Ceará e Espírito Santo</div>
+                <div class="porque">Tiveram muitos problemas financeiros e ataques duros de nativos.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">São Vicente e Pernambuco</div>
+                <div class="porque">Elas conseguiram obter enorme sucesso agrícola com a cana-de-açúcar.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em qual cidade se instalou a primeira sede do Governo-Geral brasileiro em 1548?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Salvador</div>
+                <div class="porque">Salvador foi fundada por Tomé de Sousa para ser a sede do governo local.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Rio de Janeiro</div>
+                <div class="porque">A capital do Brasil só foi transferida para o Rio no ano de 1763.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Vila de São Vicente</div>
+                <div class="porque">Ela era muito rica, mas a sede política escolhida foi Salvador.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Olinda</div>
+                <div class="porque">Olinda enriqueceu com os senhores de engenho, mas não foi capital.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Quem foi o primeiro governador-geral enviado ao Brasil para centralizar a administração?</div>
+            <div class="alternativa">
+                <div class="opcao">D. João III</div>
+                <div class="porque">Ele era o próprio rei absolutista de Portugal e nunca governou aqui.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Tomé de Sousa</div>
+                <div class="porque">Ele foi escolhido e chegou em 1549 para ser a maior autoridade aqui.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Pedro Álvares Cabral</div>
+                <div class="porque">Foi um importante navegador, mas não administrou a colônia real.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Martin Afonso de Souza</div>
+                <div class="porque">Ele fundou a primeira vila anos antes do sistema de Governo-Geral.</div>
+            </div>
+        </div>
+
+        <!-- Médias (11 a 20) -->
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual produto agrícola tornou-se a grande base da economia na colônia após 1530?</div>
+            <div class="alternativa">
+                <div class="opcao">Café</div>
+                <div class="porque">O café tornou-se a grande riqueza brasileira séculos depois.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Cacau</div>
+                <div class="porque">O cacau foi plantado no Brasil, porém nunca dominou a economia.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Açúcar</div>
+                <div class="porque">Plantar cana foi a atividade mais valiosa do sistema colonial.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Algodão</div>
+                <div class="porque">O algodão gerou lucro, mas não superou os imensos ganhos com açúcar.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual região brasileira mais se destacou na produção lucrativa da cana-de-açúcar?</div>
+            <div class="alternativa">
+                <div class="opcao">Região Sul</div>
+                <div class="porque">O clima ameno e frio do Sul não era o ideal para plantar a cana.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Região Norte</div>
+                <div class="porque">Essa região não reuniu as condições ideais nem o investimento maciço.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Centro-Oeste</div>
+                <div class="porque">O vasto interior do Brasil só foi colonizado no ciclo da mineração.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Nordeste</div>
+                <div class="porque">Destacou-se fortemente, especialmente as áreas da Bahia e Pernambuco.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Quais são os quatro pilares clássicos do sistema agrícola conhecido como "plantation"?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Latifúndio, monocultura, trabalho escravo e exportação</div>
+                <div class="porque">Essas quatro características formavam a grande base da economia açucareira.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Minifúndio, policultura, trabalho livre e venda local</div>
+                <div class="porque">Esse conjunto define a agricultura de pequena subsistência local.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Indústrias, comércio urbano, salário e máquinas modernas</div>
+                <div class="porque">O Brasil colonial quase não tinha indústrias nem salários justos livres.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Cooperativas, trabalho indígena pago, consumo próprio</div>
+                <div class="porque">O trabalho não era remunerado, e o lucro seguia sempre para a Europa.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">No sistema de plantation implementado no Brasil, o que era um latifúndio?</div>
+            <div class="alternativa">
+                <div class="opcao">Um armazém de venda</div>
+                <div class="porque">Armazéns eram usados por comerciantes, e não eram faixas de terras.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Uma grande propriedade rural</div>
+                <div class="porque">Eram imensas fazendas que abrigavam as plantações e o engenho.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Uma praça comercial na vila</div>
+                <div class="porque">Refere-se à agricultura em terras longas, e não a locais na cidade.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Uma tribo aliada dos europeus</div>
+                <div class="porque">O latifúndio era uma divisão de terra, não um agrupamento humano real.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">O que a característica da "monocultura" representava na prática nos campos dos engenhos?</div>
+            <div class="alternativa">
+                <div class="opcao">O uso de sementes misturadas</div>
+                <div class="porque">Misturar diferentes culturas na mesma terra seria o cultivo diverso.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A produção rica de especiarias</div>
+                <div class="porque">O clima brasileiro daquela época não servia ao plantio de especiarias.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">O cultivo de um só produto</div>
+                <div class="porque">Concentrava-se totalmente o plantio em enormes lavouras da mesma cana.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A criação solta de animais</div>
+                <div class="porque">Refere-se exclusivamente à agricultura, e não ao controle da pecuária.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">O que o solo "massapê", presente no Nordeste, oferecia de vantajoso aos colonizadores europeus?</div>
+            <div class="alternativa">
+                <div class="opcao">Ocultava ouro precioso</div>
+                <div class="porque">O solo não escondia metais; o ouro foi achado nas margens de rios.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Era ótimo para café rural</div>
+                <div class="porque">A terra vermelha do Sudeste é que abrigou o ciclo imenso do café.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Facilitava construir vilas</div>
+                <div class="porque">O destaque dessa terra não era urbano, mas sim sua potência rural.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Era muito fértil para a cana</div>
+                <div class="porque">Sendo rico e escuro, o solo aumentava incrivelmente a farta colheita.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Quem era a figura humana com maior poder e respeito na estrutura social do engenho colonial?</div>
+            <div class="alternativa certa">
+                <div class="opcao">O senhor de engenho</div>
+                <div class="porque">Era o rico patriarca que controlava a terra, os escravizados e as leis.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O mestre de açúcar local</div>
+                <div class="porque">Ele era um funcionário especializado importante, porém sem poder real.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O governador-geral da Bahia</div>
+                <div class="porque">Ele mandava no território todo, mas o poder local era dos ricos senhores.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O artesão livre da pequena vila</div>
+                <div class="porque">Eram pessoas simples, livres e sem qualquer riqueza ou domínio político.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">O que era a "casa-grande" dentro da fazenda produtora de açúcar?</div>
+            <div class="alternativa">
+                <div class="opcao">O celeiro que guardava o pó</div>
+                <div class="porque">Celeiros rústicos mantinham as colheitas, mas não as famílias ricas.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">A moradia da família do senhor</div>
+                <div class="porque">Era o núcleo e o maior símbolo de todo o poder do dono e da família.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O lugar em que o líquido fervia</div>
+                <div class="porque">Esse setor do processo era realizado no perigoso local da fornalha.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A prisão dos piores crimes</div>
+                <div class="porque">Funcionava como um refúgio e casa de luxo, não era uma penitenciária.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Em que local insalubre e vigiado os trabalhadores escravizados dormiam após as duras jornadas?</div>
+            <div class="alternativa">
+                <div class="opcao">Nos alojamentos da moenda</div>
+                <div class="porque">A moenda funcionava para extrair o caldo sem ser usada para dormir.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Nos quartos da casa-grande</div>
+                <div class="porque">Eram quartos destinados somente aos parentes e convidados do senhor.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Nas rústicas senzalas da fazenda</div>
+                <div class="porque">Eram galpões escuros de alojamento com condições muito desumanas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Nas grandes praças de Salvador</div>
+                <div class="porque">Eles deviam dormir próximos ao local de trabalho agrícola no campo.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Quais foram os grandes motivos que causaram o fracasso imediato da maioria das capitanias donatárias?</div>
+            <div class="alternativa">
+                <div class="opcao">O excesso gigante de chuvas fortes</div>
+                <div class="porque">O clima litorâneo no geral era bastante favorável ao cultivo planejado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A proibição de explorar a mata rica</div>
+                <div class="porque">O desmatamento da costa estava totalmente liberado aos donos na época.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A enorme quantia de ouro roubado</div>
+                <div class="porque">Nenhum ouro farto havia sido descoberto no início desse ciclo falho.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">A falta de recursos e a distância</div>
+                <div class="porque">Além do isolamento oceânico, muitos sofreram duros ataques indígenas.</div>
+            </div>
+        </div>
+
+        <!-- Difíceis (21 a 30) -->
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">A implantação inteligente do Governo-Geral (1548) acabou extinguindo as antigas Capitanias Hereditárias?</div>
+            <div class="alternativa">
+                <div class="opcao">Sim, a metrópole encerrou todas</div>
+                <div class="porque">A coroa decidiu manter o formato, buscando integrar todas as áreas ali.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Não, ele apenas uniu a administração</div>
+                <div class="porque">O governador-geral serviu para dar auxílio e centralizar o poder local.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Sim, a Igreja assumiu todos os lotes</div>
+                <div class="porque">A Igreja tinha influência enorme, mas as posses de terra eram sempre civis.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Não, porém o rei mudou todos de lugar</div>
+                <div class="porque">O acordo de herança e posse feito pela Coroa com os donatários continuou.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual era a real intenção dos portugueses ao instalar diversas feitorias pelas praias brasileiras?</div>
+            <div class="alternativa">
+                <div class="opcao">Construir ali as futuras capitais</div>
+                <div class="porque">Elas não eram cidades, mas depósitos comerciais rústicos bem protegidos.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Refinar o rico açúcar para viagem</div>
+                <div class="porque">O açúcar passava pelos engenhos muito tempo após a fase das rudes feitorias.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Armazenar as toras brutas de pau-brasil</div>
+                <div class="porque">Eram os entrepostos fortificados usados para proteger as valiosas madeiras.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Abrigarem os escravizados africanos</div>
+                <div class="porque">Nessa primeira fase comercial, ainda não ocorria o tráfico oficial da costa.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">O sistema das capitanias dependia também da distribuição das chamadas sesmarias. O que eram elas?</div>
+            <div class="alternativa">
+                <div class="opcao">Títulos pomposos reais militares</div>
+                <div class="porque">Títulos eram dados, porém as sesmarias eram faixas concretas e úteis de chão.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Câmaras municipais de juízes nativos</div>
+                <div class="porque">O governo local nunca ficou submetido a grupos ou juízes puramente indígenas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Tribos nativas legalmente convertidas</div>
+                <div class="porque">O termo não define a catequese da aldeia indígena, e sim um aspecto agrário.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Lotes menores de terras doados</div>
+                <div class="porque">O donatário partilhava sua área extensa entregando lotes para colonizadores.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Por que a Coroa Portuguesa decidiu acelerar a colonização efetiva por volta do ano turbulento de 1530?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Pelo medo concreto das invasões da França</div>
+                <div class="porque">O risco real e alto de perder o seu domínio motivou Portugal a povoar logo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Pelo esgotamento de todo o açúcar europeu</div>
+                <div class="porque">O açúcar já era consumido, mas o plantio servia para lucrar, não para salvar.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque a venda oficial de nativos dobrou</div>
+                <div class="porque">Portugal colonizou para garantir o território, e não para exportar nativos de cá.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque os reis de Portugal ficaram falidos</div>
+                <div class="porque">Eles lucravam bem no vasto comércio do Oriente e tentavam expandir as fortunas.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual alternativa resume perfeitamente o papel das diferentes etnias na mão de obra da plantation litorânea?</div>
+            <div class="alternativa">
+                <div class="opcao">Apenas os imigrantes foram usados de fato</div>
+                <div class="porque">Trabalho imigrante europeu só ganhou peso e fama lá no final do século XIX colonial.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Usou nativos e depois migrou para africanos</div>
+                <div class="porque">Começou com indígenas locais, seguidos pelo cruel tráfico rentável que os substituiu.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Os indígenas apenas cortavam toda a madeira</div>
+                <div class="porque">Foram cativos cruéis do açúcar na largada, muito antes dos navios tumbeiros da África.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Africanos lideravam os fortes donos de terra</div>
+                <div class="porque">Eram os infelizes e sofridos alvos trágicos do duro cativeiro em todo grande império.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">O rigoroso sistema latifundiário e escravocrata das plantation foi concebido para atender qual grupo local?</div>
+            <div class="alternativa">
+                <div class="opcao">Aos fortes e espertos comerciantes da colônia</div>
+                <div class="porque">A estrutura rígida barrava o avanço deles, visando mandar toda a renda para a Europa rica.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Aos grupos catequizados de jesuítas em missões</div>
+                <div class="porque">O clero protegia parte dos nativos, no entanto não recebia todo o lucro dos engenhos dali.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Aos vastos e claros interesses da metrópole</div>
+                <div class="porque">O pacto econômico colonial exigia que o lucro exorbitante partisse para as mãos do grande rei.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">À imensa massa operária solta ali explorada</div>
+                <div class="porque">Eram sugados à exaustão; nenhum ganho ou bem estar era garantido legalmente pela pátria mãe.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual destas complexas afirmações sintetiza a importância social exercida por um rico "Senhor de Engenho"?</div>
+            <div class="alternativa">
+                <div class="opcao">Ele obedecia fielmente a todos os pobres soltos</div>
+                <div class="porque">Tratava-se do exato contrário: pela força, dominava trabalhadores e impunha sua dura rotina.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Era o representante fiel, puro e humilde da Igreja</div>
+                <div class="porque">Embora católicos fervorosos, eram proprietários agressivos lucrando bem sem compaixão no fim.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Seu poder parava apenas no limite do longo canavial</div>
+                <div class="porque">Como donos absolutos das vilas ao redor, dominavam o comércio, justiça e leis municipais todas.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Possuía grande mando econômico, político e social</div>
+                <div class="porque">Concentrar a terra e a renda gerava um cenário de obediência geral aos desejos dessa alta elite.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Como o imenso lucro obtido nas intensas vendas do cobiçado açúcar colonial acabava sendo destinado por lei?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Gerava grandes ganhos para a metrópole e rei</div>
+                <div class="porque">A essência triste de toda a colônia baseava-se em explorar, sugar e transferir os bens à Europa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Era fielmente repassado aos pequenos artesãos</div>
+                <div class="porque">O abismo de rendas impedia a partilha de riquezas; o dinheiro alimentava as monarquias na base.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Sustentava planos justos para toda as senzalas</div>
+                <div class="porque">Senzalas sofriam perdas absurdas e subumanas; as moedas geradas pagavam apenas mais opressão real.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Construía fortes para reinos de reinos rivais</div>
+                <div class="porque">A defesa pagava exércitos da Coroa, nunca destinando impostos valiosos a inimigos declarados duros.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Em relação às dinâmicas iniciais de troca por trabalho, o que representou o escambo feito com o pau-brasil?</div>
+            <div class="alternativa">
+                <div class="opcao">Uma chance honrosa de justiça plena para ambas as partes</div>
+                <div class="porque">Enquanto um lado levava mercadorias valiosas infinitas, o outro ganhava bugigangas curtas e rasas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Um pacto de defesa mútua sagrada selado entre duas nações</div>
+                <div class="porque">Serviu tão somente à busca selvagem de matéria prima barata para os navios partirem ricos para lá.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Uma forte exploração mascarada de trocas supostamente úteis</div>
+                <div class="porque">Os estrangeiros usufruíram da mão nativa para lucrar quantias irreais pagando apenas quinquilharias.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">O fim dos saques e a ascensão bela do livre comércio formal</div>
+                <div class="porque">O livre mercado não operava nas florestas; havia controle total feito pela ganância sem freios antes.</div>
+            </div>
+        </div>
+
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Embora o poder real tenha instalado o rigoroso Governo-Geral por todo o mapa, que grupos exerciam domínio ali?</div>
+            <div class="alternativa">
+                <div class="opcao">Os bravos líderes das rebeladas e perigosas tribos locais</div>
+                <div class="porque">Povos originários sofriam contínua exclusão dolorosa não comandando tribunais ou taxas tributárias.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Os novos juízes nobres despachados da praça real portuguesa</div>
+                <div class="porque">Ainda que juízes viessem atuar, a política da vila girava em torno dos temidos ricos chamados bons.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A irmandade sagrada e isolada vivendo oculta nos mosteiros</div>
+                <div class="porque">O clero controlava mentes e terras vastas, contudo não possuía primazia única nos fóruns municipais.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Os grandes donos da produção dominando a Câmara Municipal</div>
+                <div class="porque">A centralidade não removeu o mando dos senhores que organizavam os impostos ditando leis e rotinas.</div>
+            </div>
+        </div>
+    </section>
+    <!-- ZONA 5 FIM -->
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<!-- BLOCO TRAVADO: SELOS E MOTOR. COPIE IGUAL. -->
+<script id="selo">
+const SELO_MOTOR = "db5bcc72";
+const SELO_CSS = "1b813fa0";
+</script>
+<script id="motor">
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+// --- LEITURA DAS QUESTOES (vem do HTML) ---
+function htmlDe(pai, seletor) {
+    const el = pai ? pai.querySelector(seletor) : null;
+    return el ? el.innerHTML.trim() : '';
+}
+
+const questions = Array.from(document.querySelectorAll('#bancoQuestoes .questao')).map((bloco, i) => {
+    const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+    const certa = Math.max(alternativas.findIndex(a => a.classList.contains('certa')), 0);
+    return {
+        id: i + 1,
+        level: bloco.dataset.nivel,
+        text: htmlDe(bloco, ':scope > .enunciado'),
+        options: alternativas.map(a => htmlDe(a, ':scope > .opcao')),
+        correct: certa,
+        explanation: {
+            correct: htmlDe(alternativas[certa], ':scope > .porque'),
+            options: alternativas.map((a, j) => j === certa ? 'Certa' : htmlDe(a, ':scope > .porque'))
+        }
+    };
+});
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise a teoria com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+
+// --- VERIFICADOR AUTOMATICO DA PAGINA ---
+function seloDe(texto) {
+    const limpo = texto.replace(/[^\x21-\x7E]/g, '');
+    let h = 2166136261;
+    for (let i = 0; i < limpo.length; i++) {
+        h ^= limpo.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(16);
+}
+
+function textoDe(html) {
+    const modelo = document.createElement('template');
+    modelo.innerHTML = html;
+    return modelo.content.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function verificarPagina() {
+    const erros = [];
+    const letras = ['A', 'B', 'C', 'D'];
+    const conteudo = [
+        document.title,
+        document.querySelector('.logo-header').innerHTML,
+        document.getElementById('viewExplanation').innerHTML,
+        document.getElementById('bancoQuestoes').innerHTML
+    ].join(' ');
+
+    const seloMotor = document.getElementById('motor');
+    const seloCss = document.getElementById('css-motor');
+    if (typeof SELO_MOTOR === 'undefined' || !seloMotor || seloDe(seloMotor.textContent) !== SELO_MOTOR) erros.push('O motor JavaScript foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (typeof SELO_CSS === 'undefined' || !seloCss || seloDe(seloCss.textContent) !== SELO_CSS) erros.push('O CSS do motor foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (conteudo.includes('[[') || conteudo.includes(']]')) erros.push('Ficou algum campo [[...]] sem preencher.');
+    if (conteudo.includes('**')) erros.push('Há Markdown (**) dentro do HTML. Use <strong>.');
+    if (document.querySelector('#viewExplanation script, #bancoQuestoes script, #viewExplanation iframe, #bancoQuestoes iframe')) erros.push('Há script ou iframe dentro das zonas de conteúdo.');
+    if (document.querySelector('#viewExplanation img, #bancoQuestoes img')) erros.push('Há imagem externa. Desenhe com SVG.');
+
+    document.querySelectorAll('#viewExplanation svg, #bancoQuestoes svg').forEach((svg, i) => {
+        if (!svg.getAttribute('viewBox') || !svg.getAttribute('aria-label')) erros.push('O desenho SVG ' + (i + 1) + ' precisa de viewBox e aria-label.');
+    });
+
+    const grupos = document.querySelectorAll('#viewExplanation .content-group');
+    if (grupos.length < 2) erros.push('A teoria precisa de pelo menos 2 temas.');
+    grupos.forEach((g, i) => {
+        if (!g.querySelector('.section-badge') || !g.querySelector('.theory-box')) erros.push('O tema ' + (i + 1) + ' da teoria está sem .section-badge ou .theory-box.');
+    });
+
+    const blocos = Array.from(document.querySelectorAll('#bancoQuestoes .questao'));
+    if (blocos.length !== 30) erros.push('São ' + blocos.length + ' questões, mas precisam ser exatamente 30.');
+
+    const enunciados = new Set();
+    const contagem = [0, 0, 0, 0];
+    let longas = 0;
+    let sequencia = 0;
+    let ultima = -1;
+
+    blocos.forEach((bloco, i) => {
+        const q = 'Questão ' + (i + 1) + ': ';
+        const esperado = i < 10 ? 'Fácil' : i < 20 ? 'Médio' : 'Difícil';
+        if (bloco.dataset.nivel !== esperado) erros.push(q + 'o nível deveria ser ' + esperado + '.');
+
+        const enunciadoEl = bloco.querySelector(':scope > .enunciado');
+        const enunciado = enunciadoEl ? textoDe(enunciadoEl.innerHTML) : '';
+        if (!enunciado) erros.push(q + 'falta o enunciado.');
+        if (enunciado && enunciados.has(enunciado)) erros.push(q + 'enunciado repetido.');
+        enunciados.add(enunciado);
+
+        const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+        if (alternativas.length !== 4) erros.push(q + 'precisa de exatamente 4 alternativas.');
+        const certas = alternativas.filter(a => a.classList.contains('certa'));
+        if (certas.length !== 1) erros.push(q + 'precisa de exatamente 1 alternativa certa.');
+
+        const textos = alternativas.map(a => {
+            const el = a.querySelector(':scope > .opcao');
+            return el ? textoDe(el.innerHTML) : '';
+        });
+        if (textos.some(t => !t)) erros.push(q + 'há alternativa sem texto.');
+        if (new Set(textos).size !== textos.length) erros.push(q + 'há alternativas repetidas.');
+
+        alternativas.forEach((a, j) => {
+            const el = a.querySelector(':scope > .porque');
+            const porque = el ? textoDe(el.innerHTML) : '';
+            const letra = letras[j] || '?';
+            if (!porque) erros.push(q + 'a alternativa ' + letra + ' está sem explicação.');
+            if (porque.length > 110) erros.push(q + 'a explicação da alternativa ' + letra + ' passou de 110 caracteres.');
+        });
+
+        const indice = alternativas.findIndex(a => a.classList.contains('certa'));
+        if (indice >= 0 && indice < 4) {
+            contagem[indice]++;
+            sequencia = indice === ultima ? sequencia + 1 : 1;
+            ultima = indice;
+            if (sequencia === 4) erros.push(q + 'são 4 respostas seguidas com a mesma letra.');
+            const tamanhos = textos.map(t => t.length);
+            const outros = tamanhos.filter((_, j) => j !== indice);
+            if (tamanhos[indice] > 20 && tamanhos[indice] - Math.max(...outros) >= 6) longas++;
+        }
+    });
+
+    contagem.forEach((total, i) => {
+        if (blocos.length === 30 && (total < 5 || total > 10)) erros.push('A letra ' + letras[i] + ' é a certa em ' + total + ' questões. Use de 6 a 9.');
+    });
+    if (longas > 3) erros.push('A alternativa certa é claramente a mais longa em ' + longas + ' questões. Equilibre os tamanhos.');
+
+    const aviso = document.getElementById('avisoMotor');
+    if (erros.length === 0) {
+        aviso.remove();
+        window.PAGINA_OK = true;
+        return;
+    }
+    const lista = erros.slice(0, 25).map(e => '<li>' + e.replace(/</g, '&lt;') + '</li>').join('');
+    aviso.innerHTML = '<strong>⚠️ A página precisa de correção. Não envie aos alunos.</strong><br>Copie esta lista, cole no Gemini e peça para corrigir só estes itens:<ol style="margin:8px 0 0 20px;">' + lista + '</ol>';
+}
+
+verificarPagina();
+</script>
+</body>
+</html>
