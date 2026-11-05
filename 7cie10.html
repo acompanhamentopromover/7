@@ -1,0 +1,841 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>7cie10</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- BLOCO TRAVADO: CSS DO MOTOR. COPIE IGUAL. -->
+<style id="css-motor">
+:root {
+    --border-color: #000000;
+    --white: #FFFFFF;
+    --theme-text-active: #FFFFFF;
+    --correct-bg: #D1FAE5;
+    --correct-border: #059669;
+    --wrong-bg: #FFE4E6;
+    --wrong-border: #BE123C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+    display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+    background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); color: var(--theme-contrast); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); color: var(--theme-contrast); }
+    100% { transform: scale(1); }
+}
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-dark); font-weight: 600; text-align: center;}
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn { flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+.content-group { display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #E0F2FE; border-left: 4px solid var(--theme-contrast); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #075985; }
+.highlight-box.warning { background-color: #FEF2F2; border-left-color: #BE123C; color: #881337; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil { background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar { display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct { background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+.option-btn.correct { background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle { background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle { background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; }
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt { border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt { border-left-color: var(--wrong-border); color: #7F1D1D; }
+.result-card { background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big { font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+.nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.feedback-box { scroll-margin-top: 12px; scroll-margin-bottom: 90px; }
+.question-map { scroll-margin-top: 8px; }
+td, th { padding: 6px 8px; }
+#bancoQuestoes { display: none; }
+.visual-area.texto { font-size: 0.95rem; flex-direction: column; gap: 8px; }
+.tabela { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+.tabela th { background: var(--theme-light); }
+.tabela th, .tabela td { border: 1px solid var(--border-color); }
+.lista { padding-left: 20px; }
+.desenho { width: 100%; max-width: 420px; height: auto; display: block; margin: 10px auto; }
+.d-cor1 { fill: var(--theme-dark); }
+.d-cor2 { fill: var(--theme-contrast); }
+.d-cor3 { fill: var(--theme-medium); }
+.d-fundo { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-linha { fill: none; stroke: var(--text-color); stroke-width: 2; }
+.d-texto { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; }
+</style>
+<!-- ZONA 2 INICIO: CORES E CSS EXTRA -->
+<style id="css-tema">
+:root {
+    --bg-color: #EEF2FF;
+    --text-color: #1E1B4B;
+    --theme-light: #E0E7FF;
+    --theme-medium: #818CF8;
+    --theme-dark: #3730A3;
+    --theme-contrast: #0E7490;
+    --theme-accent: #4F46E5;
+}
+.d-peq { fill: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; }
+.d-suave { fill: var(--theme-light); stroke: var(--text-color); stroke-width: 2; }
+.d-tracejado { fill: none; stroke: var(--theme-accent); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.d-fina { fill: none; stroke: var(--text-color); stroke-width: 1.2; }
+.quiz-footer { padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px)); }
+.tabela.compacta th, .tabela.compacta td { padding: 5px 2px; font-size: 0.72rem; }
+</style>
+<!-- ZONA 2 FIM -->
+
+<div id="avisoMotor" style="display:block; max-width:600px; width:100%; margin:0 auto 16px; padding:14px; background:#FFE4E6; color:#881337; border:3px solid #BE123C; border-radius:12px; font-family:sans-serif; font-size:15px; font-weight:600; line-height:1.5;">⚠️ Este arquivo está incompleto ou com erro no código. Não envie aos alunos. Peça ao Gemini para gerar o arquivo completo de novo.</div>
+<div class="container">
+    <header class="logo-header">
+        <div class="css-logo"><span class="pulse-effect">🚀</span> PROMOVER</div>
+        <!-- ZONA 3 INICIO: CABECALHO -->
+        <h1>Ciências – 7º&nbsp;Ano</h1>
+        <p class="subtitle">Capítulo 10: Pantanal, Pampa, Cerrado e Caatinga</p>
+        <!-- ZONA 3 FIM -->
+    </header>
+
+    <div class="toggle-container" hidden>
+        <button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">📘 Teoria</button>
+        <button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">🧠 Prática (15)</button>
+    </div>
+
+    <div id="viewExplanation" class="view-section" hidden>
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+        </div>
+        <div id="no-results"><p>😕 Termo não encontrado.</p></div>
+
+        <!-- ZONA 4 INICIO: TEORIA -->
+        <!-- ZONA 4 FIM -->
+
+        <button class="btn-action" onclick="setMode('practice')">
+            Iniciar Diagnóstico (15 Q) ➜
+        </button>
+    </div>
+
+    <div id="viewPractice" class="view-section">
+        <div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+            <h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+            <p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">15 questões rigorosas. Acerte <strong>80% (12/15)</strong> para provar seu domínio. Leia a correção de cada erro!</p>
+        </div>
+        <div class="question-map" id="qMap"></div>
+        <div id="quizContainer" style="margin-bottom: 100px;"></div>
+    </div>
+
+    <div id="viewResult" class="view-section">
+        <div class="result-card">
+            <h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+            <div class="stars-container" id="finalStars">⭐⭐⭐</div>
+            <div class="percentage-big" id="finalPercent">0%</div>
+            <p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 15</p>
+            <div id="review-container"></div>
+        </div>
+        <div id="action-buttons"></div>
+    </div>
+
+    <!-- ZONA 5 INICIO: 30 QUESTOES -->
+    <section id="bancoQuestoes" hidden>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">O que é um bioma?</div>
+            <div class="alternativa">
+                <div class="opcao">Um único animal típico de uma região</div>
+                <div class="porque">Bioma reúne vários seres vivos e o ambiente.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Grande conjunto de ecossistemas parecidos</div>
+                <div class="porque">Bioma tem clima, solo, vegetação e animais parecidos em grande extensão.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Uma cidade cercada por vegetação</div>
+                <div class="porque">Bioma é uma grande região natural, não uma cidade.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Um rio com todos os seus afluentes</div>
+                <div class="porque">Um rio com afluentes forma uma bacia hidrográfica.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual bioma é a maior planície alagável do mundo?</div>
+            <div class="alternativa">
+                <div class="opcao">Caatinga</div>
+                <div class="porque">A Caatinga é semiárida.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Cerrado</div>
+                <div class="porque">O Cerrado é a savana brasileira.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Pampa</div>
+                <div class="porque">O Pampa é formado por campos e coxilhas.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Pantanal</div>
+                <div class="porque">No Pantanal, os rios transbordam e alagam grande parte do terreno.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Em qual estado brasileiro ocorre o Pampa?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Rio Grande do Sul</div>
+                <div class="porque">No Brasil, o Pampa ocorre somente no Rio Grande do Sul.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Mato Grosso do Sul</div>
+                <div class="porque">Mato Grosso do Sul tem Pantanal e Cerrado, não o Pampa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Goiás</div>
+                <div class="porque">Goiás fica no Planalto Central, região do Cerrado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Bahia</div>
+                <div class="porque">A Bahia tem Caatinga e Cerrado, não o Pampa.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">Qual é o clima da Caatinga?</div>
+            <div class="alternativa">
+                <div class="opcao">Temperado frio</div>
+                <div class="porque">A Caatinga tem temperaturas altas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Subtropical</div>
+                <div class="porque">Subtropical é o clima do Pampa.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Semiárido</div>
+                <div class="porque">A Caatinga tem temperaturas altas, pouca chuva e secas longas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Tropical com cheias</div>
+                <div class="porque">As cheias marcam o Pantanal.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Fácil">
+            <div class="enunciado">O que significa a palavra caatinga, de origem tupi?</div>
+            <div class="alternativa">
+                <div class="opcao">Berço das águas</div>
+                <div class="porque">“Berço das águas” é o apelido do Cerrado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Mata alagada</div>
+                <div class="porque">Alagamento é uma característica do Pantanal.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Campo verde</div>
+                <div class="porque">Os campos marcam o Pampa.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Mata branca</div>
+                <div class="porque">Na seca, as plantas perdem folhas, e a paisagem fica branca.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">O que acontece no Pantanal durante a cheia?</div>
+            <div class="alternativa">
+                <div class="opcao">As plantas perdem as folhas, e tudo fica branco</div>
+                <div class="porque">Isso acontece na seca da Caatinga.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Os rios transbordam e alagam grande parte do terreno</div>
+                <div class="porque">De outubro a março, a chuva faz os rios transbordarem.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Caem geadas sobre os campos e as coxilhas</div>
+                <div class="porque">As geadas acontecem no inverno do Pampa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">A água desaparece e surgem grandes desertos</div>
+                <div class="porque">Na cheia, a água aumenta.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual adaptação protege as árvores do Cerrado contra o fogo?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Casca grossa</div>
+                <div class="porque">A casca grossa protege a árvore do fogo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Raízes profundas</div>
+                <div class="porque">As raízes profundas alcançam a água do solo.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Folhas grossas</div>
+                <div class="porque">As folhas grossas reduzem a perda de água.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Folhas flutuantes</div>
+                <div class="porque">Plantas aquáticas, como o aguapé, vivem no Pantanal.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Por que muitas plantas da Caatinga perdem as folhas na seca?</div>
+            <div class="alternativa">
+                <div class="opcao">Para se proteger das geadas</div>
+                <div class="porque">As geadas são típicas do Pampa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Para receber mais chuva pelo tronco</div>
+                <div class="porque">A falta de folhas não aumenta a chuva.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Para diminuir a perda de água</div>
+                <div class="porque">Sem folhas, a planta perde menos água durante a seca.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Para flutuar quando os rios enchem</div>
+                <div class="porque">Plantas flutuantes vivem no Pantanal.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">O que são as coxilhas do Pampa?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Planícies onduladas</div>
+                <div class="porque">As coxilhas são o relevo de planícies onduladas do Pampa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Rios que secam</div>
+                <div class="porque">Rios que secam são os rios intermitentes.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Árvores retorcidas</div>
+                <div class="porque">Árvores retorcidas aparecem no Cerrado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Lagoas temporárias</div>
+                <div class="porque">Lagoas aparecem na seca do Pantanal.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Médio">
+            <div class="enunciado">Qual bioma é o “berço das águas”, e por quê?</div>
+            <div class="alternativa">
+                <div class="opcao">Pampa, por ter chuva bem distribuída no ano</div>
+                <div class="porque">A chuva bem distribuída não explica esse apelido.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Pantanal, por alagar quase toda a planície</div>
+                <div class="porque">O Pantanal alaga, mas o apelido é do Cerrado.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Caatinga, por ter muitos rios intermitentes</div>
+                <div class="porque">Rios intermitentes secam, e o apelido é do Cerrado.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Cerrado, por ter nascentes de grandes bacias</div>
+                <div class="porque">Nele nascem rios das bacias do Tocantins-Araguaia, do São Francisco e do Prata.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Por que a Caatinga é chamada de bioma exclusivamente brasileiro?</div>
+            <div class="alternativa">
+                <div class="opcao">Porque ocorre em todos os estados do país</div>
+                <div class="porque">Ela ocorre no Nordeste e no norte de Minas Gerais.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque é o maior bioma de todo o Brasil</div>
+                <div class="porque">Ela ocupa cerca de 10% do território.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Porque só existe no território do Brasil</div>
+                <div class="porque">A Caatinga ocorre no Nordeste e no norte de Minas Gerais.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Porque não sofre nenhuma ameaça</div>
+                <div class="porque">Ela sofre com desmatamento, desertificação e caça.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual grupo reúne adaptações da vegetação xerófila?</div>
+            <div class="alternativa">
+                <div class="opcao">Folhas flutuantes, raízes na água e caules moles</div>
+                <div class="porque">Essas características combinam com plantas aquáticas.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Espinhos, folhas pequenas e caules que guardam água</div>
+                <div class="porque">Essas características ajudam a enfrentar a falta d’água.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Folhas largas, casca fina e raízes bem curtas</div>
+                <div class="porque">Essas características aumentam a dificuldade na seca.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Campos baixos, geadas e chuvas bem distribuídas</div>
+                <div class="porque">Essas características descrevem o Pampa.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual característica é do Cerrado, e não da Caatinga?</div>
+            <div class="alternativa">
+                <div class="opcao">Cactos como mandacaru e xique-xique</div>
+                <div class="porque">Isso descreve a Caatinga.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Clima semiárido com secas longas</div>
+                <div class="porque">Isso descreve a Caatinga.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Muitos rios intermitentes</div>
+                <div class="porque">Isso descreve a Caatinga.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Verão chuvoso e inverno seco</div>
+                <div class="porque">O Cerrado tem clima tropical, com verão chuvoso e inverno seco.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Um estudo cita campos de gramíneas, geadas no inverno e arenização do solo. De qual bioma ele trata?</div>
+            <div class="alternativa certa">
+                <div class="opcao">Pampa</div>
+                <div class="porque">Campos, geadas e arenização são características do Pampa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Pantanal</div>
+                <div class="porque">O Pantanal tem clima tropical, com cheia e seca.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Cerrado</div>
+                <div class="porque">O Cerrado é uma savana de clima tropical.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Caatinga</div>
+                <div class="porque">A Caatinga é quente e semiárida.</div>
+            </div>
+        </div>
+        <div class="questao" data-nivel="Difícil">
+            <div class="enunciado">Qual ameaça atinge Pantanal, Cerrado e Caatinga?</div>
+            <div class="alternativa">
+                <div class="opcao">Arenização</div>
+                <div class="porque">A arenização é uma ameaça ao Pampa.</div>
+            </div>
+            <div class="alternativa certa">
+                <div class="opcao">Desmatamento</div>
+                <div class="porque">O desmatamento aparece entre as ameaças dos três biomas.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Geada</div>
+                <div class="porque">A geada é um fenômeno do clima do Pampa.</div>
+            </div>
+            <div class="alternativa">
+                <div class="opcao">Cheia dos rios</div>
+                <div class="porque">A cheia é um processo natural do Pantanal.</div>
+            </div>
+        </div>
+    </section>
+    <!-- ZONA 5 FIM -->
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+    <button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+    <button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<!-- BLOCO TRAVADO: SELOS E MOTOR. COPIE IGUAL. -->
+<script id="selo">
+const SELO_MOTOR = "b41e4528";
+const SELO_CSS = "1b813fa0";
+</script>
+<script id="motor">
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let totalVisible = 0;
+    contentGroups.forEach(group => {
+        const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (textContent.includes(term)) {
+            group.style.display = 'flex';
+            totalVisible++;
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+// --- LEITURA DAS QUESTOES (vem do HTML) ---
+function htmlDe(pai, seletor) {
+    const el = pai ? pai.querySelector(seletor) : null;
+    return el ? el.innerHTML.trim() : '';
+}
+
+const questions = Array.from(document.querySelectorAll('#bancoQuestoes .questao')).map((bloco, i) => {
+    const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+    const certa = Math.max(alternativas.findIndex(a => a.classList.contains('certa')), 0);
+    return {
+        id: i + 1,
+        level: bloco.dataset.nivel,
+        text: htmlDe(bloco, ':scope > .enunciado'),
+        options: alternativas.map(a => htmlDe(a, ':scope > .opcao')),
+        correct: certa,
+        explanation: {
+            correct: htmlDe(alternativas[certa], ':scope > .porque'),
+            options: alternativas.map((a, j) => j === certa ? 'Certa' : htmlDe(a, ':scope > .porque'))
+        }
+    };
+});
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+try {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(savedAnswers) && savedAnswers.length === questions.length) userAnswers = savedAnswers;
+} catch (e) { /* Sem salvamento disponível: a página continua funcionando. */ }
+
+function setMode(mode) {
+    const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+    views.forEach(v => document.getElementById(v).style.display = 'none');
+    document.getElementById('quizFooter').style.display = 'none';
+    if(mode === 'explanation') {
+        document.getElementById('viewExplanation').style.display = 'flex';
+        document.getElementById('btnExp').classList.add('active');
+        document.getElementById('btnPrac').classList.remove('active');
+    } else if (mode === 'practice') {
+        document.getElementById('viewPractice').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'flex';
+        document.getElementById('btnExp').classList.remove('active');
+        document.getElementById('btnPrac').classList.add('active');
+        renderQuestion();
+        renderMap();
+    } else if (mode === 'result') {
+        document.getElementById('viewResult').style.display = 'block';
+        document.getElementById('quizFooter').style.display = 'none';
+    }
+    window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+    if(questions.length === 0) return;
+    const q = questions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const letters = ['A', 'B', 'C', 'D'];
+    const ans = userAnswers[currentQuestion];
+    let badgeClass = '';
+    if(q.level === 'Fácil') badgeClass = 'dif-facil';
+    else if(q.level === 'Médio') badgeClass = 'dif-medio';
+    else badgeClass = 'dif-dificil';
+
+    container.innerHTML = `
+    <div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+        <span class="difficulty-badge ${badgeClass}">${q.level}</span>
+        <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+            <h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+        </div>
+        <div class="options-list">
+            ${q.options.map((opt, i) => {
+                let cls = '';
+                if (ans !== null) {
+                    if (i === q.correct) cls = 'correct';
+                    else if (i === ans) cls = 'wrong';
+                    else cls = 'disabled';
+                }
+                return `<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+                    <div class="opt-circle">${letters[i]}</div>
+                    <div>${opt}</div>
+                </button>
+                `;
+            }).join('')}
+        </div>
+        ${ans !== null ? `
+        <div class="feedback-box">
+            <div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+                ${ans === q.correct ? '✅ Raciocínio Aprovado!' : '❌ Ops! Falha Detectada:'}
+            </div>
+            <div class="feedback-item correct-opt"><strong>A Verdade Direta e Certa:</strong> ${q.options[q.correct]}</div>
+            <div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+                ${q.explanation.correct}
+            </div>
+            <div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+                <small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+                ${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+            </div>
+        </div>
+        ` : ''}
+    </div>
+    `;
+    updateNav();
+}
+
+function handleAnswer(idx) {
+    if (userAnswers[currentQuestion] !== null) return;
+    userAnswers[currentQuestion] = idx;
+    try { localStorage.setItem(storageKey, JSON.stringify(userAnswers)); } catch (e) { /* Sem salvamento disponível. */ }
+    if (idx === questions[currentQuestion].correct) {
+        if (window.confetti) {
+            const duration = 1500;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#10B981', '#059669', '#34D399', '#047857'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    } else {
+        const quizContainer = document.getElementById('quizContainer');
+        quizContainer.classList.remove('shake-effect');
+        void quizContainer.offsetWidth;
+        quizContainer.classList.add('shake-effect');
+        setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+    }
+    renderQuestion();
+    renderMap();
+    const feedback = document.querySelector('.feedback-box');
+    if (feedback) feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderMap() {
+    if(questions.length === 0) return;
+    const map = document.getElementById('qMap');
+    map.innerHTML = questions.map((q, i) => {
+        let cls = 'map-dot';
+        if (i === currentQuestion) cls += ' active';
+        if (userAnswers[i] !== null) {
+            cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+        }
+        return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+    }).join('');
+    setTimeout(() => {
+        const activeDot = map.querySelector('.map-dot.active');
+        if (activeDot) {
+            const mapBox = map.getBoundingClientRect();
+            const dotBox = activeDot.getBoundingClientRect();
+            map.scrollTo({ left: map.scrollLeft + dotBox.left - mapBox.left - (mapBox.width - dotBox.width) / 2, behavior: 'smooth' });
+        }
+    }, 50);
+}
+
+function goTo(i) {
+    if (window.confetti) confetti.reset();
+    currentQuestion = i;
+    renderQuestion();
+    renderMap();
+    document.getElementById('qMap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function changeQuestion(d) {
+    let n = currentQuestion + d;
+    if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+    document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+    const next = document.getElementById('btnNext');
+    if (currentQuestion === questions.length - 1) {
+        next.textContent = "Finalizar Diagnóstico";
+        next.onclick = finish;
+    } else {
+        next.textContent = "Avançar";
+        next.onclick = () => changeQuestion(1);
+    }
+}
+
+function finish() {
+    let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+    let percent = Math.round((correct / questions.length) * 100);
+    if (window.confetti) confetti.reset();
+    document.getElementById('finalPercent').textContent = percent + "%";
+    document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+    document.getElementById('finalStars').textContent = percent >= 80 ? "⭐⭐⭐⭐⭐" : percent >= 60 ? "⭐⭐⭐" : "⭐";
+    let summary = '<div style="text-align:left; margin-top:20px;">';
+    if (percent < 80) {
+        summary += `<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+            <strong>⚠️ Domínio Insuficiente!</strong> O seu desempenho não atingiu a meta de 80%. Revise o conteúdo com atenção antes de tentar novamente.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Limpar Histórico e Refazer Prova</button>`;
+    } else {
+        summary += `<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+            <strong>🎉 Excelente Desempenho!</strong> Você demonstrou uma base sólida sobre os conceitos avaliados. Continue revisando para fazer a prova com segurança.
+        </div>`;
+        document.getElementById('action-buttons').innerHTML = `<button class="btn-action" onclick="reset()">🔄 Refazer Prova (Zerar Histórico)</button>`;
+    }
+    if (correct < questions.length) {
+        summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+        questions.forEach((q, i) => {
+            if(userAnswers[i] !== q.correct) {
+                summary += `<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+                    <strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+                    <span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">${userAnswers[i] === null ? 'Questão não respondida' : 'Seu Erro: ' + q.options[userAnswers[i]]}</span>
+                    <span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+                </div>`;
+            }
+        });
+    }
+    summary += '</div>';
+    document.getElementById('review-container').innerHTML = summary;
+    setMode('result');
+}
+
+function reset() {
+    try { localStorage.removeItem(storageKey); } catch (e) { /* Sem salvamento disponível. */ }
+    userAnswers = new Array(questions.length).fill(null);
+    currentQuestion = 0;
+    setMode('practice');
+}
+
+setMode('practice');
+
+// --- VERIFICADOR AUTOMATICO DA PAGINA ---
+function seloDe(texto) {
+    const limpo = texto.replace(/[^\x21-\x7E]/g, '');
+    let h = 2166136261;
+    for (let i = 0; i < limpo.length; i++) {
+        h ^= limpo.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(16);
+}
+
+function textoDe(html) {
+    const modelo = document.createElement('template');
+    modelo.innerHTML = html;
+    return modelo.content.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function verificarPagina() {
+    const erros = [];
+    const letras = ['A', 'B', 'C', 'D'];
+    const conteudo = [
+        document.title,
+        document.querySelector('.logo-header').innerHTML,
+        document.getElementById('viewExplanation').innerHTML,
+        document.getElementById('bancoQuestoes').innerHTML
+    ].join(' ');
+
+    const seloMotor = document.getElementById('motor');
+    const seloCss = document.getElementById('css-motor');
+    if (typeof SELO_MOTOR === 'undefined' || !seloMotor || seloDe(seloMotor.textContent) !== SELO_MOTOR) erros.push('O motor JavaScript foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (typeof SELO_CSS === 'undefined' || !seloCss || seloDe(seloCss.textContent) !== SELO_CSS) erros.push('O CSS do motor foi alterado. Copie de novo o bloco do esqueleto, sem mudar nada.');
+    if (conteudo.includes('[[') || conteudo.includes(']]')) erros.push('Ficou algum campo [[...]] sem preencher.');
+    if (conteudo.includes('**')) erros.push('Há Markdown (**) dentro do HTML. Use <strong>.');
+    if (document.querySelector('#viewExplanation script, #bancoQuestoes script, #viewExplanation iframe, #bancoQuestoes iframe')) erros.push('Há script ou iframe dentro das zonas de conteúdo.');
+    if (document.querySelector('#viewExplanation img, #bancoQuestoes img')) erros.push('Há imagem externa. Desenhe com SVG.');
+
+    document.querySelectorAll('#viewExplanation svg, #bancoQuestoes svg').forEach((svg, i) => {
+        if (!svg.getAttribute('viewBox') || !svg.getAttribute('aria-label')) erros.push('O desenho SVG ' + (i + 1) + ' precisa de viewBox e aria-label.');
+    });
+
+    const blocos = Array.from(document.querySelectorAll('#bancoQuestoes .questao'));
+    if (blocos.length !== 15) erros.push('São ' + blocos.length + ' questões, mas precisam ser exatamente 15.');
+
+    const enunciados = new Set();
+    const contagem = [0, 0, 0, 0];
+    let longas = 0;
+    let sequencia = 0;
+    let ultima = -1;
+
+    blocos.forEach((bloco, i) => {
+        const q = 'Questão ' + (i + 1) + ': ';
+        const esperado = i < 5 ? 'Fácil' : i < 10 ? 'Médio' : 'Difícil';
+        if (bloco.dataset.nivel !== esperado) erros.push(q + 'o nível deveria ser ' + esperado + '.');
+
+        const enunciadoEl = bloco.querySelector(':scope > .enunciado');
+        const enunciado = enunciadoEl ? textoDe(enunciadoEl.innerHTML) : '';
+        if (!enunciado) erros.push(q + 'falta o enunciado.');
+        if (enunciado && enunciados.has(enunciado)) erros.push(q + 'enunciado repetido.');
+        enunciados.add(enunciado);
+
+        const alternativas = Array.from(bloco.querySelectorAll(':scope > .alternativa'));
+        if (alternativas.length !== 4) erros.push(q + 'precisa de exatamente 4 alternativas.');
+        const certas = alternativas.filter(a => a.classList.contains('certa'));
+        if (certas.length !== 1) erros.push(q + 'precisa de exatamente 1 alternativa certa.');
+
+        const textos = alternativas.map(a => {
+            const el = a.querySelector(':scope > .opcao');
+            return el ? textoDe(el.innerHTML) : '';
+        });
+        if (textos.some(t => !t)) erros.push(q + 'há alternativa sem texto.');
+        if (new Set(textos).size !== textos.length) erros.push(q + 'há alternativas repetidas.');
+
+        alternativas.forEach((a, j) => {
+            const el = a.querySelector(':scope > .porque');
+            const porque = el ? textoDe(el.innerHTML) : '';
+            const letra = letras[j] || '?';
+            if (!porque) erros.push(q + 'a alternativa ' + letra + ' está sem explicação.');
+            if (porque.length > 110) erros.push(q + 'a explicação da alternativa ' + letra + ' passou de 110 caracteres.');
+        });
+
+        const indice = alternativas.findIndex(a => a.classList.contains('certa'));
+        if (indice >= 0 && indice < 4) {
+            contagem[indice]++;
+            sequencia = indice === ultima ? sequencia + 1 : 1;
+            ultima = indice;
+            if (sequencia === 4) erros.push(q + 'são 4 respostas seguidas com a mesma letra.');
+            const tamanhos = textos.map(t => t.length);
+            const outros = tamanhos.filter((_, j) => j !== indice);
+            if (tamanhos[indice] > 20 && tamanhos[indice] - Math.max(...outros) >= 6) longas++;
+        }
+    });
+
+    contagem.forEach((total, i) => {
+        if (blocos.length === 15 && (total < 2 || total > 5)) erros.push('A letra ' + letras[i] + ' é a certa em ' + total + ' questões. Use de 3 a 4.');
+    });
+    if (longas > 2) erros.push('A alternativa certa é claramente a mais longa em ' + longas + ' questões. Equilibre os tamanhos.');
+
+    const aviso = document.getElementById('avisoMotor');
+    if (erros.length === 0) {
+        aviso.remove();
+        window.PAGINA_OK = true;
+        return;
+    }
+    const lista = erros.slice(0, 25).map(e => '<li>' + e.replace(/</g, '&lt;') + '</li>').join('');
+    aviso.innerHTML = '<strong>⚠️ A página precisa de correção. Não envie aos alunos.</strong><br>Copie esta lista, cole no Gemini e peça para corrigir só estes itens:<ol style="margin:8px 0 0 20px;">' + lista + '</ol>';
+}
+
+verificarPagina();
+</script>
+
+</body></html>
